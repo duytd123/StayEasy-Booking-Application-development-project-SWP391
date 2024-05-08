@@ -1,24 +1,24 @@
 GROUP 4
 ```sh
-make demo
+dev
 ```
 Nguyễn Hải Phong
 ```sh
-make demo
+dev
 ```
 Phạm Mạnh Hùng
 ```sh
-make demo
+dev
 ```
-Trần Đức Duy Leader
+Trần Đức Duy 
 ```sh
-make demo
+Leader
 ```
 Lê Đình Nam
 ```sh
-make demo
+dev
 ```
 Vi Duy Khánh
 ```sh
-make demo
+dev
 ```
