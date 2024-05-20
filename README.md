@@ -1,4 +1,4 @@
-GROUP 4
+GROUP 4 - SE1806 - Summer2024
 ```
 Nguyễn Hải Phong
 ```
