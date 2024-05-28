@@ -68,6 +68,7 @@ public class SignUpServlet extends HttpServlet {
             request.getRequestDispatcher("signup.jsp").forward(request, response);
         }
         else {
+            //condition
             if (!password.equals(repassword)) {
                 request.setAttribute("username", username);
                 request.setAttribute("fullname", fullname);
