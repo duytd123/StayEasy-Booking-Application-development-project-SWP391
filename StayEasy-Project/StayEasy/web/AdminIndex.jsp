@@ -1,9 +1,3 @@
-<%-- 
-    Document   : AdminIndex
-    Created on : May 28, 2024, 11:16:56 PM
-    Author     : hungm
---%>
-
 section class="dashboard"><%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@page import="Model.Account"%>
     <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -102,3 +96,5 @@ section class="dashboard"><%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl
 </body>
 <script src="admin_script.js"></script>
 </html>
+
+ 
