@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.util.ArrayList"%>
@@ -55,6 +56,7 @@
                     </a>
                 </c:if>
                 <c:if test="${sessionScope.acc != null}">
+
                     <span class="user-fullname">${acc.fullname}</span>
                     <a href="LogoutServlet" class="icon-link">
                         <i class="fas fa-sign-out-alt" id="logout-btn"></i> 
@@ -66,8 +68,6 @@
             </div>
 
         </header>
-
-
 
         <!-- header section ends -->
 

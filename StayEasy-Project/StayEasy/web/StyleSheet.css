@@ -3,6 +3,7 @@
 :root {
     --orange: #ffa500;
 }
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
@@ -212,7 +213,6 @@ header .icons i {
 }
 
 * {
-
     font-family: 'Nunito', sans-serif;
     margin: 0;
     padding: 0;
@@ -228,6 +228,7 @@ header .icons i {
     background: var(--orange);
     color: #fff;
 }
+
 
 html {
     font-size: 62.5%;
@@ -245,17 +246,17 @@ section {
     padding: 2.5rem 0
 }
 
-.heading span {
-    font-size: 3.5rem;
-    background: rgba(255, 165, 0,.2);
-    color: var(--orange);
-    border-radius: .5rem;
-    padding: .2rem 1rem;
-}
+    .heading span {
+        font-size: 3.5rem;
+        background: rgba(255, 165, 0,.2);
+        color: var(--orange);
+        border-radius: .5rem;
+        padding: .2rem 1rem;
+    }
 
-.heading span.space {
-    background: none;
-}
+        .heading span.space {
+            background: none;
+        }
 
 .btn {
     display: inline-block;
@@ -268,10 +269,12 @@ section {
     font-size: 1.7rem;
 }
 
+
 .btn:hover {
     background: rgba(255, 165, 0,.2);
     color: var(--orange);
 }
+
 
 header {
     position: fixed;
@@ -285,6 +288,7 @@ header {
     justify-content: space-between;
     padding: 2rem 9%;
 }
+
 
 header .logo {
     font-size: 2.5rem;
@@ -356,6 +360,7 @@ header .search-bar-container label:hover {
     color: var(--orange);
 }
 
+
 .login-form-container {
     position: fixed;
     top: -120%;
@@ -368,6 +373,7 @@ header .search-bar-container label:hover {
     align-items: center;
     justify-content: center;
 }
+
 
 .login-form-container.active {
     top: 0;
@@ -441,6 +447,7 @@ header .search-bar-container label:hover {
     cursor: pointer;
 }
 
+
 #menu-bar {
     color: #fff;
     border: .1rem solid #fff;
@@ -460,6 +467,7 @@ header .search-bar-container label:hover {
     position: relative;
     z-index: 0;
 }
+
 
 .home .content {
     text-align: center;
@@ -510,6 +518,7 @@ header .search-bar-container label:hover {
     background: var(--orange);
 }
 
+
 .book .row {
     display: flex;
     flex-wrap: wrap;
@@ -550,6 +559,7 @@ header .search-bar-container label:hover {
     padding: 1rem 0;
     color: #666;
 }
+
 
 .packages .box-container {
     display: flex;
@@ -606,6 +616,7 @@ header .search-bar-container label:hover {
     text-decoration: line-through;
 }
 
+
 .services .box-container {
     display: flex;
     flex-wrap: wrap;
@@ -640,11 +651,13 @@ header .search-bar-container label:hover {
     box-shadow: 0 1rem 2rem rgba(0,0,0,.1);
 }
 
+
 .gallery .box-container {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
 }
+
 
 .gallery .box-container .box {
     overflow: hidden;
@@ -700,6 +713,7 @@ header .search-bar-container label:hover {
     border-radius: .5rem;
 }
 
+
 .review .box img {
     height: 13rem;
     width: 13rem;
@@ -724,12 +738,14 @@ header .search-bar-container label:hover {
     font-size: 1.7rem;
 }
 
+
 .contact .row {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     align-items: center;
 }
+
 
 .contact .row .image {
     flex: 1 1 35rem;
@@ -768,6 +784,7 @@ header .search-bar-container label:hover {
     width: 100%;
 }
 
+
 .brand-container {
     text-align: center;
 }
@@ -775,6 +792,7 @@ header .search-bar-container label:hover {
 .footer {
     background: #333;
 }
+
 
 .footer .box-container {
     display: flex;
@@ -875,6 +893,7 @@ header .search-bar-container label:hover {
         margin: 1.5rem 0;
         background: #222;
     }
+
 }
 
 @media (max-width:450px) {
