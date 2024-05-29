@@ -12,6 +12,12 @@
         <servlet-name>NextEditAccountServlet</servlet-name>
         <servlet-class>Controller.NextEditAccountServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>DashboardHostServlet</servlet-name>
+        <servlet-class>Controller.DashboardHostServlet</servlet-class>
+    </servlet>
+
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>Controller.LoginServlet</servlet-class>

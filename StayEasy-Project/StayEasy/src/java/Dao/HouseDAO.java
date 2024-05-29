@@ -6,6 +6,7 @@
 package Dao;
 
 import Connect.DBContext;
+import Model.Account;
 import Model.House;
 import Model.Location;
 import Model.Menu;
@@ -33,6 +34,7 @@ public class HouseDAO {
             System.out.println("error: " + e);
         }
     }
+
 
      public List<House> getNameThreeHouseBest() {
         String sql = "select top 3 House.house_id  ,House.house_name , COUNT (*)\n"
@@ -259,6 +261,14 @@ public class HouseDAO {
     public List<House> getHousebyName(String name) {
         String sql = "select * from House where house_name like '%" + name + "%'";
         List<House> list = new ArrayList<>();
+    public List<House> getNameThreeHouseBest() {
+        String sql = "select top 3 House.house_id  ,House.house_name , COUNT (*)\n"
+                + "from Bill_detail , House\n"
+                + "where Bill_detail.house_id  = House.house_id\n"
+                + "group by House.house_id ,House.house_name\n"
+                + "";
+        List<House> list = new ArrayList<House>();
+
         try {
             //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
@@ -281,6 +291,14 @@ public class HouseDAO {
                 Location location = new Location(locationid, null);
                 House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
                 list.add(h);
+                String houseName = resultSet.getString(2);
+                int numberBill = resultSet.getInt(3);
+                House house = new House();
+                house.setHouseid(houseid);
+                house.setHousename(houseName);
+                house.setNumberBill(numberBill);
+                list.add(house);
+
             }
         } catch (Exception e) {
             System.out.println("error: " + e);
