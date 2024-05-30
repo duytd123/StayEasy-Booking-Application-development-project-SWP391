@@ -19,7 +19,7 @@
             <form action="" method="post">
                 <h3>Block Account</h3>
                 <p class="box">Your account has been locked</p>
-                <p><a href="Index.jsp" class="btn">Return to HomePage</a></p>
+                <p><a href="LogoutServlet" class="btn">Return to HomePage</a></p>
             </form>
         </div>
     </body>

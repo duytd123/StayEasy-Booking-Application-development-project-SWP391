@@ -22,6 +22,7 @@
         <link rel="stylesheet" href="list_house_main.css">
         <link rel="stylesheet" href="StyleSheet.css">
         <link rel="stylesheet" href="css/housepage.css">
+
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -32,6 +33,7 @@
     <%@ include file="header.jsp" %>
 
     <body>     
+
         <div class="listContainer">
             <div class="listWrapper">
                 <div class="listSearch">
@@ -96,3 +98,4 @@
         </div>
     </body>
 </html>
+

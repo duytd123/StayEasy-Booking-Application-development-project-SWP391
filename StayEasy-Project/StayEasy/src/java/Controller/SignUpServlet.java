@@ -26,32 +26,25 @@ public class SignUpServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
 
-        if (username == null || username.trim().isEmpty()) {
-            setErrorAndForward(request, response, "input username!", username, fullname, email, phone);
-            return;
-        }
+        String userimg = "";
+        int status = 1;
+        int roleid = 2;
+        //pass != repass
+        if (username == null || username.equals("")) {
+            request.setAttribute("mess", "Input user name!");
+            request.setAttribute("username", username);
+            request.setAttribute("fullname", fullname);
+            request.setAttribute("email", email);
+            request.setAttribute("phone", phone);
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
+        }if(password == null | password.equals("")){
+            request.setAttribute("mess", "Input passwword end repeat password!");
+            request.setAttribute("username", username);
+            request.setAttribute("fullname", fullname);
+            request.setAttribute("email", email);
+            request.setAttribute("phone", phone);
+            request.getRequestDispatcher("signup.jsp").forward(request, response);
 
-        if (password == null || password.trim().isEmpty()) {
-            setErrorAndForward(request, response, "input password and repeat password!", username, fullname, email, phone);
-            return;
-        }
-
-        if (email == null || email.trim().isEmpty()) {
-            setErrorAndForward(request, response, "Please input email!", username, fullname, email, phone);
-            return;
-        }
-
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        Pattern pattern = Pattern.compile(emailRegex);
-
-        if (!pattern.matcher(email).matches()) {
-            setErrorAndForward(request, response, "Invalid email format!", username, fullname, email, phone);
-            return;
-        }
-
-        if (!password.equals(repassword)) {
-            setErrorAndForward(request, response, "repeat password is wrong!", username, fullname, email, phone);
-            return;
         }
         if (phone != null && !phone.trim().isEmpty() && !phone.matches("\\d{10}")) {
             setErrorAndForward(request, response, "phone number must be  10 digits!", username, fullname, email, phone);
