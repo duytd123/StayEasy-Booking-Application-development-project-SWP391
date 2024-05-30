@@ -1,8 +1,4 @@
-<%-- 
-    Document   : AddService
-    Created on : Oct 27, 2022, 8:41:48 PM
-    Author     : Admin
---%>
+
 <%@page import="Model.House"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.AdditionalService"%>

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Error
-    Created on : Oct 11, 2022, 8:26:18 PM
-    Author     : Admin
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -24,7 +19,7 @@
             <form action="" method="post">
                 <h3>Block Account</h3>
                 <p class="box">Your account has been locked</p>
-                <p><a href="Index.jsp" class="btn">Return to HomePage</a></p>
+                <p><a href="LogoutServlet" class="btn">Return to HomePage</a></p>
             </form>
         </div>
     </body>

@@ -1,4 +1,7 @@
-
+<%@page import="Model.Account"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="Model.Role"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -17,57 +20,52 @@
 
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
-        <link rel="stylesheet" href="StyleSheet.css">
-        <link rel="stylesheet" href="css/housepage.css">
-        <link rel="stylesheet" href="css/style.css">
+
     </head>
     <body>
+        <%
+        Account a = new Account();
+            if (request.getAttribute("account") != null) {
+                a = (Account) request.getAttribute("account");
+            }
+        %>
+        <header class="header">
 
-        <section class="add-products">
-            <h1 class="title">Add Account</h1>
-            <header class="header">
+            <div class="flex">
 
-                <div class="flex">
+                <a href="home" class="logo">Admin<span>Panel</span></a>
 
-                    <a href="AdminIndex.jsp" class="logo">Admin<span>Panel</span></a>
+                <nav class="navbar">
+                    <a href="home"><span>Home</span></a>
+                    <a href="ListHouseServlet">Room</a>
+                    <a href="ListBillServlet">Orders</a>
+                    <a href="ListAccountServlet">Users</a>
+                    <a href="ListAddService">Service</a>
+                    <a href="ListCommentServlet">Messages</a>
+                </nav>
 
-                    <nav class="navbar">
-                        <a href="AdminIndex.jsp"><span>Home</span></a>
-                        <a href="ListHouseServlet">Room</a>
-                        <a href="ListBillServlet">Orders</a>
-                        <a href="ListAccountServlet">Users</a>
-                        <a href="ListAddService">Service</a>
-                        <a href="ListCommentServlet">Messages</a>
-                    </nav>
+                <div class="icons">
+                    <div id="menu-btn" class="fas fa-bars"></div>
+                    <div id="user-btn" class="fas fa-user"></div>
+                </div>
 
-                    <div class="icons">
-                        <div id="menu-btn" class="fas fa-bars"></div>
-                        <div id="user-btn" class="fas fa-user"></div>
-                    </div>
-
-                    <div class="account-box">
-                        <p>username : <span>${fullname}</span></p>
-                        <a href="LogoutServlet" class="delete-btn">logout</a>
-
-                    </div>
+                <div class="account-box">
+                    <p>username : <span>${fullname}</span></p>
+                    <a href="LogoutServlet" class="delete-btn">logout</a>
 
                 </div>
-            </header>
-            <form action="AddAccountServlet" method="post" >
+
+            </div>
+        </header>
+        <section class="add-products">
+            <h1 class="title">Update</h1>
+
+            <form action="EditAccountServlet" method="post" >
                 <!--        <h3>Update Account</h3>-->
                 <input
                     type="text"
                     name="id"
+                    value="<%=a.getUserid() %>"
                     class="box"
                     placeholder="Enter Account ID"
                     hidden="true"
@@ -75,6 +73,7 @@
                 <input
                     type="file"
                     name="userimg"
+                    value="<%=a.getUserimg() %>"
                     class="box"
                     hidden="true"
                     />
@@ -82,6 +81,7 @@
                 <input
                     type="text"
                     name="fullname"
+                    value="<%=a.getFullname() %>"
                     class="box"
                     placeholder="Enter Full Name"
                     />
@@ -89,6 +89,7 @@
                 <input
                     type="text"
                     name="username"
+                    value="<%=a.getUsername() %>"
                     class="box"
                     placeholder="Enter Username"
                     />
@@ -96,6 +97,7 @@
                 <input
                     type="password"
                     name="password"
+                    value="<%=a.getPass() %>"
                     class="box"
                     placeholder="Enter Password"
                     />
@@ -103,12 +105,14 @@
                 <input
                     type="number"
                     name="phone"
+                    value="<%=a.getPhone() %>"
                     class="box"
                     placeholder="Enter phone number"
                     />
                 <input
                     type="number"
                     name="status"
+                    value="<%=a.getStatus() %>"
                     class="box"
                     placeholder="Enter status"
                     hidden="true"
@@ -116,13 +120,15 @@
                 <input
                     type="number"
                     name="role"
+                    value="<%=a.getRole().getId() %>"
                     class="box"
                     placeholder="Enter role"
                     hidden="true"
                     />
-                <input class="Update-btn" type="submit" value="   Add  " name="Update" />
+                <input class="Update-btn" type="submit" value="Update" name="Update" />
             </form>
         </section>
+
     </body>
+    <script src="admin_script.js"></script>
 </html>
-<script src="admin_script.js"></script>
