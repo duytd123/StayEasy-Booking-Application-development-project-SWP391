@@ -1,12 +1,11 @@
 
-<%@page import="Model.AdditionalService"%>
+<%@page import="Model.House"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="adminuser_style.css"/>
         <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
@@ -21,19 +20,11 @@
     </head>
     <body>
         <%
-        AdditionalService a = new AdditionalService();
-        if(request.getAttribute("aid") != null){
-            a = (AdditionalService) request.getAttribute("aid");
-        }
+        House h = new House();
+            if (request.getAttribute("house") != null) {
+                h = (House) request.getAttribute("house");
+            }
         %>
-        <div class="header_fixed">
-<!--       <h1>Manage House</h1>
-        <form action="mainController" method="get">
-            Name : <input type="text" name="name" >
-            <input type="submit" value="search" name="action">
-        </form>-->
-       
-        
         <header class="header">
 
       <div class="flex">
@@ -62,21 +53,32 @@
    
       </div>
    </header>
-            <table>
-                <thead>
-                    <tr>
-                    <th>Add_Service_ID</th>
-                    <th>Add_Service_Name</th>
-                    <th>Add_Service_Desc</th>
-                    </tr>
-                </thead>
-                <tr>
-                    <td><%=a.getServiceid() %></td>
-                    <td><%=a.getServicename() %></td>
-                    <td><%=a.getServicedesc() %></td>
-                </tr>
-            </table>
-            </div>
+        
+       
+        <section class="add-products">
+      <h1 class="title">Add</h1>
+
+      <form action="AddHouseImgServlet" method="post" >
+        <h2>IMG_Link</h2>
+        <input
+          type="text"
+          name="imglink"
+          class="box"
+          required=""
+        />
+        <h2>House ID</h2>
+        <input
+          type="text"
+          name="houseid"
+          value="<%=h.getHouseid() %>"
+          class="box"
+          placeholder="Enter HouseId"
+          required=""
+        />
+        
+        <input class="Update-btn" type="submit" value="Add" name="Add" />
+      </form>
+    </section>
     </body>
     <script src="admin_script.js"></script>
 </html>

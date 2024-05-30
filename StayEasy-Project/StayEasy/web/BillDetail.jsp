@@ -1,7 +1,6 @@
 
-<%@page import="Model.HouseAdditionalService"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="java.util.List"%>
+
+<%@page import="Model.BillDetail"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,7 +19,6 @@
 
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
         <link href="stylesheet" rel="stylesheet">
         <link rel="stylesheet" href="list.css">
         <link rel="stylesheet" href="housepage.css">
@@ -33,30 +31,30 @@
         <link rel="stylesheet" href="list_house_main.css">
         <link rel="stylesheet" href="StyleSheet.css">
         <link rel="stylesheet" href="css/housepage.css">
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <%
-        List<HouseAdditionalService> list = new ArrayList<HouseAdditionalService>();
-        if(request.getAttribute("List") != null){
-            list = (List<HouseAdditionalService>) request.getAttribute("List");
+        BillDetail b = new BillDetail();
+        if(request.getAttribute("bid") != null){
+            b = (BillDetail) request.getAttribute("bid");
         }
         %>
         <div class="header_fixed">
-            <!--       <h1>Manage House</h1>
-                    <form action="mainController" method="get">
-                        Name : <input type="text" name="name" >
-                        <input type="submit" value="search" name="action">
-                    </form>-->
-
+            <h1>Manage House</h1>
+            <form action="mainController" method="get">
+                Name : <input type="text" name="name" >
+                <input type="submit" value="search" name="action">
+            </form>-->
 
             <header class="header">
 
                 <div class="flex">
 
-                    <a href="DashboardServlet" class="logo">Admin<span>Panel</span></a>
+                    <a href="home" class="logo">Admin<span>Panel</span></a>
 
                     <nav class="navbar">
-                        <a href="DashboardServlet"><span>Home</span></a>
+                        <a href="home"><span>Home</span></a>
                         <a href="ListHouseServlet">Room</a>
                         <a href="ListBillServlet">Orders</a>
                         <a href="ListAccountServlet">Users</a>
@@ -77,41 +75,25 @@
 
                 </div>
             </header>
-
             <table>
-                <form action="SearchHouseServlet" class="search-bar-container"  method="post"  >
-                    <input style="height: 60px;font-size: 40px;" type="text" name="search" id="search-bar" placeholder="Search here..."">
-                    <button class="fas fa-search" style="height: 60px; font-size: 40px; background-color: #fff" value="search" type="submit"></button>
-                </form>
                 <thead>
                     <tr>
-                        <th>House_Add_Service_ID</th>
-                        <th>Add_Service_ID</th>
+                        <th>Bill_Detail_ID</th>
+                        <th>Bill_ID</th>
                         <th>House_ID</th>
-                        <th>Add_Service_Status</th>
-                        <th>Add_Service_Price</th>
-                        <th>Action</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Note</th>
                     </tr>
                 </thead>
-                <%
-                    for(HouseAdditionalService h : list){
-                %>
                 <tr>
-                    <td><%=h.getHouseaddserviceid() %></td>
-                    <td><a href="getAdditionalServiceServlet?id=<%=h.getServiceid() %>"><%=h.getServiceid() %></a></td>
-                    <td><%=h.getHouseid() %></td>
-                    <td><%=h.getServicestatus() %></td>
-                    <td><%=h.getServiceprice() %></td>
-                    <td>
-                        <span class="action_btn">
-                            <a href="NextEditHouseAdditionalServiceServlet?id=<%=h.getHouseaddserviceid() %>">Update</a>
-                            <a href="DeleteHouseAdditionalServiceServlet?id=<%=h.getHouseid() %>">Delete</a>
-                        </span>
-                    </td>
+                    <td><%=b.getBilldetailid() %></td>
+                    <td><%=b.getBillid() %></td>
+                    <td><%=b.getHouseid() %></td>
+                    <td><%=b.getStartdate() %></td>
+                    <td><%=b.getEnddate() %></td>
+                    <td><%=b.getNote() %></td>
                 </tr>
-                <%
-                }
-                %>
             </table>
         </div>
     </body>

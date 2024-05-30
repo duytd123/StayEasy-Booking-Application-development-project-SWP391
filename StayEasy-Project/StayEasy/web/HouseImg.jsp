@@ -1,7 +1,7 @@
 
-<%@page import="Model.HouseAdditionalService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
+<%@page import="Model.HouseImg"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,25 +20,12 @@
 
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
-        <link rel="stylesheet" href="StyleSheet.css">
-        <link rel="stylesheet" href="css/housepage.css">
     </head>
     <body>
         <%
-        List<HouseAdditionalService> list = new ArrayList<HouseAdditionalService>();
-        if(request.getAttribute("List") != null){
-            list = (List<HouseAdditionalService>) request.getAttribute("List");
+        List<HouseImg> list = new ArrayList<>();
+        if(request.getAttribute("hid") != null){
+            list = (List<HouseImg>) request.getAttribute("hid");
         }
         %>
         <div class="header_fixed">
@@ -53,10 +40,10 @@
 
                 <div class="flex">
 
-                    <a href="DashboardServlet" class="logo">Admin<span>Panel</span></a>
+                    <a href="home" class="logo">Admin<span>Panel</span></a>
 
                     <nav class="navbar">
-                        <a href="DashboardServlet"><span>Home</span></a>
+                        <a href="home"><span>Home</span></a>
                         <a href="ListHouseServlet">Room</a>
                         <a href="ListBillServlet">Orders</a>
                         <a href="ListAccountServlet">Users</a>
@@ -77,40 +64,30 @@
 
                 </div>
             </header>
-
             <table>
-                <form action="SearchHouseServlet" class="search-bar-container"  method="post"  >
-                    <input style="height: 60px;font-size: 40px;" type="text" name="search" id="search-bar" placeholder="Search here..."">
-                    <button class="fas fa-search" style="height: 60px; font-size: 40px; background-color: #fff" value="search" type="submit"></button>
-                </form>
                 <thead>
                     <tr>
-                        <th>House_Add_Service_ID</th>
-                        <th>Add_Service_ID</th>
+                        <th>Img_ID</th>
+                        <th>Img_Link</th>
                         <th>House_ID</th>
-                        <th>Add_Service_Status</th>
-                        <th>Add_Service_Price</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <%
-                    for(HouseAdditionalService h : list){
+                for(HouseImg h : list){
                 %>
                 <tr>
-                    <td><%=h.getHouseaddserviceid() %></td>
-                    <td><a href="getAdditionalServiceServlet?id=<%=h.getServiceid() %>"><%=h.getServiceid() %></a></td>
+                    <td><%=h.getImgid() %></td>
+                    <td><%=h.getImglink() %></td>
                     <td><%=h.getHouseid() %></td>
-                    <td><%=h.getServicestatus() %></td>
-                    <td><%=h.getServiceprice() %></td>
                     <td>
                         <span class="action_btn">
-                            <a href="NextEditHouseAdditionalServiceServlet?id=<%=h.getHouseaddserviceid() %>">Update</a>
-                            <a href="DeleteHouseAdditionalServiceServlet?id=<%=h.getHouseid() %>">Delete</a>
+                            <a href="NextEditHouseImgServlet?id=<%=h.getHouseid() %>">Update</a>
                         </span>
                     </td>
                 </tr>
                 <%
-                }
+                    }
                 %>
             </table>
         </div>

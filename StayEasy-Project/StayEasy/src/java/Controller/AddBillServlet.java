@@ -35,12 +35,12 @@ public class AddBillServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddBillServlet</title>");            
+            out.println("<title>Servlet AddBillServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddBillServlet at " + request.getContextPath() + "</h1>");
@@ -77,35 +77,35 @@ public class AddBillServlet extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         int billid = Integer.parseInt(request.getParameter("billid"));
-        String dateString =request.getParameter("date");
+        String dateString = request.getParameter("date");
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         try {
             date = formatDate.parse(dateString);
         } catch (Exception e) {
-            response.getWriter().print("error : "+e);
+            response.getWriter().print("error : " + e);
             return;
         }
         float total = Float.parseFloat(request.getParameter("total"));
         int status = 1;
         int userid = Integer.parseInt(request.getParameter("userid"));
         int houseid = Integer.parseInt(request.getParameter("houseid"));
-        String dateString1 =request.getParameter("startdate");
+        String dateString1 = request.getParameter("startdate");
         SimpleDateFormat formatDate1 = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = new Date();
         try {
             date1 = formatDate1.parse(dateString1);
         } catch (Exception e) {
-            response.getWriter().print("error : "+e);
+            response.getWriter().print("error : " + e);
             return;
         }
-        String dateString2 =request.getParameter("enddate");
+        String dateString2 = request.getParameter("enddate");
         SimpleDateFormat formatDate2 = new SimpleDateFormat("yyyy-MM-dd");
         Date date2 = new Date();
         try {
             date2 = formatDate2.parse(dateString2);
         } catch (Exception e) {
-            response.getWriter().print("error : "+e);
+            response.getWriter().print("error : " + e);
             return;
         }
         String note = request.getParameter("note");
