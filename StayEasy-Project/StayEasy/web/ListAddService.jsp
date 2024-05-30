@@ -1,8 +1,3 @@
-<%-- 
-    Document   : ListAddService
-    Created on : May 28, 2024, 11:11:43 PM
-    Author     : hungm
---%>
 
 <%@page import="Model.Account"%>
 <%@page import="Model.AdditionalService"%>
@@ -26,6 +21,18 @@
 
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <link href="stylesheet" rel="stylesheet">
+        <link rel="stylesheet" href="list.css">
+        <link rel="stylesheet" href="housepage.css">
+        <link rel="stylesheet" href="css/list_house_main.css">
+        <link rel="stylesheet" href="assets/css/style.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user.jsp">
+        <link rel="stylesheet" href="list_house_main.css">
+        <link rel="stylesheet" href="StyleSheet.css">
+        <link rel="stylesheet" href="css/housepage.css">
     </head>
     <body>
         <%
@@ -35,21 +42,14 @@
         }
         %>
         <div class="header_fixed">
-            <!--       <h1>Manage House</h1>
-                    <form action="mainController" method="get">
-                        Name : <input type="text" name="name" >
-                        <input type="submit" value="search" name="action">
-                    </form>-->
-
-
             <header class="header">
 
                 <div class="flex">
 
-                    <a href="AdminIndex.jsp" class="logo">Admin<span>Panel</span></a>
+                    <a href="DashboardServlet" class="logo">Admin<span>Panel</span></a>
 
                     <nav class="navbar">
-                        <a href="AdminIndex.jsp"><span>Home</span></a>
+                        <a href="DashboardServlet"><span>Home</span></a>
                         <a href="ListHouseServlet">Room</a>
                         <a href="ListBillServlet">Orders</a>
                         <a href="ListAccountServlet">Users</a>

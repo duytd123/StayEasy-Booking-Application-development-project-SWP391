@@ -1,4 +1,5 @@
-section class="dashboard"><%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<section class="dashboard"><%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@page import="Model.Account"%>
     <%@page contentType="text/html" pageEncoding="UTF-8"%>
     <!DOCTYPE html>
@@ -17,13 +18,25 @@ section class="dashboard"><%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl
 
             <!-- jquery -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <link href="stylesheet" rel="stylesheet">
+            <link rel="stylesheet" href="list.css">
+            <link rel="stylesheet" href="housepage.css">
+            <link rel="stylesheet" href="css/list_house_main.css">
+            <link rel="stylesheet" href="assets/css/style.min.css">
+            <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+            <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+            <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+            <link rel="stylesheet" href="user.jsp">
+            <link rel="stylesheet" href="list_house_main.css">
+            <link rel="stylesheet" href="StyleSheet.css">
+            <link rel="stylesheet" href="css/housepage.css">
         </head>
         <body>
             <header class="header">
 
                 <div class="flex">
 
-                    <a href="Index.jsp" class="logo">Admin<span>Panel</span></a>
+                    <a href="home" class="logo">Admin<span>Panel</span></a>
 
                     <nav class="navbar">
                         <a href="DashboardServlet"><span>Home</span></a>
@@ -96,5 +109,3 @@ section class="dashboard"><%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl
 </body>
 <script src="admin_script.js"></script>
 </html>
-
- 

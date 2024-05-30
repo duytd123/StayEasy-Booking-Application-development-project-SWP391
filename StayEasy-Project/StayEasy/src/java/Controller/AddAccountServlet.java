@@ -80,6 +80,11 @@ public class AddAccountServlet extends HttpServlet {
         String password = request.getParameter("password");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
+        if (phone.length() != 10) {
+        // Redirect về trang đăng ký với thông báo lỗi
+        response.sendRedirect("AddAccount.jsp?error=phone");
+        return; // Dừng việc xử lý tiếp theo
+    }
         int roleid = 1;
         int status = 1;
         Role role = new Role(roleid, null);
