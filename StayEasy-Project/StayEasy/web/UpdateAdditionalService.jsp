@@ -1,3 +1,5 @@
+
+<%@page import="Model.AdditionalService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -15,30 +17,22 @@
 
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
-        <link rel="stylesheet" href="StyleSheet.css">
-        <link rel="stylesheet" href="css/housepage.css">
-        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        <%
+        AdditionalService h = new AdditionalService();
+            if (request.getAttribute("additionalservice") != null) {
+                h = (AdditionalService) request.getAttribute("additionalservice");
+            }
+        %>
         <header class="header">
 
             <div class="flex">
 
-                <a href="AdminIndex.jsp" class="logo">Admin<span>Panel</span></a>
+                <a href="home" class="logo">Admin<span>Panel</span></a>
 
                 <nav class="navbar">
-                    <a href="AdminIndex.jsp"><span>Home</span></a>
+                    <a href="home"><span>Home</span></a>
                     <a href="ListHouseServlet">Room</a>
                     <a href="ListBillServlet">Orders</a>
                     <a href="ListAccountServlet">Users</a>
@@ -62,11 +56,20 @@
         <section class="add-products">
             <h1 class="title">Add Additional Service</h1>
 
-            <form action="AddAdditionalServiceServlet" method="post" >
+            <form action="EditAdditionalServiceServlet" method="post" >
+                <input
+                    type="text"
+                    name="addserviceid"
+                    value="<%=h.getServiceid() %>"
+                    class="box"
+                    placeholder="Enter AdditionalServiceID"
+                    hidden="true"
+                    />
                 <h2>Additional_Service_Name</h2>
                 <input
                     type="text"
                     name="addservicename"
+                    value="<%=h.getServicename() %>"
                     class="box"
                     placeholder="Enter Service Name"
                     required=""
@@ -75,12 +78,12 @@
                 <input
                     type="text"
                     name="addservicedesc"
+                    value="<%=h.getServicedesc() %>"
                     class="box"
                     placeholder="Enter Service Desc"
                     required=""
                     />
-
-                <input class="Update-btn" type="submit" value="   Add   " name="Add Service" />
+                <input class="Update-btn" type="submit" value="   Update   " name="Update Service" />
             </form>
         </section>
     </body>

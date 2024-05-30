@@ -4,24 +4,21 @@
  */
 package Controller;
 
-import Dao.BillDAO;
-import Dao.BillDetailDAO;
-import Model.Bill;
-import Model.BillDetail;
+import Dao.HouseImgDAO;
+import Model.HouseImg;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 
 /**
  *
  * @author Admin
  */
-public class AddBillServlet extends HttpServlet {
+public class EditHouseImgServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,15 +32,15 @@ public class AddBillServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddBillServlet</title>");
+            out.println("<title>Servlet EditHouseImgServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddBillServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EditHouseImgServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -76,46 +73,13 @@ public class AddBillServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        int billid = Integer.parseInt(request.getParameter("billid"));
-        String dateString = request.getParameter("date");
-        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        try {
-            date = formatDate.parse(dateString);
-        } catch (Exception e) {
-            response.getWriter().print("error : " + e);
-            return;
-        }
-        float total = Float.parseFloat(request.getParameter("total"));
-        int status = 1;
-        int userid = Integer.parseInt(request.getParameter("userid"));
+        int imgid = Integer.parseInt((request.getParameter("imgid")));
+        String imglink = request.getParameter("imglink");
         int houseid = Integer.parseInt(request.getParameter("houseid"));
-        String dateString1 = request.getParameter("startdate");
-        SimpleDateFormat formatDate1 = new SimpleDateFormat("yyyy-MM-dd");
-        Date date1 = new Date();
-        try {
-            date1 = formatDate1.parse(dateString1);
-        } catch (Exception e) {
-            response.getWriter().print("error : " + e);
-            return;
-        }
-        String dateString2 = request.getParameter("enddate");
-        SimpleDateFormat formatDate2 = new SimpleDateFormat("yyyy-MM-dd");
-        Date date2 = new Date();
-        try {
-            date2 = formatDate2.parse(dateString2);
-        } catch (Exception e) {
-            response.getWriter().print("error : " + e);
-            return;
-        }
-        String note = request.getParameter("note");
-        Bill b = new Bill(-1, date, total, status, userid);
-        BillDAO dao = new BillDAO();
-        dao.addBill(b);
-        BillDetail bd = new BillDetail(-1, billid, houseid, date1, date2, note);
-        BillDetailDAO ddao = new BillDetailDAO();
-        ddao.addBillDetail(bd);
-        response.sendRedirect("ListBillServlet");
+        HouseImg h = new HouseImg(imgid, imglink, houseid);
+        HouseImgDAO dao = new HouseImgDAO();
+        dao.editHouse(h);
+        response.sendRedirect("ListHouseServlet");
     }
 
     /**

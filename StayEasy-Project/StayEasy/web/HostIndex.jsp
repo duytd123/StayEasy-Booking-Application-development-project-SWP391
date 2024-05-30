@@ -18,18 +18,6 @@
 
             <!-- jquery -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            <link href="stylesheet" rel="stylesheet">
-            <link rel="stylesheet" href="list.css">
-            <link rel="stylesheet" href="housepage.css">
-            <link rel="stylesheet" href="css/list_house_main.css">
-            <link rel="stylesheet" href="assets/css/style.min.css">
-            <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-            <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-            <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-            <link rel="stylesheet" href="user.jsp">
-            <link rel="stylesheet" href="list_house_main.css">
-            <link rel="stylesheet" href="StyleSheet.css">
-            <link rel="stylesheet" href="css/housepage.css">
         </head>
         <body>
             <header class="header">
@@ -39,11 +27,11 @@
                     <a href="home" class="logo">Admin<span>Panel</span></a>
 
                     <nav class="navbar">
-                        <a href="DashboardServlet"><span>Home</span></a>
+                        <a href="home"><span>Home</span></a>
                         <a href="ListHouseServlet">Room</a>
                         <a href="ListBillServlet">Orders</a>
-                        <a href="ListAccountServlet">Users</a>
-                        <a href="ListAddService">Service</a>
+
+
                         <a href="ListCommentServlet">Messages</a>
                     </nav>
 
@@ -77,34 +65,6 @@
                 </c:forEach>
             </div>
 
-            <div class="title">Top 3 Users</div>
-            <div class="top3House-containner">
-                <c:forEach items="${listAcount}" var="acount">
-                    <div class="Housetopcontainner">
-                        <div class="box">
-                            <h3>${acount.username}</h3>
-                            <p>Total cost: ${acount.total} <i class="fa-solid fa-dong-sign"></i></p>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-            <div class="box-container"> 
-                <div class="title">Type Users and total accounts
-                    <div class="box">
-                        <h3></h3>
-                        <p>Number of normal users: ${countUser} <i class="fas fa-user"></i></p>
-                    </div>
-                    <div class="box">
-                        <h3></h3>
-                        <p>Number of admin users: ${countAdmin} <i class="fas fa-user"></i></p>
-                    </div>
-
-                    <div class="box">
-                        <h3></h3>
-                        <p>total accounts: ${countAdmin + countUser} <i class="fas fa-user"></i></p>
-                    </div>
-                </div>
-            </div>
 </section>
 </body>
 <script src="admin_script.js"></script>

@@ -1,30 +1,29 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller;
 
-import Dao.HouseDAO;
-import Dao.LocationDAO;
-import Dao.MenuDAO;
-import Model.House;
-import Model.HouseImg;
-import Model.Location;
-import Model.Menu;
+import Dao.BillDAO;
+import Model.Account;
+import Model.Bill;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author kiety
  */
-public class NextAddHouseServlet extends HttpServlet {
+@WebServlet(name = "BillUserServlet", urlPatterns = {"/BillUserServlet"})
+public class BillUserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,27 +37,28 @@ public class NextAddHouseServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            String houseIdStr = request.getParameter("id"); // Get the house ID from the request
-            if (houseIdStr != null && !houseIdStr.isEmpty()) {
-                int houseId = Integer.parseInt(houseIdStr); // Convert the string ID to integer
-                HouseDAO houseDAO = new HouseDAO();
-                House house = houseDAO.getHousebyId(houseId); // Fetch the house by its ID
-                if (house != null) {
-                    request.setAttribute("house", house);
-                    request.getRequestDispatcher("EditHouse.jsp").forward(request, response);
-                } else {
-                    // Handle case when house is not found
-                    response.getWriter().println("House not found");
+        HttpSession session = request.getSession();
+        session.removeAttribute("mess");
+        Account acc = (Account) session.getAttribute("acc");
+        
+        BillDAO bdao = new BillDAO();
+        List<Bill> list = bdao.getBillbyUserId(acc.getUserid());
+        SimpleDateFormat sdf = new SimpleDateFormat("MM");
+        float rs = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getStatus() == 1) {
+                Date date = new Date();
+                String nowDate = sdf.format(date);
+                if (sdf.format(list.get(i).getDate()).equals(nowDate)) {
+                    rs += list.get(i).getTotal();
+
                 }
-            } else {
-                // Handle case when house ID is not provided
-                response.getWriter().println("House ID is missing");
             }
-        } catch (NumberFormatException e) {
-            // Handle case when invalid house ID is provided
-            response.getWriter().println("Invalid house ID");
+
         }
+        request.setAttribute("rs", rs);
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("/bill.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

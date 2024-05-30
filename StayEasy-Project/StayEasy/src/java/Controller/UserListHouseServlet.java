@@ -1,31 +1,27 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller;
 
 import Dao.HouseDAO;
-import Dao.LocationDAO;
-import Dao.MenuDAO;
 import Model.House;
-import Model.HouseImg;
-import Model.Location;
-import Model.Menu;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author Asus
  */
-public class NextAddHouseServlet extends HttpServlet {
-
+@WebServlet(name = "UserListHouseServlet", urlPatterns = {"/UserListHouseServlet"})
+public class UserListHouseServlet extends HttpServlet {
+private static final String ERROR = "error.jsp";
+    private static final String SUCCESS = "user.jsp";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,27 +34,17 @@ public class NextAddHouseServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            String houseIdStr = request.getParameter("id"); // Get the house ID from the request
-            if (houseIdStr != null && !houseIdStr.isEmpty()) {
-                int houseId = Integer.parseInt(houseIdStr); // Convert the string ID to integer
-                HouseDAO houseDAO = new HouseDAO();
-                House house = houseDAO.getHousebyId(houseId); // Fetch the house by its ID
-                if (house != null) {
-                    request.setAttribute("house", house);
-                    request.getRequestDispatcher("EditHouse.jsp").forward(request, response);
-                } else {
-                    // Handle case when house is not found
-                    response.getWriter().println("House not found");
-                }
-            } else {
-                // Handle case when house ID is not provided
-                response.getWriter().println("House ID is missing");
+        String url = ERROR;
+            try {
+            HouseDAO dao = new HouseDAO();
+            List<House> list = dao.getHouse();
+            request.setAttribute("HouseList", list);
+            url = SUCCESS;
+            } catch (Exception e) {
+                log("ERROR at ListHouseServlet: "+e.toString());
+            }finally{
+                request.getRequestDispatcher(url).forward(request, response);
             }
-        } catch (NumberFormatException e) {
-            // Handle case when invalid house ID is provided
-            response.getWriter().println("Invalid house ID");
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
