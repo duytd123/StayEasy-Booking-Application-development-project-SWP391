@@ -1,25 +1,24 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package Controller;
 
-import Dao.HouseDAO;
-import Model.House;
-import java.io.IOException;
-import java.io.PrintWriter;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  *
- * @author Mr D
+ * @author Admin
  */
-public class SearchHouseMain extends HttpServlet {
+public class mainContronller extends HttpServlet {
+    private String url="errorpage.html";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,16 +34,20 @@ public class SearchHouseMain extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SearchHouseMain</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SearchHouseMain at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+            String action = request.getParameter("action");
+            if(action==null || action.equals("")){
+                url = "Index.jsp";
+            }
+            else if(action.equals("")){
+                url = "search";
+            }
+            else if(action.equals("updateStatusAccount")){
+                url = "UpdateStatusAccountServlet";
+            }
+            
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+        }   
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,22 +61,9 @@ public class SearchHouseMain extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-
-
-    throws ServletException, IOException {
-    String whereTo = request.getParameter("whereTo");
-    String arrivals = request.getParameter("arrivals");
-    String guests = request.getParameter("guests"); // Access other fields
-    String leaving = request.getParameter("leaving");
-    
-    
-    HouseDAO dao = new HouseDAO();
-    List<House> listHouse = dao.searchHouse(whereTo, arrivals, guests, leaving);  
-
-    request.setAttribute("list", listHouse);
-    request.getRequestDispatcher("Listhousemain.jsp").forward(request, response);
-}
-
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -98,17 +88,5 @@ public class SearchHouseMain extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-
-    
-    
-    public static void main(String[] args) {
-        HouseDAO dao = new HouseDAO();
-        List<House> listHouse = dao.searchHouse("o", "2024-05-30", "2", "2024-05-31");
-        for(House h : listHouse){
-            System.out.println(h.getHouseid());
-        }
-    }
-
 
 }

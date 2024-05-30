@@ -1,10 +1,8 @@
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="icon" href="images/logo1.png" type="image/x-icon" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>
             About us
@@ -17,8 +15,24 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>       
         <link rel="stylesheet" href="https://cdn.tailwindcss.com/3.3.2"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"/>
-        <link rel="stylesheet" href="css/style.css">
-        <style type="text/css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="Images/logo1.png"/>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
+        <link href="stylesheet" rel="stylesheet">
+        <link rel="stylesheet" href="list.css">
+        <link rel="stylesheet" href="housepage.css">
+        <link rel="stylesheet" href="css/list_house_main.css">
+        <link rel="stylesheet" href="assets/css/style.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user.jsp">
+        <link rel="stylesheet" href="list_house_main.css">
+        <link rel="stylesheet" href="StyleSheet.css">
+        <link rel="stylesheet" href="css/housepage.css">
+
+        <style>
             .a {
                 color: black;
             }
@@ -28,27 +42,33 @@
                 font-size: 24px;
                 color: #f39c12;
             }
-
-
             .icon:before {
                 content: '\f015';
                 margin-right: 8px;
             }
+            section {
+                margin-top: 50px;
+            }
         </style>
     </head>
 
-    <body class="stretched no-transition">    
+    <%@ include file="header.jsp" %>
+    
+    <body>           
         <!-- Content
 ============================================= -->
         <section id="content">
             <div class="content-wrap notoppadding nobottompadding">
-                <a href="Index.jsp" class="logo">
+                <a href="home" class="logo">
                 </span><span class="icon">StayEasy</span><span>
+
         </a>
+
         <!-- group 1 -->
+
         <section id="section_about" class="corner clearfix">
             <div class="container">
-                <h2 style="font-family: Roboto;font-size: 48px; margin-top: 50px">Store
+                <h2 style="font-family: Roboto;font-size: 48px; margin-top: 50px">Booking
                     <span style="font-family: Roboto;color: #ff5722;">
                         STAY EASY
                     </span>
@@ -68,7 +88,7 @@
                             <p><i class="fa fa-check" aria-hidden="true"></i>Đặt phòng
                                 <span>Nhanh chóng</span> Uy tín .</p>
                         </div>
-                        <a class="button-click" href="#" data-href="#section_detail">
+                        <a class="button-click" href="search-house-main?whereTo=&guests=&arrivals=&leaving=" data-href="#section_detail">
                             <button>BOOK NOW </button>
                         </a>
                     </div>

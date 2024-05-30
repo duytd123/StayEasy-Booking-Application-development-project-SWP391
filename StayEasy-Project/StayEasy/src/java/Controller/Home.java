@@ -1,12 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package Controller;
 
-import Dao.HouseDAO;
-import Model.House;
+import Dao.HouseImgDAO;
+import Model.HouseImg;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,40 +17,37 @@ import java.util.List;
 
 /**
  *
- * @author Mr D
+ * @author badao
  */
-public class SearchHouseMain extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class Home extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchHouseMain</title>");            
+            out.println("<title>Servlet Home</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SearchHouseMain at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Home at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -58,26 +55,17 @@ public class SearchHouseMain extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-
-
     throws ServletException, IOException {
-    String whereTo = request.getParameter("whereTo");
-    String arrivals = request.getParameter("arrivals");
-    String guests = request.getParameter("guests"); // Access other fields
-    String leaving = request.getParameter("leaving");
-    
-    
-    HouseDAO dao = new HouseDAO();
-    List<House> listHouse = dao.searchHouse(whereTo, arrivals, guests, leaving);  
+          HouseImgDAO houseImgDAO = new HouseImgDAO();
+        List<HouseImg> houseImages = houseImgDAO.getHouseImg();
+        
+        request.setAttribute("houseImages", houseImages);
 
-    request.setAttribute("list", listHouse);
-    request.getRequestDispatcher("Listhousemain.jsp").forward(request, response);
-}
+        request.getRequestDispatcher("Index.jsp").forward(request, response);
+    } 
 
-
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -85,30 +73,17 @@ public class SearchHouseMain extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-
-    
-    
-    public static void main(String[] args) {
-        HouseDAO dao = new HouseDAO();
-        List<House> listHouse = dao.searchHouse("o", "2024-05-30", "2", "2024-05-31");
-        for(House h : listHouse){
-            System.out.println(h.getHouseid());
-        }
-    }
-
 
 }

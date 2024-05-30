@@ -1,25 +1,25 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package Controller;
 
-import Dao.HouseDAO;
-import Model.House;
-import java.io.IOException;
-import java.io.PrintWriter;
+import Dao.AccountDAO;
+import Model.Account;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Mr D
+ * @author Admin
  */
-public class SearchHouseMain extends HttpServlet {
+public class SearchAccountServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,15 +33,15 @@ public class SearchHouseMain extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchHouseMain</title>");            
+            out.println("<title>Servlet SearchAccountServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SearchHouseMain at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SearchAccountServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,22 +58,9 @@ public class SearchHouseMain extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-
-
-    throws ServletException, IOException {
-    String whereTo = request.getParameter("whereTo");
-    String arrivals = request.getParameter("arrivals");
-    String guests = request.getParameter("guests"); // Access other fields
-    String leaving = request.getParameter("leaving");
-    
-    
-    HouseDAO dao = new HouseDAO();
-    List<House> listHouse = dao.searchHouse(whereTo, arrivals, guests, leaving);  
-
-    request.setAttribute("list", listHouse);
-    request.getRequestDispatcher("Listhousemain.jsp").forward(request, response);
-}
-
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -86,7 +73,13 @@ public class SearchHouseMain extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        List<Account> list = new ArrayList<>();
+        AccountDAO dao = new AccountDAO();
+        String name = request.getParameter("search");
+        list = dao.getAccountbyName(name);
+        request.setAttribute("AccountList", list);
+        request.getRequestDispatcher("ListAccount.jsp").forward(request, response);
     }
 
     /**
@@ -98,17 +91,5 @@ public class SearchHouseMain extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-
-    
-    
-    public static void main(String[] args) {
-        HouseDAO dao = new HouseDAO();
-        List<House> listHouse = dao.searchHouse("o", "2024-05-30", "2", "2024-05-31");
-        for(House h : listHouse){
-            System.out.println(h.getHouseid());
-        }
-    }
-
 
 }

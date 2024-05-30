@@ -1,0 +1,259 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : May 29, 2024, 10:58:35 PM
+    Author     : badao
+*/
+
+/* Basic resets and default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.fxt-template-layout1 {
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f7f6;
+}
+
+.fxt-bg-color {
+    background: linear-gradient(45deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    padding: 60px;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.fxt-content {
+    max-width: 400px;
+    margin: auto;
+}
+
+.fxt-header .fxt-logo div {
+    font-size: 24px;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.fxt-page-switcher a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.fxt-form {
+    margin-top: 20px;
+}
+
+.fxt-form h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.fxt-form p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    position: relative;
+}
+
+.form-control {
+    height: 45px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 10px rgba(106, 17, 203, 0.2);
+}
+
+.fxt-btn-fill {
+    background-color: #6a11cb;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.fxt-btn-fill:hover {
+    background-color: #2575fc;
+}
+
+.fxt-transformY-50 {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: transformY-50 0.6s ease forwards;
+}
+
+.fxt-transition-delay-1 {
+    animation-delay: 0.1s;
+}
+
+.fxt-transition-delay-2 {
+    animation-delay: 0.2s;
+}
+
+@keyframes transformY-50 {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fxt-bg-img {
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    min-height: 100vh;
+    padding: 0;
+}
+
+@media (max-width: 767px) {
+    .fxt-bg-color {
+        border-radius: 0;
+        padding: 20px;
+    }
+
+    .fxt-bg-img {
+        display: none;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.fxt-template-animation .fxt-template-layout1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.fxt-bg-color {
+    background-color: #ffffff;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.fxt-content {
+    width: 100%;
+}
+
+.fxt-header .fxt-logo img {
+    max-width: 150px;
+}
+
+.fxt-page-switcher {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.switcher-text1 {
+    margin-left: 1rem;
+    color: #007bff;
+}
+
+.switcher-text1:hover {
+    text-decoration: underline;
+}
+
+.fxt-form h2 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.fxt-form p {
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+
+.fxt-btn-fill {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.fxt-btn-fill:hover {
+    background-color: #0056b3;
+}
+
+.fxt-none-767 {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .fxt-none-767 {
+        display: block;
+    }
+}
+
+.fxt-bg-img {
+    background-size: cover;
+    background-position: center;
+}
+
+.fxt-transformY-50 {
+    transform: translateY(50px);
+    transition: transform 0.5s ease;
+}
+
+.fxt-transition-delay-1 {
+    transition-delay: 0.1s;
+}
+
+.fxt-transition-delay-2 {
+    transition-delay: 0.2s;
+}
+
+.flaticon-envelope {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 1.2rem;
+    color: #007bff;
+}

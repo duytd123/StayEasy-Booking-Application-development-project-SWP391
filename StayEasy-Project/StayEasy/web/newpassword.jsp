@@ -11,6 +11,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style_1.css">
+    <link rel="stylesheet" href="style_1.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+
     <style>
         i[id='iconsee']:hover {
             color: rgba(0, 0, 0, 0.5);
@@ -57,7 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-12 fxt-none-767 fxt-bg-img" data-bg-image="images/figure/aa.jpg"></div>
+                <div class="col-md-6 col-12 fxt-none-767 fxt-bg-img" data-bg-image="Images/aa.jpg"></div>
             </div>
         </div>
     </section>

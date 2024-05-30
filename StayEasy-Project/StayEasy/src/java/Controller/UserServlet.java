@@ -5,6 +5,8 @@
 package Controller;
 
 import Dao.AccountDAO;
+import Dao.BillDAO;
+import Dao.BillDetailDAO;
 import Model.Account;
 import Model.Bill;
 import Model.BillDetail;
@@ -69,44 +71,38 @@ public class UserServlet extends HttpServlet {
         dao.editAccount(a);
         session.setAttribute("acc", a);
         request.setAttribute("mess", "save profile success!!");
-        request.getRequestDispatcher("/user.jsp").forward(request, response);
+        request.getRequestDispatcher("user.jsp").forward(request, response);
 
     }
 
-    protected void resetPass(HttpServletRequest request, HttpServletResponse response)
+    protected void rejectBill(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String curPass = request.getParameter("curPass");
-        String newPass = request.getParameter("newPass");
-        String rePass = request.getParameter("rePass");
+        int billid = Integer.parseInt(request.getParameter("billid"));
+        int userid = Integer.parseInt(request.getParameter("userid"));
+        BillDAO dao = new BillDAO();
+        dao.deleteBill(billid);
+        List<Bill> list = dao.getBillbyUserId(userid);
+        session.setAttribute("list", list);
+        request.setAttribute("mess", "reject success");
+        request.getRequestDispatcher("bill.jsp").forward(request, response);
+    }
 
-        Account acc = (Account) session.getAttribute("acc");
-        if (curPass == null || curPass.equals("")) {
-            request.setAttribute("mess", "Enter current pass");
-            request.getRequestDispatcher("/security.jsp").forward(request, response);
-        } else {
-            if (curPass.equals(acc.getPass())) {
-                if (newPass == null || newPass.equals("") || rePass == null || rePass.equals("")) {
-                    request.setAttribute("mess", "Enter new pass and confirm pass");
-                    request.getRequestDispatcher("/security.jsp").forward(request, response);
-                } else {
-                    if (newPass.equals(rePass)) {
-                        AccountDAO dao = new AccountDAO();
-                        dao.updateAccountPass(newPass, acc.getUserid());
-                        acc.setPass(rePass);
-                        request.setAttribute("mess", "password has been changed");
-                        request.getRequestDispatcher("/security.jsp").forward(request, response);
-                    } else {
-                        request.setAttribute("mess", "confirm pass is wrong");
-                        request.getRequestDispatcher("/security.jsp").forward(request, response);
-                    }
-                }
-            } else {
-                request.setAttribute("mess", "current pass is wrong");
-                request.getRequestDispatcher("/security.jsp").forward(request, response);
+    protected void viewBill(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+
+            int billid = Integer.parseInt(request.getParameter("billid"));
+            HttpSession session = request.getSession();
+            BillDetail b = new BillDetail();
+            BillDetailDAO dao = new BillDetailDAO();
+            b = dao.getBillDeatailbyBillID(billid);
+            if (b != null) {
+                session.setAttribute("bill", b);
+                request.getRequestDispatcher("billDetailUser.jsp").forward(request, response);
             }
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -145,8 +141,11 @@ public class UserServlet extends HttpServlet {
             case "save":
                 saveChanges(request, response);
                 break;
-            case "resetPass":
-                resetPass(request, response);
+            case "reject":
+                rejectBill(request, response);
+                break;
+            case "view":
+                viewBill(request, response);
                 break;
             default:
                 throw new AssertionError();
@@ -159,7 +158,7 @@ public class UserServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
-            String uploadFolder = "C:/Users/Admin/OneDrive/Desktop/HouseBookingSystem2_SWP391/HouseBookingSystem_SWP391/web/Images/userimgs";
+            String uploadFolder = "C:/Users/Admin/OneDrive/Desktop/HouseBookingSystem_SWP391/HouseBookingSystem_SWP391/web/Images/userimgs";
             Path uploadPath = Paths.get(uploadFolder);
             if (!Files.exists(uploadPath)) {
                 Files.createDirectory(uploadPath);
@@ -172,7 +171,7 @@ public class UserServlet extends HttpServlet {
             request.setAttribute("mess", "upload image success!!");
             acc.setUserimg(imageFileName);
             session.setAttribute("acc", acc);
-            request.getRequestDispatcher("/user.jsp").forward(request, response);
+            request.getRequestDispatcher("user.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

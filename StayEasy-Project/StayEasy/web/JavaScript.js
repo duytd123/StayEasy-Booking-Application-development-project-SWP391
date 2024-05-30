@@ -21,7 +21,7 @@ menu.addEventListener('click', () => {
 });
 
 document.querySelector().onclick = () => {
-    
+
 }
 
 searchBtn.addEventListener('click', () => {
@@ -88,3 +88,24 @@ var swiper = new Swiper(".brand-slider", {
         },
     },
 });
+
+let currentIndex = 0;
+const images = document.querySelectorAll('.image_wrapper img');
+const container = document.querySelector('.image_wrapper');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const imageWidth = images[0].offsetWidth + 10;
+
+function nextImages() {
+    if (currentIndex < images.length - 1) {
+        currentIndex++;
+        container.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
+    }
+}
+
+function prevImages() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        container.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
+    }
+}
