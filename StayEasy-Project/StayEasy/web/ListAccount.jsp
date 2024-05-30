@@ -82,8 +82,8 @@
         </form>
             <thead>
                 <tr>
-                <th>Account_ID</th>
-                <th>Account_Img</th>
+                <th>ID</th>
+                <th>Image</th>
                 <th>Full Name</th>
                 <th>Username</th>
                 <th>Password</th>
@@ -100,7 +100,7 @@
                 <tbody>
                     <tr>
                         <td><%=a.getUserid() %></td>
-                        <td><%=a.getUserimg() %></td>
+                        <td><%=a.getUserimg(        ) %></td>
                         <td><%=a.getFullname() %></td>
                         <td><%=a.getUsername() %></td>
                         <td><%=a.getPass() %></td>

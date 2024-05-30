@@ -10,7 +10,7 @@ public class Constants {
 
 	public static String GOOGLE_CLIENT_SECRET = "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";
 
-	public static String GOOGLE_REDIRECT_URI = "http://localhost:8080/HouseBookingSystem2_SWP391/LoginGoogleServlet";
+	public static String GOOGLE_REDIRECT_URI = "http://localhost:8080/StayEasy/LoginGoogleServlet";
 
 	public static String GOOGLE_LINK_GET_TOKEN = "https://accounts.google.com/o/oauth2/token";
 
