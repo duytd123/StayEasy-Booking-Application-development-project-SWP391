@@ -10,7 +10,18 @@
         <!------ Include the above in your HEAD tag ---------->
         <link rel="stylesheet"
               href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
+        <link href="stylesheet" rel="stylesheet">
+        <link rel="stylesheet" href="list.css">
+        <link rel="stylesheet" href="housepage.css">
+        <link rel="stylesheet" href="css/list_house_main.css">
+        <link rel="stylesheet" href="assets/css/style.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user.jsp">
+        <link rel="stylesheet" href="list_house_main.css">
+        <link rel="stylesheet" href="StyleSheet.css">
+        <link rel="stylesheet" href="css/housepage.css">
         <style type="text/css">
             .form-gap {
                 padding-top: 70px;

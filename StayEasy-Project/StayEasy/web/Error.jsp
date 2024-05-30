@@ -1,8 +1,3 @@
-<%-- 
-    Document   : Error
-    Created on : Oct 11, 2022, 8:26:18 PM
-    Author     : Admin
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

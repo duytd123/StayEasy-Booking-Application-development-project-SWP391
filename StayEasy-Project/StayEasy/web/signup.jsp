@@ -1,82 +1,105 @@
-<%-- 
-    Document   : Register
-    Created on : Oct 1, 2022, 1:35:40 AM
-    Author     : Admin
---%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Signup</title>
 
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
-        <title>JSP Page</title>
-
-        <!-- font awesome cdn link  -->
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <!-- Bootstrap CSS -->
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <!------ Include the above in your HEAD tag ---------->
 
-        <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
-        <!-- custom css file link  -->
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
+
+
         <link rel="stylesheet" href="login_style.css">
+        <link href="stylesheet" rel="stylesheet">
+        <link rel="stylesheet" href="list.css">
+        <link rel="stylesheet" href="housepage.css">
+        <link rel="stylesheet" href="css/list_house_main.css">
+        <link rel="stylesheet" href="assets/css/style.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user.jsp">
+        <link rel="stylesheet" href="list_house_main.css">
+        <link rel="stylesheet" href="StyleSheet.css">
+        <link rel="stylesheet" href="css/housepage.css">
+        <link rel="stylesheet" href="css/style.css">
+
+        <script>
+
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+
+            $(document).ready(function () {
+                var email = getUrlParameter('email');
+                if (email) {
+                    $('#email').val(email);
+                }
+            });
+        </script>
     </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-md-5 mx-auto">
-                    <div class="myform form ">
+                    <div class="myform form">
                         <div class="logo mb-3">
                             <div class="col-md-12 text-center">
-                                <h1 >Signup</h1>
+                                <h1>Signup</h1>
                             </div>
                         </div>
                         <form action="SignUpServlet" method="post" name="registration">
-                            <!--mess-->
                             <p class="text-danger">${mess}</p>
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">User name*</label>
-                                <input type="text"  name="username" value="${username}" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter username">
+                                <label for="username">Username*</label>
+                                <input type="text" name="username" value="${username}" class="form-control" id="username" placeholder="Enter username">
                             </div>
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Password*</label>
-                                <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
+                                <label for="password">Password*</label>
+                                <input type="password" name="password" id="password" class="form-control" placeholder="Enter password">
                             </div>
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Repeat Password*</label>
-                                <input type="password" name="repassword" id="repassword"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Repeat Password">
+                                <label for="repassword">Repeat Password*</label>
+                                <input type="password" name="repassword" id="repassword" class="form-control" placeholder="Enter repeat password">
                             </div>
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Full Name</label>
-                                <input type="text"  name="fullname" value="${fullname}" class="form-control" id="fullname" aria-describedby="emailHelp" placeholder="Enter Full name">
+                                <label for="fullname">Full Name</label>
+                                <input type="text" name="fullname" value="${fullname}" class="form-control" id="fullname" placeholder="Enter full name">
                             </div>
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Email address*</label>
-                                <input type="email" name="email" value="${email}" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                                <label for="email">Email address*</label>
+                                <input type="email" name="email" value="${email}" class="form-control" id="email" placeholder="Enter email">
                             </div>
+
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Phone</label>
-                                <input type="text" name="phone" value="${phone}" class="form-control" id="phone" aria-describedby="emailHelp" placeholder="Phone">
+                                <label for="phone">Phone</label>
+                                <input type="text" name="phone" value="${phone}" class="form-control" id="phone" placeholder="Enter phone number">
                             </div>
 
                             <div class="col-md-12 text-center mb-3">
-                                <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">SIGN UP</button>
+                                <button type="submit" class="btn btn-block mybtn btn-primary tx-tfm">SIGN UP</button>
                             </div>
-                            <div class="col-md-12 ">
-                                <div class="form-group">
-                                    <p class="text-center"><a href="login.jsp" id="signin">Already have an account?</a></p>
-                                </div>
+
+                            <div class="col-md-12 text-center">
+                                <p class="text-center"><a href="login.jsp" id="signin">Already have an account?</a></p>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>  
-
-</body>
+    </body>
 </html>

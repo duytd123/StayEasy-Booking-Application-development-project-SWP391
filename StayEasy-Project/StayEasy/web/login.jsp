@@ -5,11 +5,23 @@
 <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <link href="login_style.css" rel="stylesheet"/>
+<link href="stylesheet" rel="stylesheet">
+<link rel="stylesheet" href="list.css">
+<link rel="stylesheet" href="housepage.css">
+<link rel="stylesheet" href="css/list_house_main.css">
+<link rel="stylesheet" href="assets/css/style.min.css">
+<link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+<link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="user.jsp">
+<link rel="stylesheet" href="list_house_main.css">
+<link rel="stylesheet" href="StyleSheet.css">
+<link rel="stylesheet" href="css/housepage.css">
 
 <body>
     <% String username = ""; String password = ""; Cookie[] cookies = request.getCookies(); if (cookies != null) { for (Cookie cookie: cookies) { if ((cookie.getName()).equals("cusername")) { username = cookie.getValue(); } else if ((cookie.getName()).equals("cpassword")) { password = cookie.getValue(); } } } %>
     <div class="back-to-home rounded d-none d-sm-block">
-        <a href="Index.jsp" class="btn btn-icon btn-primary"><i data-feather="home" class="icons"></i></a>
+        <a href="home" class="btn btn-icon btn-primary"><i data-feather="home" class="icons"></i></a>
     </div>
     <div class="container">
         <div class="row">
@@ -31,7 +43,7 @@
                                 <input type="password" name="password" value="<%=password %>"id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
                             </div>
                             <div class="myformother">
-                                <input type="checkbox" checked="checked" name="rememberme" id="rememberMeCheckbox">
+                                <input type="checkbox" checked="checked" name="rememberme" id="rememberMeCheckbox"> 
                                 <label for="rememberMeCheckbox">Remember me</label>
                                 <a style="color: black" href="forgot" class="switcher-text2">Forgot Password</a>
                             </div>
@@ -57,7 +69,7 @@
                                 </p>
                             </div>
                             <div class="form-group" id="d">
-                                <p class="text-center">Don't have account? <a href="signup.jsp"  id="signup">Sign up here</a></p>
+                                <p class="text-center">Don't have account? <a href="SignUpServlet"  id="signup">Sign up here</a></p>
                             </div>
                         </form>
                     </div>

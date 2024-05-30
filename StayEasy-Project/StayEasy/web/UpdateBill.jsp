@@ -1,8 +1,3 @@
-<%-- 
-    Document   : UpdateBill
-    Created on : Oct 11, 2022, 10:58:35 PM
-    Author     : Admin
---%>
 
 <%@page import="Model.BillDetail"%>
 <%@page import="Model.Bill"%>
@@ -39,10 +34,10 @@
 
       <div class="flex">
    
-          <a href="AdminIndex.jsp" class="logo">Admin<span>Panel</span></a>
+          <a href="home" class="logo">Admin<span>Panel</span></a>
    
          <nav class="navbar">
-            <a href="AdminIndex.jsp"><span>Home</span></a>
+            <a href="home"><span>Home</span></a>
             <a href="ListHouseServlet">Room</a>
             <a href="ListBillServlet">Orders</a>
             <a href="ListAccountServlet">Users</a>

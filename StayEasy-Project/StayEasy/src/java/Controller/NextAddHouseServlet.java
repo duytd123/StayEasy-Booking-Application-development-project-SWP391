@@ -9,6 +9,7 @@ import Dao.HouseDAO;
 import Dao.LocationDAO;
 import Dao.MenuDAO;
 import Model.House;
+import Model.HouseImg;
 import Model.Location;
 import Model.Menu;
 import jakarta.servlet.ServletException;
@@ -37,17 +38,26 @@ public class NextAddHouseServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet NextAddHouseServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet NextAddHouseServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        try {
+            String houseIdStr = request.getParameter("id"); // Get the house ID from the request
+            if (houseIdStr != null && !houseIdStr.isEmpty()) {
+                int houseId = Integer.parseInt(houseIdStr); // Convert the string ID to integer
+                HouseDAO houseDAO = new HouseDAO();
+                House house = houseDAO.getHousebyId(houseId); // Fetch the house by its ID
+                if (house != null) {
+                    request.setAttribute("house", house);
+                    request.getRequestDispatcher("EditHouse.jsp").forward(request, response);
+                } else {
+                    // Handle case when house is not found
+                    response.getWriter().println("House not found");
+                }
+            } else {
+                // Handle case when house ID is not provided
+                response.getWriter().println("House ID is missing");
+            }
+        } catch (NumberFormatException e) {
+            // Handle case when invalid house ID is provided
+            response.getWriter().println("Invalid house ID");
         }
     }
 
@@ -63,17 +73,7 @@ public class NextAddHouseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        LocationDAO ldao = new LocationDAO();
-        List<Location> llist = ldao.getLocation();
-        MenuDAO mdao = new MenuDAO();
-        List<Menu> mlist = mdao.getMenu();
-        HouseDAO dao = new HouseDAO();
-        House h = dao.getHouses();
-        request.setAttribute("house", h);
-        request.setAttribute("llist", llist);
-        request.setAttribute("mlist", mlist);
-        request.getRequestDispatcher("AddHouse.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : forgot
-    Created on : Dec 30, 2023, 9:21:53 PM
-    Author     : lvhho
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
@@ -12,14 +6,16 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <title>Forgot</title>
-        <link rel="icon" href="images/logo1.png"/>
+        <link rel="icon" href="Images/logo1.png"/>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="css/style_1.css">
+        <link rel="stylesheet" href="style_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
     </head>
 
     <body>
@@ -29,20 +25,20 @@
                     <div class="col-md-6 col-12 fxt-bg-color">
                         <div class="fxt-content">
                             <div class="fxt-header">
-                                <a href="home" class="fxt-logo"><img src="images/logo.png" alt="Logo"></a>
+                                <a href="home"class="fxt-logo"><div>Home</div></a>
                                 <div class="fxt-page-switcher">
-                                    <a href="login" class="switcher-text1">Log In</a>
-                                    <a href="register" class="switcher-text1">Register</a>
+                                    <a href="LoginServlet" class="switcher-text1">Log In</a>
+                                    <a href="SignUpServlet" class="switcher-text1">Register</a>
                                 </div>
                             </div>
                             <div class="fxt-form">
                                 <h2 style="color: red">Forgot Password</h2>
                                 <c:if test="${requestScope.check == null}">
-                                    <p>For recover your password</p>
+                                    <p>Enter your email to recover your password</p>
                                 </c:if>
                                 <c:if test="${requestScope.check != null}">
                                     <c:if test="${requestScope.check == 'true' && !(requestScope.message == 'Sorry, reset code incorrect')}">
-                                        <p style="color: green">${requestScope.message}</p>
+                                        <p style="color: red">${requestScope.message}</p>
                                     </c:if>
                                     <c:if test="${requestScope.check == 'false'}">
                                         <p style="color: red">${requestScope.message}</p>
@@ -90,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-12 fxt-none-767 fxt-bg-img" data-bg-image="images/figure/aa.jpg"></div>
+                    <div class="col-md-6 col-12 fxt-none-767 fxt-bg-img" data-bg-image="Images/aa.jpg"></div>
                 </div>
             </div>
         </section>

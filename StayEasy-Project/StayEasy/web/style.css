@@ -142,37 +142,8 @@ section{
    color:var(--black);
 }
 
-.heading{
-   min-height: 30vh;
-   display: flex;
-   flex-flow: column;
-   align-items: center;
-   justify-content: center;
-   gap:1rem;
-   background: url(../images/heading-bg.webp) no-repeat;
-   background-size: cover;
-   background-position: center;
-   text-align: center;
-}
 
-.heading h3{
-   font-size: 5rem;
-   color:var(--black);
-   text-transform: uppercase;
-}
 
-.heading p{
-   font-size: 2.5rem;
-   color:var(--light-color);
-}
-
-.heading p a{
-   color:var(--purple);
-}
-
-.heading p a:hover{
-   text-decoration: underline;
-}
 
 @keyframes fadeIn {
    0%{
@@ -978,10 +949,6 @@ section{
 
    html{
       font-size: 50%;
-   }
-
-   .heading h3{
-      font-size: 3.5rem;
    }
 
    .title{

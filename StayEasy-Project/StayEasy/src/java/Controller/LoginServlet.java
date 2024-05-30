@@ -113,7 +113,7 @@ public class LoginServlet extends HttpServlet {
                     }
                 }
             }
-
+            
             // Redirect to the home page on successful login
             if (a.getRole().getId() == 0) {
                 // Admin role
@@ -123,7 +123,7 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("DashboardHostServlet"); // Modify as needed
             } else if (a.getRole().getId() == 2 && a.getStatus() == 1) {
                 // Customer role
-                response.sendRedirect("Index.jsp");
+                response.sendRedirect("home");
             } else {
                 response.sendRedirect("Error.jsp");
             }

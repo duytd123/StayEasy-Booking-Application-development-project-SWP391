@@ -1,8 +1,4 @@
-<%-- 
-    Document   : AdditionalService
-    Created on : Oct 27, 2022, 7:16:31 PM
-    Author     : Admin
---%>
+
 <%@page import="Model.AdditionalService"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

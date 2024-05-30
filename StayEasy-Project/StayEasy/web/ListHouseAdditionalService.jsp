@@ -1,8 +1,3 @@
-<%-- 
-    Document   : ListHouseAdditionalService
-    Created on : Oct 27, 2022, 3:39:19 PM
-    Author     : Admin
---%>
 
 <%@page import="Model.HouseAdditionalService"%>
 <%@page import="java.util.ArrayList"%>
@@ -25,6 +20,19 @@
 
         <!-- jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <link href="stylesheet" rel="stylesheet">
+        <link rel="stylesheet" href="list.css">
+        <link rel="stylesheet" href="housepage.css">
+        <link rel="stylesheet" href="css/list_house_main.css">
+        <link rel="stylesheet" href="assets/css/style.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user.jsp">
+        <link rel="stylesheet" href="list_house_main.css">
+        <link rel="stylesheet" href="StyleSheet.css">
+        <link rel="stylesheet" href="css/housepage.css">
     </head>
     <body>
         <%
@@ -45,10 +53,10 @@
 
                 <div class="flex">
 
-                    <a href="AdminIndex.jsp" class="logo">Admin<span>Panel</span></a>
+                    <a href="DashboardServlet" class="logo">Admin<span>Panel</span></a>
 
                     <nav class="navbar">
-                        <a href="AdminIndex.jsp"><span>Home</span></a>
+                        <a href="DashboardServlet"><span>Home</span></a>
                         <a href="ListHouseServlet">Room</a>
                         <a href="ListBillServlet">Orders</a>
                         <a href="ListAccountServlet">Users</a>
