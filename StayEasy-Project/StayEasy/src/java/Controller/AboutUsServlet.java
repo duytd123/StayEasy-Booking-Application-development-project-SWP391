@@ -15,9 +15,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 
+
 /**
  *
- * @author
+ * @author 
  */
 @WebServlet(name = "AboutUsServlet", urlPatterns = {"/aboutus"})
 public class AboutUsServlet extends HttpServlet {
@@ -34,7 +35,7 @@ public class AboutUsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -60,7 +61,7 @@ public class AboutUsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //HouseDAO d = new HouseDAO();
+        HouseDAO d = new HouseDAO();
         //request.setAttribute("house", houses);
         request.getRequestDispatcher("about_us.jsp").forward(request, response);
     }
