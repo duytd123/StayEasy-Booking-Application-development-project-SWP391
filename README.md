@@ -9,9 +9,6 @@ Phạm Mạnh Hùng
 Trần Đức Duy ~Leader
 ```
 ```
-Lê Đình Nam
-```
-```
 Vi Duy Khánh
 ```
 My group decided to develop a hotel booking website. The website is designed to provide a convenient, flexible and diverse housing booking experience for users.
