@@ -52,7 +52,7 @@ public class SignUpServlet extends HttpServlet {
             request.setAttribute("phone", phone);
             request.getRequestDispatcher("signup.jsp").forward(request, response);
         }if(password == null | password.equals("")){
-            request.setAttribute("mess", "Input passwwor end repeat password!");
+            request.setAttribute("mess", "Input passwword end repeat password!");
             request.setAttribute("username", username);
             request.setAttribute("fullname", fullname);
             request.setAttribute("email", email);

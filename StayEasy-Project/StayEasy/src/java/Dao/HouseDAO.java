@@ -6,9 +6,6 @@
 package Dao;
 
 import Connect.DBContext;
-
-import Model.Account;
-
 import Model.House;
 import Model.Location;
 import Model.Menu;
@@ -37,8 +34,7 @@ public class HouseDAO {
         }
     }
 
-
-     public List<House> getNameThreeHouseBest() {
+    public List<House> getNameThreeHouseBest() {
         String sql = "select top 3 House.house_id  ,House.house_name , COUNT (*)\n"
                 + "from Bill_detail , House\n"
                 + "where Bill_detail.house_id  = House.house_id\n"
@@ -67,7 +63,7 @@ public class HouseDAO {
 
         return list;
     }
-    
+
     public List<House> getHouse() {
         String sql = "select * from dbo.House";
         List<House> list = new ArrayList<>();
@@ -101,40 +97,98 @@ public class HouseDAO {
         return list;
     }
 
-    public List<House> searchHouse(String whereTo, String arrivals) {
-        String sql = "select * \n"
-                + "from House \n"
-                + "where address like '%"+whereTo+"%' \n"
-                + "and post_date like '%"+arrivals+"%' ";
+    public List<House> searchHouse(String whereTo, String arrivals, String guests, String leaving) {
+//    String sql = "select h.*, bd.*\n" 
+//            +"from House h\n" 
+//            +" left join bill_detail bd on h.house_id = bd.house_id";
+//
+//            
+//  // Build dynamic WHERE clause based on provided parameters
+//  List<String> conditions = new ArrayList<>();
+//  if (whereTo != null && !whereTo.isEmpty()) {
+//    conditions.add("address like '%" + whereTo + "%'");
+//  }
+//  if (arrivals != null && !arrivals.isEmpty()) {
+//    conditions.add("NOT EXISTS (SELECT * FROM bill_detail bd2 WHERE bd2.house_id = h.house_id AND (('"+ arrivals +"' BETWEEN bd2.start_date AND bd2.end_date) OR ('"+ leaving +"' BETWEEN bd2.start_date AND bd2.end_date) OR (bd2.start_date BETWEEN '"+ arrivals +"' AND '"+ leaving +"') OR (bd2.end_date BETWEEN '"+ arrivals +"' AND '"+ leaving +"'))");
+//  }
+//  // Add conditions for guests (assuming a 'capacity' field in House table)
+//  if (guests != null) {
+//    conditions.add("capacity >= " + guests);
+//  }
+//  // Add conditions for leaving date (assuming a 'departure_date' field)
+//  if (leaving != null && !leaving.isEmpty()) {
+//    conditions.add("end_date like '%" + leaving + "%'"); // Consider date comparison for better efficiency
+//  }
+//
+//  // Append conditions to the WHERE clause (if any)
+//  if (!conditions.isEmpty()) {
+//    sql += " WHERE " + String.join(" AND ", conditions);
+//  }
+//
+//  List<House> list = new ArrayList<>();
+//  try (PreparedStatement pre = con.prepareStatement(sql)) {
+//    // No parameters needed if no conditions were added
+//    if (!conditions.isEmpty()) {
+//      // Set parameters based on the number of conditions
+//      for (int i = 0; i < conditions.size(); i++) {
+//        pre.setString(i + 1, conditions.get(i));
+//      }
+//    }
+//
+//    ResultSet resultSet = pre.executeQuery();
+//    while (resultSet.next()) {
+//      int houseid = resultSet.getInt(1);
+//      Date postdate = resultSet.getDate(2);
+//      String housename = resultSet.getString(3);
+//      String review = resultSet.getString(4);
+//      float price = resultSet.getFloat(5);
+//      int status = resultSet.getInt(6);
+//      String address = resultSet.getString(7);
+//      String description = resultSet.getString(8);
+//      int locationid = resultSet.getInt(9);
+//      int menuid = resultSet.getInt(10);
+//
+//      Location location = locationid > 0 ? new Location(locationid, null) : null;
+//            Menu menu = resultSet.getInt(10) > 0 ? new Menu(menuid, null) : null;
+//
+//            House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
+//            list.add(h);
+//        }
+//    } catch (Exception e) {
+//        System.out.println("Error: " + e);
+//    }
+//
+//    return list;
+
+        String sql = "with r as (select * from house where house.house_id  not in ( select h.house_id from house as h\n"
+                + "join Bill_detail as b on h.house_id = b.house_id\n"
+                + "where house_name like ? and start_date <= ? and end_date >= ?))\n"
+                + "select r.house_id,r.post_date,r.house_name,r.review,\n"
+                + "r.house_price,r.status,r.address,r.description\n"
+                + ", m.*, l.* from r \n"
+                + "join Menu as m on m.menu_id = r.menu_id\n"
+                + "join Location as l on l.loca_id = r.loca_id\n"
+                + "where house_name like ?";
         List<House> list = new ArrayList<>();
         try {
-            //tạo khay chứa câu lệnh
-            PreparedStatement pre = con.prepareStatement(sql);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
-            ResultSet resultSet = pre.executeQuery();
-            while (resultSet.next()) {
-                int houseid = resultSet.getInt(1);
-                Date postdate = resultSet.getDate(2);
-                String housename = resultSet.getString(3);
-                String review = resultSet.getString(4);
-                float price = resultSet.getFloat(5);
-                int status = resultSet.getInt(6);
-                String address = resultSet.getString(7);
-                String description = resultSet.getString(8);
-                int locationid = resultSet.getInt(9);
-                int menuid = resultSet.getInt(10);
-
-                //tạo model hứng giữ liệu
-                Menu menu = new Menu(menuid, null);
-                Location location = new Location(locationid, null);
-                House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
+            PreparedStatement pr = con.prepareStatement(sql);
+            pr.setString(1, "%" + whereTo + "%");
+            pr.setString(2, arrivals);
+            pr.setString(3, leaving);
+            pr.setString(4, "%" + whereTo + "%");
+            ResultSet rs = pr.executeQuery();
+            while(rs.next()) {
+                House h = new House(rs.getInt(1), rs.getDate(2), rs.getString(3), rs.getString(4), rs.getFloat(5), rs.getInt(6), rs.getString(7),
+                         rs.getString(8), new Location(rs.getInt(9), rs.getString(10)), new Menu(rs.getInt(11), rs.getString(12)));
                 list.add(h);
             }
-        } catch (Exception e) {
-            System.out.println("error: " + e);
-        }
 
+        } catch (Exception e) {
+            System.out.println("List err");
+            System.out.println(e);
+        }
         return list;
+
     }
 
     public House getHousebyId(int id) {
