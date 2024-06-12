@@ -16,7 +16,7 @@ public class DBContext {
 
 
 
-            String password = "1234";
+            String password = "12345";
           
             String url = "jdbc:sqlserver://localhost:1433;databaseName=HouseBooking2";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
