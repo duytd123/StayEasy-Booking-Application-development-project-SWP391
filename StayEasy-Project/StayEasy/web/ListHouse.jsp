@@ -91,8 +91,8 @@
                                     <td><%= h.getStatus() %></td>
                                     <td><span class="address"><%= h.getAddress() %></span></td>
                                     <td><%= h.getDescription() %></td>
-                                    <td><%= h.getLocation().getId() %></td>
-                                    <td><%= h.getMenu().getId() %></td>
+                                    <td><%= h.getLocation().getName() %></td>
+                                    <td><%= h.getMenu().getName() %></td>
                                     <td>
                                         <span class="action_btn">
                                             <a href="NextEditHouseServlet?id=<%= h.getHouseid() %>">Update</a>

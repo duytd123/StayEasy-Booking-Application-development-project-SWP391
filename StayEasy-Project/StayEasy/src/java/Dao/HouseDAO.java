@@ -63,9 +63,12 @@ public class HouseDAO {
 
         return list;
     }
-
-    public List<House> getHouse() {
-        String sql = "select * from dbo.House";
+public List<House> getHouse() {
+        String sql= "SELECT  distinct  house_id,post_date,house_name,review,house_price,status,address,description,Location.loca_id,Location.name,Menu.menu_id,\n" +
+"               Menu.name\n" +
+"                FROM[dbo].[House]\n" +
+"                \n" +
+"                join [Location] on House.loca_id = [Location].loca_id join Menu on House.menu_id = Menu.menu_id";
         List<House> list = new ArrayList<>();
         try {
             //tạo khay chứa câu lệnh
@@ -81,12 +84,10 @@ public class HouseDAO {
                 int status = resultSet.getInt(6);
                 String address = resultSet.getString(7);
                 String description = resultSet.getString(8);
-                int locationid = resultSet.getInt(9);
-                int menuid = resultSet.getInt(10);
-
+               
                 //tạo model hứng giữ liệu
-                Menu menu = new Menu(menuid, null);
-                Location location = new Location(locationid, null);
+                Menu menu = new Menu(resultSet.getInt(11), resultSet.getString(12));
+                Location location = new Location(resultSet.getInt(9), resultSet.getString(10));
                 House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
                 list.add(h);
             }
@@ -96,6 +97,7 @@ public class HouseDAO {
 
         return list;
     }
+
 
     public List<House> searchHouse(String whereTo, String arrivals, String guests, String leaving) {
 //    String sql = "select h.*, bd.*\n" 
@@ -378,5 +380,8 @@ public class HouseDAO {
 
         return h;
     }
-
+public static void main(String[] args) {
+        HouseDAO h = new HouseDAO();
+        System.out.println(h.getHouse());
+    }
 }
