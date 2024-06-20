@@ -48,15 +48,13 @@ public class NextAddHouseServlet extends HttpServlet {
                     request.setAttribute("house", house);
                     request.getRequestDispatcher("EditHouse.jsp").forward(request, response);
                 } else {
-                    // Handle case when house is not found
                     response.getWriter().println("House not found");
                 }
             } else {
-                // Handle case when house ID is not provided
                 response.getWriter().println("House ID is missing");
             }
         } catch (NumberFormatException e) {
-            // Handle case when invalid house ID is provided
+
             response.getWriter().println("Invalid house ID");
         }
     }

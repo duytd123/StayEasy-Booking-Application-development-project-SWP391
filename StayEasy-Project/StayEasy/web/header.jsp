@@ -80,6 +80,7 @@
         <a href="aboutus">About Us</a>
         <a href="#packages">Room</a>
         <a href="#contact">Contact</a>
+        <a href="hostpage" >Ready a partner</a>
         <c:if test="${sessionScope.acc != null}">
             <c:choose>
                 <c:when test="${acc.role.id == 0}">
