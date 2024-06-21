@@ -7,6 +7,7 @@ package Controller;
 import Dao.AccountDAO;
 import Dao.HouseDAO;
 import Model.Account;
+import Model.Bill;
 import Model.House;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -68,18 +69,18 @@ public class DashboardServlet extends HttpServlet {
         int countUser = adao.countAccountByRole(2);
         int countAdmin = adao.countAccountByRole(0);
         int countAll = adao.countAccount();
-
+        
         //get 3 house best 
         HouseDAO hdao = new HouseDAO();
         List<House> listHouse = hdao.getNameThreeHouseBest();
 
         //get 3 Account best
-        AccountDAO accountDAO = new AccountDAO();
-        List<Account> listAcount = accountDAO.getThreeUserMaxBill();
+        AccountDAO bill = new AccountDAO();
+        List<Bill> listbill = bill.getThreeUserMaxBill();
 
         request.setAttribute("countUser", countUser);
         request.setAttribute("listHouse", listHouse);
-        request.setAttribute("listAcount", listAcount);
+        request.setAttribute("listBill", listbill);
         request.setAttribute("listHouse", listHouse);
         request.setAttribute("countAdmin", countAdmin);
         request.setAttribute("countAll", countAll);

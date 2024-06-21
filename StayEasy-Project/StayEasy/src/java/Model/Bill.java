@@ -16,10 +16,28 @@ public class Bill {
     private float total;
     private int status;
     private int userid;
+    private String userName;
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    
     public Bill() {
     }
 
+    public Bill(int billid, float total, int status, int userid,String UserName) {
+        this.billid = billid;
+        this.total = total;
+        this.status = status;
+        this.userid = userid;
+        this.userName = UserName;
+    }
+
+    
     public Bill(int billid, Date date, float total, int status, int userid) {
         this.billid = billid;
         this.date = date;
