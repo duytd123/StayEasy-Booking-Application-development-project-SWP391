@@ -5,7 +5,6 @@
 <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
 <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <link href="login_style.css" rel="stylesheet"/>
-
 <body>
     <% String username = ""; String password = ""; Cookie[] cookies = request.getCookies(); if (cookies != null) { for (Cookie cookie: cookies) { if ((cookie.getName()).equals("cusername")) { username = cookie.getValue(); } else if ((cookie.getName()).equals("cpassword")) { password = cookie.getValue(); } } } %>
     <div class="back-to-home rounded d-none d-sm-block">

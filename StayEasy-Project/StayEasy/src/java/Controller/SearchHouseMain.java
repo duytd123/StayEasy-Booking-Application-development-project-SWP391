@@ -58,22 +58,17 @@ public class SearchHouseMain extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-
-
-    throws ServletException, IOException {
-    String whereTo = request.getParameter("whereTo");
-    String arrivals = request.getParameter("arrivals");
-    String guests = request.getParameter("guests"); // Access other fields
-    String leaving = request.getParameter("leaving");
-    
-    
-    HouseDAO dao = new HouseDAO();
-    List<House> listHouse = dao.searchHouse(whereTo, arrivals, guests, leaving);  
-
-    request.setAttribute("list", listHouse);
-    request.getRequestDispatcher("Listhousemain.jsp").forward(request, response);
-}
-
+            throws ServletException, IOException {
+        String whereTo = request.getParameter("whereTo");
+        String arrivals = request.getParameter("arrivals");
+        
+        HouseDAO dao = new HouseDAO();
+        
+        List<House> listHouse = dao.searchHouse(whereTo, arrivals);
+        
+        request.setAttribute("list", listHouse);
+        request.getRequestDispatcher("Listhousemain.jsp").forward(request, response);
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -98,17 +93,5 @@ public class SearchHouseMain extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-
-    
-    
-    public static void main(String[] args) {
-        HouseDAO dao = new HouseDAO();
-        List<House> listHouse = dao.searchHouse("o", "2024-05-30", "2", "2024-05-31");
-        for(House h : listHouse){
-            System.out.println(h.getHouseid());
-        }
-    }
-
 
 }

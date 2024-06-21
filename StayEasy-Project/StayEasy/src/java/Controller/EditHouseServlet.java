@@ -23,7 +23,7 @@ import java.util.Date;
  * @author Admin
  */
 public class EditHouseServlet extends HttpServlet {
-
+ private static final long serialVersionUID = 1L;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -62,7 +62,7 @@ public class EditHouseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("UpdateHouse.jsp").forward(request, response);
     }
 
     /**
@@ -95,12 +95,14 @@ public class EditHouseServlet extends HttpServlet {
         String description = request.getParameter("description");
         int locationid = Integer.parseInt(request.getParameter("location"));
         int menuid = Integer.parseInt(request.getParameter("menu"));
+        
         Location location = new Location(locationid, null);
         Menu menu = new Menu(menuid, null);
+        
         House h = new House(houseid, date, housename, review, price, status, address, description, location, menu);
         HouseDAO dao = new HouseDAO();
         dao.editHouse(h);
-        response.sendRedirect("ListHouseServlet");
+        response.sendRedirect("DashboardHostServlet");
     }
 
     /**
