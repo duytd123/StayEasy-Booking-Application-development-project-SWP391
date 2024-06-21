@@ -89,7 +89,7 @@
                         <th>Total</th>
                         <th>Status</th>
                         <th>User_ID</th>
-                        <th>Action</th>
+                       
                     </tr>
                 </thead>
                 <%
@@ -101,13 +101,7 @@
                     <td><%=b.getTotal() %></td>
                     <td><%=b.getStatus() %></td>
                     <td><%=b.getUserid() %></td>
-                    <td>
-                        <span class="action_btn">
-                            <a href="NextEditBillServlet?id=<%=b.getBillid() %>">Update</a>
-                            <a href="DeleteBillServlet?id=<%=b.getBillid() %>">Delete</a>
-                            <a href="NextAddBillServlet">Add</a>
-                        </span>
-                    </td>
+                   
                 </tr>
                 <%
                 }
