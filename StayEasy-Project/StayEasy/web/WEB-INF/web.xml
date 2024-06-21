@@ -192,6 +192,34 @@
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>Controller.UserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Hostpage</servlet-name>
+        <servlet-class>Controller.Hostpage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FAQ</servlet-name>
+        <servlet-class>Controller.FAQ</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HouseHost</servlet-name>
+        <servlet-class>Controller.HouseHost</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveHouseServlet</servlet-name>
+        <servlet-class>Controller.RemoveHouseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HostComment</servlet-name>
+        <servlet-class>Controller.HostComment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BillHostServlet</servlet-name>
+        <servlet-class>Controller.BillHostServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchHouseHost</servlet-name>
+        <servlet-class>Controller.SearchHouseHost</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListAccountServlet</servlet-name>
         <url-pattern>/ListAccountServlet</url-pattern>
@@ -387,6 +415,34 @@
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Hostpage</servlet-name>
+        <url-pattern>/hostpage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FAQ</servlet-name>
+        <url-pattern>/faqpage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HouseHost</servlet-name>
+        <url-pattern>/househost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveHouseServlet</servlet-name>
+        <url-pattern>/RemoveHouseServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HostComment</servlet-name>
+        <url-pattern>/HostComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BillHostServlet</servlet-name>
+        <url-pattern>/BillHostServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchHouseHost</servlet-name>
+        <url-pattern>/SearchHouseHost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

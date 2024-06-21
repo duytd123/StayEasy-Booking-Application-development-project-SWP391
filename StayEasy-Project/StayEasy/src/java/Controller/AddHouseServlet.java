@@ -1,122 +1,120 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Dao.HouseDAO;
 import Dao.HouseImgDAO;
+import Dao.LocationDAO;
+import Dao.MenuDAO;
+import Model.Account;
 import Model.House;
-import Model.HouseImg;
 import Model.Location;
 import Model.Menu;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-/**
- *
- * @author Admin
- */
 public class AddHouseServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddHouseServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddHouseServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+    private final LocationDAO locationDAO = new LocationDAO();
+    private final MenuDAO menuDAO = new MenuDAO();
+    private final HouseDAO houseDAO = new HouseDAO();
+    private final HouseImgDAO houseImgDAO = new HouseImgDAO();
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        List<Location> locations = locationDAO.getLocation();
+        List<Menu> menus = menuDAO.getMenu();
+
+        request.setAttribute("llist", locations);
+        request.setAttribute("mlist", menus);
+
+        request.getRequestDispatcher("AddHouse.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //processRequest(request, response);
-        String dateString =request.getParameter("postdate");
-        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        try {
-            date = formatDate.parse(dateString);
-        } catch (Exception e) {
-            response.getWriter().print("error : "+e);
-            return;
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    try {
+        // Retrieve logged-in user's ID (host ID)
+        Account account = (Account) request.getSession().getAttribute("acc");
+        if (account == null) {
+            throw new IllegalArgumentException("User is not logged in.");
         }
-        String housename = request.getParameter("housename");
-        String review = request.getParameter("review");
-        float price = Float.parseFloat(request.getParameter("houseprice"));
-        int status = 1;
+        int hostId = account.getUserid();
+
+        // Automatically set postdate to current date
+        Date postDate = new Date();
+
+        // Retrieve parameters
+        String houseName = request.getParameter("housename");
+        String review = "";  // Assuming review is not provided in the form, set to empty string
+        String housePriceStr = request.getParameter("houseprice");
         String address = request.getParameter("address");
         String description = request.getParameter("description");
-        int locationid = Integer.parseInt(request.getParameter("location"));
-        int menuid = Integer.parseInt(request.getParameter("menu"));
-        Location location = new Location(locationid, null);
-        Menu menu = new Menu(menuid, null);
-        House h = new House(-1, date, housename, review, price, status, address, description, location, menu);
-        HouseDAO dao = new HouseDAO();
-        dao.addHouse(h);
-        String imglink = request.getParameter("imglink");
-        int houseid = Integer.parseInt(request.getParameter("houseid"));
-        HouseImg hi = new HouseImg(-1, imglink, houseid);
-        HouseImgDAO hdao = new HouseImgDAO();
-        hdao.addHouseImg(hi);
-        response.sendRedirect("ListHouseServlet");
-    }
+        String locationIdStr = request.getParameter("location");
+        String menuIdStr = request.getParameter("menu");
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+        // Validate required fields
+        if (houseName == null || houseName.trim().isEmpty()
+                || housePriceStr == null || housePriceStr.trim().isEmpty()
+                || address == null || address.trim().isEmpty()
+                || locationIdStr == null || locationIdStr.trim().isEmpty()
+                || menuIdStr == null || menuIdStr.trim().isEmpty()) {
+            throw new IllegalArgumentException("House name, price, address, location, and menu are required.");
+        }
+
+        float housePrice;
+        int locationId;
+        int menuId;
+        try {
+            housePrice = Float.parseFloat(housePriceStr);
+            locationId = Integer.parseInt(locationIdStr);
+            menuId = Integer.parseInt(menuIdStr);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid number format for house price, location, or menu.");
+        }
+
+        if (housePrice <= 0) {
+            throw new IllegalArgumentException("House price must be a positive number.");
+        }
+
+        // Retrieve Location and Menu objects using DAO classes
+        Location location = locationDAO.getLocationById(locationId);
+        if (location == null) {
+            throw new IllegalArgumentException("Invalid location selected.");
+        }
+
+        Menu menu = menuDAO.getMenuById(menuId);
+        if (menu == null) {
+            throw new IllegalArgumentException("Invalid menu selected.");
+        }
+
+        // Create House object without hostId
+        House house = new House(-1, postDate, houseName, review, housePrice, 0, address, description, location, menu);
+
+        // Pass House object and hostId to HouseDAO method
+        houseDAO.addHouse(house, hostId);
+
+        // Redirect to dashboard or another page
+        response.sendRedirect("DashboardHostServlet");
+    } catch (IllegalArgumentException e) {
+        response.getWriter().print("Error: " + e.getMessage());
+    } catch (Exception e) {
+        response.getWriter().print("Error: Failed to add house. Please try again later.");
+        e.printStackTrace();
+    }
+}
+
+
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "AddHouseServlet";
+    }
 }

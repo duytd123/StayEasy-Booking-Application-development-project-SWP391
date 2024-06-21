@@ -260,5 +260,33 @@ public List<Bill> getBillByDate(String dateString){
             System.out.println("error :  " + e);
         }
     }
+    
+    
+    public List<Bill> getBillsByHostId(int hostId) {
+        List<Bill> bills = new ArrayList<>();
+        String sql = "SELECT b.bill_id, b.date, b.total, b.status, b.user_id " +
+                     "FROM Bill b " +
+                     "INNER JOIN Bill_detail bd ON b.bill_id = bd.bill_id " +
+                     "INNER JOIN House h ON bd.house_id = h.house_id " +
+                     "WHERE h.host_id = ?";
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, hostId);
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                int billId = resultSet.getInt("bill_id");
+                Date date = resultSet.getDate("date");
+                float total = resultSet.getFloat("total");
+                int status = resultSet.getInt("status");
+                int userId = resultSet.getInt("user_id");
+                Bill bill = new Bill(billId, date, total, status, userId);
+                bills.add(bill);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bills;
+    }
+    
 
 }

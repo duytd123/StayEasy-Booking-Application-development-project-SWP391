@@ -4,25 +4,25 @@
  */
 package Controller;
 
-import Dao.AccountDAO;
-import Dao.CommentDAO;
+import Dao.BillDAO;
 import Model.Account;
-import Model.Comment;
+import Model.Bill;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
+import jakarta.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author badao
  */
-@WebServlet(name = "ListCommentServlet", urlPatterns = {"/ListCommentServlet"})
-public class ListCommentServlet extends HttpServlet {
+public class BillHostServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,23 +36,30 @@ public class ListCommentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
 
-            Account loggedInUser = (Account) request.getSession().getAttribute("acc");
-            if (loggedInUser != null) {
-                int hostId = loggedInUser.getUserid();
+        HttpSession session = request.getSession();
+        session.removeAttribute("mess");
+        Account loggedInUser = (Account) session.getAttribute("acc");
 
-                CommentDAO dao = new CommentDAO();
-                List<Comment> list = dao.getCommentsByHouseId(hostId);
+        int hostId = loggedInUser.getUserid();
+        BillDAO bdao = new BillDAO();
 
-                request.setAttribute("commentList", list);
+        List<Bill> list = bdao.getBillsByHostId(hostId);
 
-                request.getRequestDispatcher("DashBoardHostComment.jsp").forward(request, response);
-            } else {
-                // If user is not logged in, handle accordingly (redirect to login or show error)
-                response.sendRedirect("LoginServlet"); // Adjust login servlet URL
+        SimpleDateFormat sdf = new SimpleDateFormat("MM");
+        float rs = 0;
+        Date currentDate = new Date();
+        String nowDate = sdf.format(currentDate);
+
+        for (Bill bill : list) {
+            if (bill.getStatus() == 1 && sdf.format(bill.getDate()).equals(nowDate)) {
+                rs += bill.getTotal();
             }
         }
+
+        request.setAttribute("rs", rs);
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("/billhost.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

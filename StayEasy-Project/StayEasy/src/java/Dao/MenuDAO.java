@@ -51,4 +51,21 @@ public class MenuDAO {
         return list;
     }
     
+     public Menu getMenuById(int id) {
+        String sql = "SELECT * FROM dbo.Menu WHERE menu_id = ?";
+        Menu menu = null;
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, id);
+            ResultSet resultSet = pre.executeQuery();
+            if (resultSet.next()) {
+                int menuId = resultSet.getInt("id");
+                String menuName = resultSet.getString("name");
+                menu = new Menu(menuId, menuName);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return menu;
+    }
 }

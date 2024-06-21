@@ -14,16 +14,8 @@
         <link href="stylesheet" rel="stylesheet">
         <link rel="stylesheet" href="list.css">
         <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
         <link rel="stylesheet" href="StyleSheet.css">
         <link rel="stylesheet" href="css/housepage.css">
-        <link rel="stylesheet" href="css/style.css">
     </head>
     <style>
         .user-fullname {
@@ -160,13 +152,15 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="section_title">
-                                <h2 class="text-shadow" style="font-size: 70px;"><span class="ani-fire">SUPPER SALES</span></h2>
+                                <h2 class="text-shadow" style="font-size: 40px;"><span class="ani-fire">SUPPER SALES</span></h2>
                                 <div class="image_container">
                                     <div class="image_wrapper">
+                                        <!-- Use <img> tags inside the forEach loop to display images -->
                                         <c:forEach items="${houseImages}" var="houseImg">
                                             <img src="${houseImg.imglink}" alt="House Image">
                                         </c:forEach>
                                     </div>
+                                    <!-- Buttons for image navigation -->
                                     <button id="prevBtn" onclick="prevImages()">Previous</button>
                                     <button id="nextBtn" onclick="nextImages()">Next</button>
                                 </div>
@@ -290,10 +284,10 @@
                         <% String email = (String)session.getAttribute("email"); %>
                         <input type="email" name="Email" placeholder="Email" value="<%= email != null ? email : "" %>">
                     </div>
-<!--                    <div class="inputBox">
-                        <input type="number" name="Number" placeholder="Number">
-                        <input type="text" name="Subject" placeholder="Subject">
-                    </div>-->
+                    <!--                    <div class="inputBox">
+                                            <input type="number" name="Number" placeholder="Number">
+                                            <input type="text" name="Subject" placeholder="Subject">
+                                        </div>-->
                     <textarea name="Message" placeholder="Message" cols="30" rows="10"></textarea>
                     <input type="submit" class="btn" value="Send message">
                 </form>
@@ -329,6 +323,30 @@
                         .then((response) => console.log("Success!", response))
                         .catch((error) => console.error("Error!", error.message));
             });
+        </script>
+
+        <script>
+            var currentImageIndex = 0; // Index of the currently displayed image
+
+            // Function to show previous image
+            function prevImages() {
+                var images = document.querySelectorAll('.image_wrapper img');
+                if (images.length > 0) {
+                    images[currentImageIndex].style.display = 'none'; // Hide current image
+                    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length; // Update index
+                    images[currentImageIndex].style.display = 'block'; // Show previous image
+                }
+            }
+
+            // Function to show next image
+            function nextImages() {
+                var images = document.querySelectorAll('.image_wrapper img');
+                if (images.length > 0) {
+                    images[currentImageIndex].style.display = 'none'; // Hide current image
+                    currentImageIndex = (currentImageIndex + 1) % images.length; // Update index
+                    images[currentImageIndex].style.display = 'block'; // Show next image
+                }
+            }
         </script>
 
         <!-- jquery cdn link  -->

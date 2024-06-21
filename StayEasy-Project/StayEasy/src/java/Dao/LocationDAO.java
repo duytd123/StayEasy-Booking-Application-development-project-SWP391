@@ -51,4 +51,22 @@ public class LocationDAO {
         return list;
     }
     
+    public Location getLocationById(int id) {
+        String sql = "SELECT * FROM dbo.Location WHERE loca_id = ?";
+        Location location = null;
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, id);
+            ResultSet resultSet = pre.executeQuery();
+            if (resultSet.next()) {
+                int locationId = resultSet.getInt("id");
+                String locationName = resultSet.getString("name");
+                location = new Location(locationId, locationName);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return location;
+    }
+    
 }
