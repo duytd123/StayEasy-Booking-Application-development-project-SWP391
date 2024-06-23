@@ -14,8 +14,16 @@
         <link href="stylesheet" rel="stylesheet">
         <link rel="stylesheet" href="list.css">
         <link rel="stylesheet" href="housepage.css">
+        <link rel="stylesheet" href="css/list_house_main.css">
+        <link rel="stylesheet" href="assets/css/style.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user.jsp">
+        <link rel="stylesheet" href="list_house_main.css">
         <link rel="stylesheet" href="StyleSheet.css">
         <link rel="stylesheet" href="css/housepage.css">
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <style>
         .user-fullname {
@@ -85,6 +93,7 @@
         }
 
         .image_wrapper {
+            position: relative;
             display: inline-block;
             transition: transform 0.3s ease;
         }
@@ -117,6 +126,7 @@
         }
 
     </style>
+
     <body>
 
         <!-- Include header -->
@@ -152,21 +162,20 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="section_title">
-                                <h2 class="text-shadow" style="font-size: 40px;"><span class="ani-fire">SUPPER SALES</span></h2>
+                                <h2 class="text-shadow" style="font-size: 70px;"><span class="ani-fire">SUPPER SALES</span></h2>
                                 <div class="image_container">
                                     <div class="image_wrapper">
-                                        <!-- Use <img> tags inside the forEach loop to display images -->
                                         <c:forEach items="${houseImages}" var="houseImg">
                                             <img src="${houseImg.imglink}" alt="House Image">
                                         </c:forEach>
                                     </div>
-                                    <!-- Buttons for image navigation -->
                                     <button id="prevBtn" onclick="prevImages()">Previous</button>
                                     <button id="nextBtn" onclick="nextImages()">Next</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="subscribe_form">
                         <form action="SignUpServlet" method="get">
                             <input id="emailDiscount" type="email" autocomplete="off" placeholder="Go to sigup">
@@ -198,26 +207,26 @@
 
             <div class="box-container">
                 <div class="box">
-                    <img src="Images/g-1.jpg" alt="">
+                    <img src="Images/HALONG.jpg" alt="">
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Ha Long</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
                 </div>
                 <div class="box">
-                    <img src="Images/g-2.jpg" alt="">
+                    <img src="Images/da-nang.jpg" alt="">
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Da Nang</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
                 </div>
                 <!-- Add more gallery boxes as needed -->
                 <div class="box">
-                    <img src="Images/g-2.jpg" alt="">
+                    <img src="Images/con-dao.jpg" alt="">
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Con Dao</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
@@ -227,29 +236,29 @@
 
 
         <section class="gallery" id="gallery">
-
             <div class="box-container">
                 <div class="box">
-                    <img src="Images/g-1.jpg" alt="">
+                    <img src="Images/Da-Lat.jpg" alt="">
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Da Lat</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
                 </div>
                 <div class="box">
-                    <img src="Images/g-2.jpg" alt="">
+                    <img src="Images/nhatrang.png" alt="">
+                    <<h2></h2>L
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Nha Trang</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
                 </div>
                 <!-- Add more gallery boxes as needed -->
                 <div class="box">
-                    <img src="Images/g-2.jpg" alt="">
+                    <img src="Images/Sa-pa.jpg" alt="">
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Sa Pa</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
@@ -313,7 +322,6 @@
 
         <!-- Include footer -->
         <%@ include file="footer.jsp" %>
-
         <script>
             const scriptURL = "https://script.google.com/macros/s/AKfycbzmx3GEyLiss69xqkLRzbnbatnyo3kYTUCatb3PQUEGjxJbL3HubmFjoPFAYxoWXylIZg/exec";
             const form = document.forms["submit-to-google-sheet"];
@@ -324,31 +332,64 @@
                         .catch((error) => console.error("Error!", error.message));
             });
         </script>
-
         <script>
-            var currentImageIndex = 0; // Index of the currently displayed image
+            window.onload = function () {
+                var today = new Date().toISOString().split('T')[0];
+                var arrivals = document.querySelector('input[name="arrivals"]');
+                var leaving = document.querySelector('input[name="leaving"]');
+                var guests = document.querySelector('input[name="guests"]');
+                var form = document.getElementById('bookingForm');
 
-            // Function to show previous image
-            function prevImages() {
-                var images = document.querySelectorAll('.image_wrapper img');
-                if (images.length > 0) {
-                    images[currentImageIndex].style.display = 'none'; // Hide current image
-                    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length; // Update index
-                    images[currentImageIndex].style.display = 'block'; // Show previous image
-                }
-            }
+                arrivals.setAttribute('min', today);
+                leaving.setAttribute('min', today);
 
-            // Function to show next image
-            function nextImages() {
-                var images = document.querySelectorAll('.image_wrapper img');
-                if (images.length > 0) {
-                    images[currentImageIndex].style.display = 'none'; // Hide current image
-                    currentImageIndex = (currentImageIndex + 1) % images.length; // Update index
-                    images[currentImageIndex].style.display = 'block'; // Show next image
-                }
+                arrivals.addEventListener('change', function () {
+                    var arrivalDate = this.value;
+                    leaving.setAttribute('min', arrivalDate);
+                });
+
+                form.addEventListener('submit', function (event) {
+                    var guestsValue = parseInt(guests.value);
+                    if (guestsValue <= 0) {
+                        event.preventDefault();
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Number of guests must be greater than 0!',
+                        });
+                    }
+                });
             }
         </script>
+        <script>
+            let currentIndex = 0;
+            const images = document.querySelectorAll('.image_wrapper img');
+            let container = document.querySelector('.image_wrapper');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const imageWidth = images[0].offsetWidth + 10;
+            console.log(container)
 
+            function nextImages() {
+                if (currentIndex < images.length - 1) {
+                    currentIndex++;
+
+                } else {
+                    currentIndex = 0;
+                }
+                container.style.transform = "translateX(-" + (currentIndex * imageWidth) + "px)";
+            }
+
+            function prevImages() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                } else {
+                    currentIndex = images.length - 1;
+                }
+                container.style.transform = "translateX(-" + (currentIndex * imageWidth) + "px)";
+            }
+        </script>
         <!-- jquery cdn link  -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

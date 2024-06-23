@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="list_house_main.css">
         <link rel="stylesheet" href="StyleSheet.css">
         <link rel="stylesheet" href="css/housepage.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
         <style>
             .inputBox {
                 margin-bottom: 1rem;
@@ -55,35 +56,38 @@
         <section class="book py-5" id="book">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-8 col-lg-6">
+                    <div class="col-11">
                         <div class="card p-4 shadow-sm">
                             <div class="card-body">
-                                <h3 class="card-title text-center mb-4">Book Your Stay</h3>
-                                <form action="search-house-main" method="get">
-                                    <div class="inputBox">
-                                        <input type="text" name="whereTo" placeholder="Place name">
-                                        <input type="number" name="guests" placeholder="Number of guests">
-                                    </div>
-                                    <div class="inputBox">
-                                        <h3>Arrivals</h3>
-                                        <input name="arrivals" type="date">
-                                    </div>
-                                    <div class="inputBox">
-                                        <h3>Leaving</h3>
-                                        <input name="leaving" type="date">
-                                    </div>
-                                    <input type="submit" class="btn btn-custom" value="Book now">
-                                </form>
+                                <div<h3 class="card-title text-center mb-4">Book Your Stay</h3>
+                                    <form action="search-house-main" method="get" class="d-flex" id="bookingForm">
+                                        <div class="inputBox">
+                                            <input value="${param.whereTo}" required="" type="text" name="whereTo" placeholder="Place name">
+                                        </div>
+                                        <div class="inputBox"><input value="${param.guests}" required="" type="number" name="guests" placeholder="Number of guests"></div>
+                                        <div class="inputBox">
+                                            <input value="${param.arrivals}" name="arrivals" type="date">
+                                        </div>
+                                        <div class="inputBox">
+                                            <input required value="${param.leaving}" name="leaving" type="date">
+                                        </div>
+                                        <div>
+                                            <input type="submit" class="btn btn-custom" value="Book now">
+                                        </div>
+
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        
         <script>
             $(document).ready(function () {
                 $('#searchForm').submit(function (e) {

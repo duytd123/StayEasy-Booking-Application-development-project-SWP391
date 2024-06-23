@@ -5,6 +5,9 @@
  */
 package configs;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,5 +79,30 @@ public class Validate {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
+    }
+     
+
+  // Existing validation methods...
+
+   public static boolean checkDate(String dateString) {
+        // Định nghĩa định dạng của ngày tháng
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try {
+            // Parse chuỗi ngày thành đối tượng LocalDate
+            LocalDate date = LocalDate.parse(dateString, dateFormatter);
+
+            // Kiểm tra nếu ngày là ngày hiện tại hoặc trong tương lai
+            LocalDate currentDate = LocalDate.now();
+            if (date.isBefore(currentDate)) {
+                return false; // Ngày trong quá khứ
+            }
+
+            // Nếu không có exception xảy ra và parse thành công, ngày hợp lệ
+            return true;
+        } catch (DateTimeParseException e) {
+            // Nếu có exception xảy ra, ngày không hợp lệ
+            return false;
+        }
     }
 }
