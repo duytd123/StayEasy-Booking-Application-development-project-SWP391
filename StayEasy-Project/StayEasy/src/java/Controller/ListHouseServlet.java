@@ -6,7 +6,11 @@
 package Controller;
 
 import Dao.HouseDAO;
+import Dao.LocationDAO;
+import Dao.MenuDAO;
 import Model.House;
+import Model.Location;
+import Model.Menu;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +18,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
 
 /**
  *
@@ -36,9 +42,15 @@ public class ListHouseServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             HouseDAO dao = new HouseDAO();
+            LocationDAO locationDAO = new LocationDAO();
+            MenuDAO menuDAO = new MenuDAO();
             List<House> list = dao.getHouse();
+            List<Location> locationList = locationDAO.getLocation();
+            List<Menu> menuList = menuDAO.getMenu();
+            request.setAttribute("Location",locationList);
             request.setAttribute("HouseList", list);
-            request.getRequestDispatcher("ListHouse.jsp").forward(request, response);
+            request.setAttribute("MenuList", menuList);
+            request.getRequestDispatcher("ListHouse.jsp").forward(request, response);  
         }
     }
 
@@ -54,7 +66,16 @@ public class ListHouseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HouseDAO dao = new HouseDAO();
+            LocationDAO locationDAO = new LocationDAO();
+            MenuDAO menuDAO = new MenuDAO();
+            List<House> list = dao.getHouse();
+            request.setAttribute("HouseList", list);
+            List<Location> locationList = locationDAO.getLocation();
+            List<Menu> menuList = menuDAO.getMenu();
+            request.setAttribute("LocationList",locationList);
+            request.setAttribute("MenuList", menuList);
+            request.getRequestDispatcher("ListHouse.jsp").forward(request, response); 
     }
 
     /**
@@ -80,5 +101,4 @@ public class ListHouseServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
