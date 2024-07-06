@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         Cookie[] cookies = request.getCookies();
 
         if (cookies != null) {
@@ -114,7 +114,7 @@ public class LoginServlet extends HttpServlet {
                     }
                 }
             }
-            
+
             // Redirect to the home page on successful login
             if (a.getRole().getId() == 0) {
                 // Admin role

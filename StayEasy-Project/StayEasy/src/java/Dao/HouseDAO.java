@@ -258,40 +258,6 @@ public class HouseDAO {
     }
 
 
-//    public House getHousebyId(int id) {
-//        String sql = "select * from dbo.House where house_id = ?";
-//        House h = new House();
-//
-//        try {
-//            //tạo khay chứa câu lệnh
-//            PreparedStatement pre = con.prepareStatement(sql);
-//            pre.setInt(1, id);
-//            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
-//            ResultSet resultSet = pre.executeQuery();
-//            while (resultSet.next()) {
-//                int houseid = resultSet.getInt(1);
-//                Date postdate = resultSet.getDate(2);
-//                String housename = resultSet.getString(3);
-//                String review = resultSet.getString(4);
-//                float price = resultSet.getFloat(5);
-//                int status = resultSet.getInt(6);
-//                String address = resultSet.getString(7);
-//                String description = resultSet.getString(8);
-//                int locationid = resultSet.getInt(9);
-//                int menuid = resultSet.getInt(10);
-//
-//                //tạo model hứng giữ liệu
-//                Menu menu = new Menu(menuid, null);
-//                Location location = new Location(locationid, null);
-//                h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
-//            }
-//        } catch (Exception e) {
-//            System.out.println("error: " + e);
-//        }
-//
-//        return h;
-//    }
-
     public void editHouse(House house) {
         String sql = "UPDATE [dbo].[House]\n"
                 + "   SET [post_date] = ?\n"
@@ -592,5 +558,62 @@ public class HouseDAO {
             ex.printStackTrace();
             return false;
         }
+    }
+    
+    public List<House> searchHouse1(String whereTo, Date arrivals, String guests, Date leaving, int locationId, int menuId) {
+
+        String sql = "select * from House as H1 where 1 = 1";
+        if (locationId >= 0) {
+            sql += " and H1.loca_id=? ";
+        }
+        if (menuId >= 0) {
+            sql += " and H1.menu_id =?";
+        }
+        sql += " and H1.house_name like ? and H1.house_id Not in "
+                + "(select H.house_id from Bill as B "
+                + "join Bill_detail as BD on BD.bill_id = B.bill_id "
+                + "join House as H on H.house_id = BD.house_id "
+                + "where BD.start_date >= ? and BD.end_date <= ?"
+                + ")";
+        List<House> list = new ArrayList<>();
+        try {
+            PreparedStatement pr = con.prepareStatement(sql);
+            int i = 1;
+            if (locationId >= 0) {
+                pr.setInt(i++, locationId);
+            }
+            if (menuId >= 0) {
+                pr.setInt(i++, menuId);
+            }
+            pr.setString(i++, "%" + whereTo + "%");
+            pr.setDate(i++, arrivals);
+            pr.setDate(i++, leaving);
+            ResultSet resultSet = pr.executeQuery();
+            while (resultSet.next()) {
+                int houseid = resultSet.getInt(1);
+                Date postdate = resultSet.getDate(2);
+                String housename = resultSet.getString(3);
+                String review = resultSet.getString(4);
+                float price = resultSet.getFloat(5);
+                int status = resultSet.getInt(6);
+                String address = resultSet.getString(7);
+                String description = resultSet.getString(8);
+                int locationid = resultSet.getInt(9);
+                int menuid = resultSet.getInt(10);
+                MenuDAO menuDao = new MenuDAO();
+                Menu m = menuDao.getMenuById(menuid);
+                Menu menu = m;
+                LocationDAO lDao = new LocationDAO();
+                Location location = lDao.getLocationById(locationid);
+                House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
+                list.add(h);
+            }
+
+        } catch (Exception e) {
+            System.out.println("List err");
+            System.out.println(e);
+        }
+        return list;
+
     }
 }

@@ -11,6 +11,7 @@ import java.util.Date;
  * @author Admin
  */
 public class BillDetail {
+
     private int billdetailid;
     private int billid;
     private int houseid;
@@ -78,6 +79,4 @@ public class BillDetail {
         this.note = note;
     }
 
-    
-    
 }

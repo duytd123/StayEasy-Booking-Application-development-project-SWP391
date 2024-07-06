@@ -72,7 +72,7 @@
                                             <input required value="${param.leaving}" name="leaving" type="date">
                                         </div>
                                         <div>
-                                            <input type="submit" class="btn btn-custom" value="Book now">
+                                            <input type="submit" class="btn btn-custom" value="Search now">
                                         </div>
 
                                     </form>

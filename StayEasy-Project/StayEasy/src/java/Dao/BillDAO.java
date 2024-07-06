@@ -31,7 +31,6 @@ public class BillDAO {
             System.out.println("error: " + e);
         }
     }
-    
 
     public List<Bill> getBill() {
         String sql = "select * from Bill";
@@ -188,15 +187,16 @@ public class BillDAO {
 
         return b;
     }
-public List<Bill> getBillByDate(String dateString){
-        String sql = "select * from Bill where date = '"+dateString+"'";
+
+    public List<Bill> getBillByDate(String dateString) {
+        String sql = "select * from Bill where date = '" + dateString + "'";
         List<Bill> list = new ArrayList<>();
         try {
             //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 int billid = resultSet.getInt(1);
                 Date date = resultSet.getDate(2);
                 float total = resultSet.getFloat(3);
@@ -208,22 +208,22 @@ public List<Bill> getBillByDate(String dateString){
                 list.add(b);
             }
         } catch (Exception e) {
-            System.out.println("error: "+e);
+            System.out.println("error: " + e);
         }
-        
+
         return list;
     }
 
-    public List<Bill> getBillbyUserId(int user_id){
+    public List<Bill> getBillbyUserId(int user_id) {
         String sql = "select * from Bill where user_id = ?";
         List<Bill> list = new ArrayList<>();
-        try{
+        try {
             //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setInt(1, user_id);
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 int billid = resultSet.getInt(1);
                 Date date = resultSet.getDate(2);
                 float total = resultSet.getFloat(3);
@@ -232,22 +232,94 @@ public List<Bill> getBillByDate(String dateString){
 
                 //tạo model hứng giữ liệu
                 Bill b = new Bill(billid, date, total, status, userid);
-               
-               list.add(b);
+
+                list.add(b);
             }
         } catch (Exception e) {
-            System.out.println("error: "+e);
+            System.out.println("error: " + e);
         }
-        
+
         return list;
     }
 
-    
-    
-    public void updatebillStatus(int billid){
-        String sql = "UPDATE [dbo].[Bill]\n" +
-                "   SET [status] = ?" +
-                " WHERE bill_id = ?";
+    public List<Bill> getHistoryBill(int userId) {
+        String sql = "SELECT * FROM Bill WHERE user_id = ?";
+        List<Bill> list = new ArrayList<>();
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, userId);
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                Bill b = new Bill();
+                b.setBillid(resultSet.getInt("bill_id"));
+                b.setDate(resultSet.getDate("date"));
+                b.setTotal(resultSet.getFloat("total"));
+                b.setStatus(resultSet.getInt("status"));
+                b.setUserid(resultSet.getInt("user_id"));
+                b.setUserName("");
+                b.setFullname(resultSet.getString("fullname"));
+                b.setPhone(resultSet.getString("phone"));
+                b.setEmail(resultSet.getString("email"));
+                b.setReason(resultSet.getString("reason"));
+                list.add(b);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        return list;
+    }
+
+    public Bill getBillByIdUser(int billId, int userId) {
+        Bill bill = null;
+        String sql = "SELECT * FROM Bill WHERE bill_id = ? and user_id=?";
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, billId);
+            pre.setInt(2, userId);
+            ResultSet resultSet = pre.executeQuery();
+            if (resultSet.next()) {
+                bill = new Bill();
+                bill.setBillid(resultSet.getInt("bill_id"));
+                bill.setDate(resultSet.getDate("date"));
+                bill.setTotal(resultSet.getFloat("total"));
+                bill.setStatus(resultSet.getInt("status"));
+                bill.setUserid(resultSet.getInt("user_id"));
+                bill.setUserName("");
+                bill.setFullname(resultSet.getString("fullname"));
+                bill.setPhone(resultSet.getString("phone"));
+                bill.setEmail(resultSet.getString("email"));
+                bill.setReason(resultSet.getString("reason"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return bill;
+    }
+
+    public int cancelBill(int billid, String reason) {
+        String sql = "UPDATE [dbo].[Bill]\n"
+                + "   SET [status] = ?, reason=?"
+                + " WHERE bill_id = ?";
+        try {
+            //tạo khay chứa câu lệnh
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, 2);
+            pre.setString(2, reason);
+            pre.setInt(3, billid);
+            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            return pre.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("error :  " + e);
+        }
+        return 0;
+    }
+
+    public void updatebillStatus(int billid) {
+        String sql = "UPDATE [dbo].[Bill]\n"
+                + "   SET [status] = ?"
+                + " WHERE bill_id = ?";
         try {
             //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
@@ -260,15 +332,14 @@ public List<Bill> getBillByDate(String dateString){
             System.out.println("error :  " + e);
         }
     }
-    
-    
+
     public List<Bill> getBillsByHostId(int hostId) {
         List<Bill> bills = new ArrayList<>();
-        String sql = "SELECT b.bill_id, b.date, b.total, b.status, b.user_id " +
-                     "FROM Bill b " +
-                     "INNER JOIN Bill_detail bd ON b.bill_id = bd.bill_id " +
-                     "INNER JOIN House h ON bd.house_id = h.house_id " +
-                     "WHERE h.host_id = ?";
+        String sql = "SELECT b.bill_id, b.date, b.total, b.status, b.user_id "
+                + "FROM Bill b "
+                + "INNER JOIN Bill_detail bd ON b.bill_id = bd.bill_id "
+                + "INNER JOIN House h ON bd.house_id = h.house_id "
+                + "WHERE h.host_id = ?";
         try {
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setInt(1, hostId);
@@ -287,6 +358,31 @@ public List<Bill> getBillByDate(String dateString){
         }
         return bills;
     }
-    
+
+    public int bookingBill(Bill bill) {
+        String sql = "INSERT INTO Bill (date, total, status, user_id, fullname, phone, email) VALUES (?,?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            int i = 1;
+            statement.setDate(i++, new java.sql.Date(bill.getDate().getTime()));
+            statement.setFloat(i++, bill.getTotal());
+            statement.setInt(i++, bill.getStatus());
+            statement.setInt(i++, bill.getUserid());
+            statement.setString(i++, bill.getFullname());
+            statement.setString(i++, bill.getPhone());
+            statement.setString(i++, bill.getEmail());
+
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Booking dao: " + e);
+        }
+        return -1;
+    }
 
 }
