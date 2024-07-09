@@ -6,6 +6,8 @@
 package Controller;
 
 import Dao.HouseDAO;
+import Dao.LocationDAO;
+import Dao.MenuDAO;
 import Model.House;
 import Model.Location;
 import Model.Menu;
@@ -17,12 +19,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author Admin
  */
 public class EditHouseServlet extends HttpServlet {
+
+    private static final String STRING_PATTERN = "^(?!\\s*$).{6,19}$";
+    public static final String ADDRESS_VALID = "[a-zA-Z0-9.{6,19} ]+";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +47,7 @@ public class EditHouseServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditHouseServlet</title>");            
+            out.println("<title>Servlet EditHouseServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet EditHouseServlet at " + request.getContextPath() + "</h1>");
@@ -62,7 +68,69 @@ public class EditHouseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HouseDAO dao = new HouseDAO();
+        LocationDAO ldao = new LocationDAO();
+        List<Location> llist = ldao.getLocation();
+        MenuDAO mdao = new MenuDAO();
+        List<Menu> mlist = mdao.getMenu();
+        int houseid = Integer.parseInt(request.getParameter("houseid"));
+        House h = dao.getHousebyId(houseid);
+        String dateString = request.getParameter("postdate");
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        try {
+            date = formatDate.parse(dateString);
+        } catch (Exception e) {
+            response.getWriter().print("error : " + e);
+            return;
+        }
+        String housename = request.getParameter("housename");
+        String review = request.getParameter("review");
+        float price = Float.parseFloat(request.getParameter("houseprice"));
+        int status = Integer.parseInt(request.getParameter("status"));
+        String address = request.getParameter("address");
+        String description = request.getParameter("description");
+        int locationid = Integer.parseInt(request.getParameter("location"));
+        int menuid = Integer.parseInt(request.getParameter("menu"));
+        Location location = new Location(locationid, null);
+        Menu menu = new Menu(menuid, null);
+
+        if (!housename.matches(STRING_PATTERN)) {
+            request.setAttribute("mess", "Please enter the correct HouseName format!!!");
+            request.setAttribute("house", h);
+            request.setAttribute("llist", llist);
+            request.setAttribute("mlist", mlist);
+            request.getRequestDispatcher("/UpdateHouse.jsp").forward(request, response);
+
+        }
+        if (!address.matches(ADDRESS_VALID)) {
+            request.setAttribute("mess", "Please enter the correct Address format!!!");
+            request.setAttribute("house", h);
+            request.setAttribute("llist", llist);
+            request.setAttribute("mlist", mlist);
+            request.getRequestDispatcher("/UpdateHouse.jsp").forward(request, response);
+
+        }
+
+        if (!description.matches(STRING_PATTERN)) {
+            request.setAttribute("mess", "Please enter the correct Description format!!!");
+            request.setAttribute("house", h);
+            request.setAttribute("llist", llist);
+            request.setAttribute("mlist", mlist);
+            request.getRequestDispatcher("/UpdateHouse.jsp").forward(request, response);
+
+        }
+        if (price <= 0.0) {
+            request.setAttribute("mess", "Please enter the correct Price format!!!");
+            request.setAttribute("house", h);
+            request.setAttribute("llist", llist);
+            request.setAttribute("mlist", mlist);
+            request.getRequestDispatcher("/UpdateHouse.jsp").forward(request, response);
+
+        }
+        House h1 = new House(houseid, date, housename, review, price, status, address, description, location, menu);
+        dao.editHouse(h1);
+        response.sendRedirect("ListHouseServlet");
     }
 
     /**
@@ -77,30 +145,7 @@ public class EditHouseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        int houseid = Integer.parseInt(request.getParameter("houseid"));
-        String dateString =request.getParameter("postdate");
-        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        try {
-            date = formatDate.parse(dateString);
-        } catch (Exception e) {
-            response.getWriter().print("error : "+e);
-            return;
-        }
-        String housename = request.getParameter("housename");
-        String review = request.getParameter("review");
-        float price = Float.parseFloat(request.getParameter("houseprice"));
-        int status = Integer.parseInt(request.getParameter("status"));
-        String address = request.getParameter("address");
-        String description = request.getParameter("description");
-        int locationid = Integer.parseInt(request.getParameter("location"));
-        int menuid = Integer.parseInt(request.getParameter("menu"));
-        Location location = new Location(locationid, null);
-        Menu menu = new Menu(menuid, null);
-        House h = new House(houseid, date, housename, review, price, status, address, description, location, menu);
-        HouseDAO dao = new HouseDAO();
-        dao.editHouse(h);
-        response.sendRedirect("ListHouseServlet");
+
     }
 
     /**

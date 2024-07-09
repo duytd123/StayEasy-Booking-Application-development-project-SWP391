@@ -72,7 +72,7 @@
         <section class="add-products">
             <h1 class="title">Update</h1>
 
-            <form action="EditHouseServlet" method="post" >
+            <form action="EditHouseServlet" method="get" >
                 <input
                     type="text"
                     name="houseid"
@@ -161,7 +161,7 @@
                     %>
                 </select>
 
-
+                <p class="text-danger">${mess}</p>
 
                 <input class="Update-btn" type="submit" value="Update" name="Update" />
             </form>

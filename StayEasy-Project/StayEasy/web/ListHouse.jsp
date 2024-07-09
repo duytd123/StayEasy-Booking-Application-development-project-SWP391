@@ -61,6 +61,9 @@
                         <input type="text" name="search"  placeholder="Search here...">
                         <button  value="search" type="submit"></button>
                     </form>
+                    
+               
+                    
                     <div class="table-responsive table-container">
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -97,7 +100,7 @@
                                         <span class="action_btn">
                                             <a href="NextEditHouseServlet?id=<%= h.getHouseid() %>">Update</a>
                                             <a href="DeleteHouseServlet?id=<%= h.getHouseid() %>">Delete</a>
-                                            <a href="NextAddHouseServlet">Add</a>
+                                           
                                             <a href="ListServiceServlet?id=<%= h.getHouseid() %>">View Service</a>
                                             <a href="NextAddServiceServlet?id=<%= h.getHouseid() %>">Add Service</a>
                                         </span>

@@ -25,6 +25,8 @@ import java.util.Date;
  * @author Admin
  */
 public class AddHouseServlet extends HttpServlet {
+  private static final String STRING_PATTERN = "^(?!\\s*$).{6,19}$";
+      public static final String ADDRESS_VALID = "[a-zA-Z0-9.{6,19} ]+";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,7 +45,7 @@ public class AddHouseServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddHouseServlet</title>");            
+            out.println("<title>Servlet AddHouseServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddHouseServlet at " + request.getContextPath() + "</h1>");
@@ -79,13 +81,13 @@ public class AddHouseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        String dateString =request.getParameter("postdate");
+        String dateString = request.getParameter("postdate");
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         try {
             date = formatDate.parse(dateString);
         } catch (Exception e) {
-            response.getWriter().print("error : "+e);
+            response.getWriter().print("error : " + e);
             return;
         }
         String housename = request.getParameter("housename");
@@ -98,11 +100,31 @@ public class AddHouseServlet extends HttpServlet {
         int menuid = Integer.parseInt(request.getParameter("menu"));
         Location location = new Location(locationid, null);
         Menu menu = new Menu(menuid, null);
+        String imglink = request.getParameter("imglink");
+        int houseid = Integer.parseInt(request.getParameter("houseid"));
+
+        if (!housename.matches(STRING_PATTERN)) {
+            response.getWriter().print("Error: Housename cannot be left blank or Cannot be less than 5 and greater than 20 characters ");
+            return;
+        }
+        if (!address.matches(ADDRESS_VALID)) {
+            response.getWriter().print("Error: Address cannot be left blank.Cannot be less than 5 and greater than 20 characters");
+            return;
+        }
+
+        if (!description.matches(STRING_PATTERN)) {
+            response.getWriter().print("Error: Description cannot be left blank.Cannot be less than 5 and greater than 20 characters");
+            return;
+        }
+        if(price <= 0.0){
+            response.getWriter().print("Error: Price cannot <0");
+            return;
+        }
+
         House h = new House(-1, date, housename, review, price, status, address, description, location, menu);
         HouseDAO dao = new HouseDAO();
         dao.addHouse(h);
-        String imglink = request.getParameter("imglink");
-        int houseid = Integer.parseInt(request.getParameter("houseid"));
+
         HouseImg hi = new HouseImg(-1, imglink, houseid);
         HouseImgDAO hdao = new HouseImgDAO();
         hdao.addHouseImg(hi);
