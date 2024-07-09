@@ -593,4 +593,38 @@ public class HouseDAO {
             return false;
         }
     }
+    public List<House> getHouse1() {
+        String sql = "SELECT  distinct  house_id,post_date,house_name,review,house_price,status,address,description,Location.loca_id,Location.name,Menu.menu_id,\n"
+                + "               Menu.name\n"
+                + "                FROM[dbo].[House]\n"
+                + "                \n"
+                + "                join [Location] on House.loca_id = [Location].loca_id join Menu on House.menu_id = Menu.menu_id";
+        List<House> list = new ArrayList<>();
+        try {
+            //tạo khay chứa câu lệnh
+            PreparedStatement pre = con.prepareStatement(sql);
+            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                int houseid = resultSet.getInt(1);
+                java.util.Date postdate = resultSet.getDate(2);
+                String housename = resultSet.getString(3);
+                String review = resultSet.getString(4);
+                float price = resultSet.getFloat(5);
+                int status = resultSet.getInt(6);
+                String address = resultSet.getString(7);
+                String description = resultSet.getString(8);
+
+                //tạo model hứng giữ liệu
+                Menu menu = new Menu(resultSet.getInt(11), resultSet.getString(12));
+                Location location = new Location(resultSet.getInt(9), resultSet.getString(10));
+                House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
+                list.add(h);
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+
+        return list;
+    }
 }

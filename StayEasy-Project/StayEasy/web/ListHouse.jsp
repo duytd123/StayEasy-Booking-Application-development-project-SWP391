@@ -1,4 +1,4 @@
-
+2   
 <%@page import="Model.House"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -61,9 +61,9 @@
                         <input type="text" name="search"  placeholder="Search here...">
                         <button  value="search" type="submit"></button>
                     </form>
-                    
-               
-                    
+                    <div >
+                        <a href="NextAddHouseServlet">Add</a>
+                    </div>
                     <div class="table-responsive table-container">
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -100,7 +100,7 @@
                                         <span class="action_btn">
                                             <a href="NextEditHouseServlet?id=<%= h.getHouseid() %>">Update</a>
                                             <a href="DeleteHouseServlet?id=<%= h.getHouseid() %>">Delete</a>
-                                           
+                                            
                                             <a href="ListServiceServlet?id=<%= h.getHouseid() %>">View Service</a>
                                             <a href="NextAddServiceServlet?id=<%= h.getHouseid() %>">Add Service</a>
                                         </span>
