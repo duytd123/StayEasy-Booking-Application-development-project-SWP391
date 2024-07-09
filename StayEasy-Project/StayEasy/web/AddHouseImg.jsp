@@ -54,7 +54,6 @@
       </div>
    </header>
         
-       
         <section class="add-products">
       <h1 class="title">Add</h1>
 

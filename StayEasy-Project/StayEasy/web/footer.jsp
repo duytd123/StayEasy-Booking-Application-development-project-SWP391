@@ -8,22 +8,22 @@
         </div>
         <div class="box">
             <h3>Locations</h3>
-            <a href="#">Ha Long</a>
-            <a href="#">Da Nang</a>
-            <a href="#">Con Dao</a>
-            <a href="#">Da Lat</a>
-            <a href="#">Nha Trang</a>
-            <a href="#">SaPa</a>
+            <a href="home#gallery">Ha Long</a>
+            <a href="home#gallery">Da Nang</a>
+            <a href="home#gallery">Con Dao</a>
+            <a href="home#gallery">Da Lat</a>
+            <a href="home#gallery">Nha Trang</a>
+            <a href="home#gallery">SaPa</a>
         </div>
         <div class="box">
             <h3>Quick Links</h3>
-            <a href="#home">Home</a>
-            <a href="#book">Book</a>
-            <a href="#packages">Packages</a>
-            <a href="#services">Services</a>
-            <a href="#gallery">Gallery</a>
-            <a href="#review">Review</a>
-            <a href="#contact">Contact</a>
+            <a href="home#home">Home</a>
+            <a href="home#book">Book</a>
+            <a href="home#packages">Packages</a>
+            <a href="home#services">Services</a>
+            <a href="home#gallery">Gallery</a>
+            <a href="home#review">Review</a>
+            <a href="home#contact">Contact</a>
         </div>
         <div class="box">
             <h3>Follow Us</h3>

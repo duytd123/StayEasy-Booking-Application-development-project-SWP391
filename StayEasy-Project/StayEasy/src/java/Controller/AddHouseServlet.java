@@ -1,29 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller;
 
 import Dao.HouseDAO;
 import Dao.HouseImgDAO;
+import Dao.LocationDAO;
+import Dao.MenuDAO;
+import Model.Account;
 import Model.House;
-import Model.HouseImg;
 import Model.Location;
 import Model.Menu;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-/**
- *
- * @author Admin
- */
 public class AddHouseServlet extends HttpServlet {
   private static final String STRING_PATTERN = "^(?!\\s*$).{6,19}$";
       public static final String ADDRESS_VALID = "[a-zA-Z0-9.{6,19} ]+";
@@ -53,30 +47,19 @@ public class AddHouseServlet extends HttpServlet {
             out.println("</html>");
         }
     }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        List<Location> locations = locationDAO.getLocation();
+        List<Menu> menus = menuDAO.getMenu();
+
+        request.setAttribute("llist", locations);
+        request.setAttribute("mlist", menus);
+
+        request.getRequestDispatcher("AddHouse.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -89,13 +72,20 @@ public class AddHouseServlet extends HttpServlet {
         } catch (Exception e) {
             response.getWriter().print("error : " + e);
             return;
+
         }
-        String housename = request.getParameter("housename");
-        String review = request.getParameter("review");
-        float price = Float.parseFloat(request.getParameter("houseprice"));
-        int status = 1;
+        int hostId = account.getUserid();
+
+        // Automatically set postdate to current date
+        Date postDate = new Date();
+
+        // Retrieve parameters
+        String houseName = request.getParameter("housename");
+        String review = "";  // Assuming review is not provided in the form, set to empty string
+        String housePriceStr = request.getParameter("houseprice");
         String address = request.getParameter("address");
         String description = request.getParameter("description");
+      
         int locationid = Integer.parseInt(request.getParameter("location"));
         int menuid = Integer.parseInt(request.getParameter("menu"));
         Location location = new Location(locationid, null);
@@ -129,16 +119,13 @@ public class AddHouseServlet extends HttpServlet {
         HouseImgDAO hdao = new HouseImgDAO();
         hdao.addHouseImg(hi);
         response.sendRedirect("ListHouseServlet");
-    }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    }
+}
+
+
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "AddHouseServlet";
+    }
 }

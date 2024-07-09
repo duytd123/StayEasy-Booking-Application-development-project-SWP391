@@ -37,47 +37,57 @@
             }
         </style>
     </head>
-    <%@ include file="header.jsp" %>
 
+    <%@ include file="header.jsp" %>
     <body>
-        <div class="container mt-5">
+
+        <div class="container" style="margin-top: 100px">
             <div class="row">
                 <div class="col-md-8">
-                    <h1 class="display-4">${house.housename}</h1>
+                    <h1 class="display-4 text-dark">${house.housename}</h1>
                     <p class="lead"><i class="fas fa-map-marker-alt"></i> ${house.address}</p>
                     <p>Check-in Date: ${house.postdate}</p>
-                    <p class="text-primary font-weight-bold">${house.houseprice}</p>
+                    <p class="text-primary font-weight-bold">${house.houseprice} USD</p>
                     <div class="hotel-images mb-4">
                         <c:forEach items="${listImage}" var="image">
-                            <img src="${image.imglink}" alt="House Image" class="img-fluid mb-2" />
+                            <img src="${image.imglink}" alt="House Image" class="img-fluid mb-2" style="width: 100%; height: auto;" />
                         </c:forEach>
                     </div>
                     <h2>Description</h2>
                     <p>${house.description}</p>
-                    <div class="hotel-services mt-4">
-                        <h2>Services</h2>
-                        <div class="form-group">
-                            <label>Beefsteak:</label>
-                            <input type="number" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <label>Drink:</label>
-                            <input type="number" class="form-control" />
-                        </div>
-                    </div>
+                    <h2>Location</h2>
+                    <p>${house.location.name}</p>
+                    <h2>Type</h2>
+                    <p>${house.menu.name}</p>
                 </div>
-                <div class="col-md-4">
-                    <button class="btn btn-primary btn-block mb-3" id="open-bill">Reserve or Book Now</button>
-                    <form action="housepage" method="post" class="form-group">
-                        <input type="hidden" name="houseid" value="${house.houseid}" />
-                        <label>Start Date:</label>
-                        <input type="date" name="startdate" class="form-control mb-2" required />
-                        <label>End Date:</label>
-                        <input type="date" name="enddate" class="form-control mb-2" required />
-                        <label>Note:</label>
-                        <input type="text" name="note" class="form-control mb-2" />
-                        <button type="submit" class="btn btn-success btn-block">Reserve or Book Now</button>
-                    </form>
+                <div class="col-md-4 mt-5">
+                    <div class="hotel-services mt-4 p-3 border rounded">
+                        <h2>Services</h2>
+                        <form action="housepage" method="post">
+                            <input type="hidden" name="houseid" value="${house.houseid}" />
+                            <div class="form-group">
+                                <label for="beefsteak">Beefsteak:</label>
+                                <input min="1" type="number" id="beefsteak" name="beefsteak" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="drink">Drink:</label>
+                                <input  min="1" type="number" id="drink" name="drink" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="startdate">Start Date:</label>
+                                <input type="date" id="startDate" name="startdate" class="form-control mb-2" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="enddate">End Date:</label>
+                                <input type="date" id="endDate" name="enddate" class="form-control mb-2" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="note">Note:</label>
+                                <input type="text" id="note" name="note" class="form-control mb-2" />
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block">Reserve or Book Now</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -131,8 +141,50 @@
             <% } %>
         </div>
 
-        <%@ include file="footer.jsp" %>
 
+
+        <%@ include file="footer.jsp" %>
+        <script>
+            window.onload = function () {
+                var today = new Date().toISOString().split('T')[0];
+                var drink = document.querySelector('#drink');
+                var beefsteak = document.querySelector('#beefsteak');
+                var start = document.querySelector('#startDate');
+                var end = document.querySelector('#endDate');
+                var form = document.getElementById('bookingForm');
+
+                start.setAttribute('min', today);
+                end.setAttribute('min', today);
+
+                start.addEventListener('change', function () {
+                    var arrivalDate = this.value;
+                    end.setAttribute('min', arrivalDate);
+                });
+
+                form.addEventListener('submit', function (event) {
+                    var beefsteakValue = parseInt(beefsteak.value);
+                    var drinkValue = parseInt(drink.value);
+                    if (drinkValue <= 0) {
+                        event.preventDefault();
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Number of drink must be greater than 0!',
+                        });
+                    }
+                    if (beefsteakValue <= 0) {
+                        event.preventDefault();
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Number of beefsteak must be greater than 0!',
+                        });
+                    }
+                });
+            }
+        </script>
         <script>
             var mess = '${mess}';
             if (mess) {
@@ -145,3 +197,4 @@
         <script src="Housepage.js" type="text/javascript"></script>
     </body>
 </html>
+

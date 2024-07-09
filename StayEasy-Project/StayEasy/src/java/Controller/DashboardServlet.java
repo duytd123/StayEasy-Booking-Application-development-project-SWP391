@@ -76,11 +76,11 @@ public class DashboardServlet extends HttpServlet {
 
         //get 3 Account best
         AccountDAO bill = new AccountDAO();
-        List<Bill> listbill = bill.getThreeUserMaxBill();
+       // List<Bill> listbill = bill.getThreeUserMaxBill();
 
         request.setAttribute("countUser", countUser);
         request.setAttribute("listHouse", listHouse);
-        request.setAttribute("listBill", listbill);
+       // request.setAttribute("listBill", listbill);
         request.setAttribute("listHouse", listHouse);
         request.setAttribute("countAdmin", countAdmin);
         request.setAttribute("countAll", countAll);

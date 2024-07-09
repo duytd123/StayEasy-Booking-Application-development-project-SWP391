@@ -30,6 +30,7 @@ public class EditHouseServlet extends HttpServlet {
     private static final String STRING_PATTERN = "^(?!\\s*$).{6,19}$";
     public static final String ADDRESS_VALID = "[a-zA-Z0-9.{6,19} ]+";
 
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -92,6 +93,7 @@ public class EditHouseServlet extends HttpServlet {
         String description = request.getParameter("description");
         int locationid = Integer.parseInt(request.getParameter("location"));
         int menuid = Integer.parseInt(request.getParameter("menu"));
+        
         Location location = new Location(locationid, null);
         Menu menu = new Menu(menuid, null);
 

@@ -64,7 +64,7 @@ public class NextEditHouseServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter("houseId"));
         LocationDAO ldao = new LocationDAO();
         List<Location> llist = ldao.getLocation();
         MenuDAO mdao = new MenuDAO();

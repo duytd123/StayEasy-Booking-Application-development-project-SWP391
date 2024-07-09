@@ -1,0 +1,402 @@
+/* media size definitions */
+/* fonts definitions */
+:root {
+  --bui_color_destructive_dark: #a30000;
+  --bui_color_destructive: #c00;
+  --bui_color_destructive_light: #fcb4b4;
+  --bui_color_destructive_lighter: #ffebeb;
+  --bui_color_destructive_lightest: #fff0f0;
+  --bui_color_callout_dark: #bc5b01;
+  --bui_color_callout: #ff8000;
+  --bui_color_callout_light: #ffc489;
+  --bui_color_callout_lighter: #fff0e0;
+  --bui_color_callout_lightest: #fff8f0;
+  --bui_color_complement_dark: #cd8900;
+  --bui_color_complement: #febb02;
+  --bui_color_complement_light: #ffe08a;
+  --bui_color_complement_lighter: #fdf4d8;
+  --bui_color_complement_lightest: #fefbf0;
+  --bui_color_constructive_dark: #006607;
+  --bui_color_constructive: #008009;
+  --bui_color_constructive_light: #97e59c;
+  --bui_color_constructive_lighter: #e7fde9;
+  --bui_color_constructive_lightest: #f1fef2;
+  --bui_color_primary_dark: #00224f;
+  --bui_color_primary: #003580;
+  --bui_color_primary_light: #bad4f7;
+  --bui_color_primary_lighter: #ebf3ff;
+  --bui_color_primary_lightest: #fafcff;
+  --bui_color_grayscale_dark: #333;
+  --bui_color_grayscale: #6b6b6b;
+  --bui_color_grayscale_light: #bdbdbd;
+  --bui_color_grayscale_lighter: #e6e6e6;
+  --bui_color_grayscale_lightest: #f5f5f5;
+  --bui_color_black: #000;
+  --bui_color_white: #fff;
+  --bui_color_action_dark: #005c9d;
+  --bui_color_action: #0071c2;
+  --bui_color_action_light: #a3d7fc;
+  --bui_color_action_lighter: #e4f4ff;
+  --genius_color_primary: #004cb8;
+}
+:root {
+    --bui_unit_value: 8;
+    --bui_unit_smaller: 2px;
+    --bui_unit_small: 4px;
+    --bui_unit_medium: 8px;
+    --bui_unit_large: 16px;
+    --bui_unit_larger: 24px;
+    --bui_unit_largest: 32px;
+}
+:root {
+  --bui_font_smaller_size: 12px;
+  --bui_font_smaller_line_height: 18px;
+  --bui_font_small_size: 14px;
+  --bui_font_small_line_height: 20px;
+  --bui_font_medium_size: 16px;
+  --bui_font_medium_line_height: 24px;
+  --bui_font_large_size: 20px;
+  --bui_font_large_line_height: 28px;
+  --bui_font_larger_size: 24px;
+  --bui_font_larger_line_height: 32px;
+  --bui_font_largest_size: 32px;
+  --bui_font_largest_line_height: 40px;
+  --bui_font_weight_normal: 400;
+  --bui_font_weight_medium: 500;
+  --bui_font_weight_bold: 700;
+  --bui_font_stack_sans: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif;
+  --bui_font_stack_serif: "Georgia", serif;
+  --bui_font_stack_mono: "Monaco", "Courier New", monospace;
+  --bui_font_stack_arabic: "Geeza Pro", "Tahoma", var(--bui_font_stack_sans);
+}
+:root {
+  --bui_font_smaller_size: 12px;
+  --bui_font_smaller_line_height: 18px;
+  --bui_font_small_size: 14px;
+  --bui_font_small_line_height: 20px;
+  --bui_font_medium_size: 16px;
+  --bui_font_medium_line_height: 24px;
+  --bui_font_large_size: 20px;
+  --bui_font_large_line_height: 28px;
+  --bui_font_larger_size: 24px;
+  --bui_font_larger_line_height: 32px;
+  --bui_font_largest_size: 32px;
+  --bui_font_largest_line_height: 40px;
+  --bui_font_weight_normal: 400;
+  --bui_font_weight_medium: 500;
+  --bui_font_weight_bold: 700;
+  --bui_font_stack_sans: "BlinkMacSystemFont", -apple-system, "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif;
+  --bui_font_stack_serif: "Georgia", serif;
+  --bui_font_stack_mono: "Monaco", "Courier New", monospace;
+  --bui_font_stack_arabic: "Geeza Pro", "Tahoma", var(--bui_font_stack_sans);
+}
+.ext-feedback {
+  width: 320px;
+  padding: 0;
+}
+.ext-feedback .bui-panel {
+  padding: 0;
+}
+.ext-feedback-cta {
+  display: inline-block;
+}
+.ext-feedback__header {
+  align-items: center;
+  border-bottom: 1px solid var(--bui_color_border_alt);
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  padding: 12px var(--bui_unit_large);
+}
+.ext-feedback__title {
+  margin: var(--bui_unit_small) 0;
+}
+.ext-feedback__close-icon {
+  flex: 0 0 auto;
+}
+.ext-feedback__body {
+  padding: var(--bui_unit_large);
+}
+.ext-feedback__subtitle {
+  margin: 0 0 var(--bui_unit_medium);
+}
+.ext-feedback__copy {
+  margin: 0 0 var(--bui_unit_large);
+}
+.ext-feedback__feedback-area {
+  display: flex;
+}
+.ext-feedback__scale,
+.ext-feedback__legend-for-scale {
+  display: flex;
+  justify-content: space-between;
+}
+.ext-feedback__scale {
+  margin-top: var(--bui_unit_large);
+}
+.ext-feedback__legend-for-scale {
+  margin-top: var(--bui_unit_smaller);
+}
+.ext-feedback__rating {
+  background: var(--bui_color_white);
+  border-radius: 50%;
+  border: 0 none;
+  color: inherit;
+  cursor: pointer;
+  fill: currentColor;
+  height: 36px;
+  outline: none;
+  padding: 0;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  width: 36px;
+}
+.ext-feedback__rating:after {
+  border-radius: 50%;
+  border: 2px solid;
+  box-sizing: border-box;
+  color: var(--bui_color_black_with_alpha); /* I actually change the border-color from here when the button is selected, disabled etc */
+  content: "";
+  display: block;
+  height: 100%;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.ext-feedback__rating:hover {
+  background-color: var(--bui_color_grayscale_lightest);
+}
+.ext-feedback__rating[disabled],
+.ext-feedback__rating[disabled]:after {
+  pointer-events: none;
+  color: var(--bui_color_grayscale_light);
+}
+.ext-feedback__rating--selected,
+.ext-feedback__rating--selected[disabled],
+.ext-feedback__rating--selected:after,
+.ext-feedback__rating--selected[disabled]:after {
+  color: var(--bui_color_action);
+}
+.rating__button--selected:after {
+  border-color: var(--bui_color_action);
+}
+@keyframes rating__button__spin {
+100% {
+    transform: rotate(360deg);
+}
+}
+.ext-feedback__rating--selected.ext-feedback__rating--loading:after {
+  animation: rating__button__spin 1.2s linear infinite;
+  border-color: var(--bui_color_primary_lighter) !important;
+  border-top-color: var(--bui_color_action) !important;
+}
+.ext-feedback-written-feedback {
+  margin-top: var(--bui_unit_smaller) !important;
+  margin-bottom: var(--bui_unit_large) !important;
+}
+.ext-feedback__actions {
+  display: flex;
+  flex-wrap: wrap;
+}
+.ext-feedback__actions > .ext-feedback__action + .ext-feedback__action {
+  margin-left: var(--bui_unit_large);
+}
+[dir="rtl"]
+  .ext-feedback__actions
+  > .ext-feedback__action
+  + .ext-feedback__action {
+  margin-left: 0;
+  margin-right: var(--bui_unit_large);
+}
+.ext-feedback-thumbs .ext-feedback__rating {
+  align-items: center;
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+.ext-feedback-thumbs .ext-feedback__rating:after {
+  border-width: 1px;
+  border-color: var(--bui_color_grayscale_lighter);
+}
+.ext-feedback-thumbs .ext-feedback__rating:hover {
+  background-color: var(--bui_color_grayscale_lighter);
+  border-color: var(--bui_color_grayscale_light);
+}
+.ext-feedback-thumbs .ext-feedback__rating[disabled] {
+  opacity: 0.5;
+}
+.ext-feedback-thumbs .ext-feedback__rating--selected {
+  background: transparent;
+  color: var(--bui_color_black);
+}
+.ext-feedback-thumbs .ext-feedback__rating--selected:after {
+  border-color: var(--bui_color_black);
+}
+.ext-feedback-thumbs .ext-feedback__rating--selected:hover {
+  background: transparent;
+}
+.ext-feedback__thumb-icon {
+  width: var(--bui_unit_large);
+  height: var(--bui_unit_large);
+  fill: var(--bui_color_black);
+}
+.ext-feedback__thumb-icon--up {
+  transform: translate(0, -1px);
+}
+.ext-feedback__thumb-icon--down {
+  transform: translate(0, 1px);
+}
+
+/* media size definitions */
+/* fonts definitions */
+:root {
+  --bui_color_destructive_dark: #a30000;
+  --bui_color_destructive: #c00;
+  --bui_color_destructive_light: #fcb4b4;
+  --bui_color_destructive_lighter: #ffebeb;
+  --bui_color_destructive_lightest: #fff0f0;
+  --bui_color_callout_dark: #bc5b01;
+  --bui_color_callout: #ff8000;
+  --bui_color_callout_light: #ffc489;
+  --bui_color_callout_lighter: #fff0e0;
+  --bui_color_callout_lightest: #fff8f0;
+  --bui_color_complement_dark: #cd8900;
+  --bui_color_complement: #febb02;
+  --bui_color_complement_light: #ffe08a;
+  --bui_color_complement_lighter: #fdf4d8;
+  --bui_color_complement_lightest: #fefbf0;
+  --bui_color_constructive_dark: #006607;
+  --bui_color_constructive: #008009;
+  --bui_color_constructive_light: #97e59c;
+  --bui_color_constructive_lighter: #e7fde9;
+  --bui_color_constructive_lightest: #f1fef2;
+  --bui_color_primary_dark: #00224f;
+  --bui_color_primary: #003580;
+  --bui_color_primary_light: #bad4f7;
+  --bui_color_primary_lighter: #ebf3ff;
+  --bui_color_primary_lightest: #fafcff;
+  --bui_color_grayscale_dark: #333;
+  --bui_color_grayscale: #6b6b6b;
+  --bui_color_grayscale_light: #bdbdbd;
+  --bui_color_grayscale_lighter: #e6e6e6;
+  --bui_color_grayscale_lightest: #f5f5f5;
+  --bui_color_black: #000;
+  --bui_color_white: #fff;
+  --bui_color_action_dark: #005c9d;
+  --bui_color_action: #0071c2;
+  --bui_color_action_light: #a3d7fc;
+  --bui_color_action_lighter: #e4f4ff;
+  --genius_color_primary: #004cb8;
+}
+:root {
+    --bui_unit_value: 8;
+    --bui_unit_smaller: 2px;
+    --bui_unit_small: 4px;
+    --bui_unit_medium: 8px;
+    --bui_unit_large: 16px;
+    --bui_unit_larger: 24px;
+    --bui_unit_largest: 32px;
+}
+/* Layouts - display */
+.ext-footer__top-content__inner,
+.ext-footer__bottom-content__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ext-footer__bottom-content__inner {
+  min-height: 36px; /* Note: to make it equal to lang selector */
+}
+@media (min-width: 576px) and (max-width: 991px) {
+.ext-footer__top-content__first,
+  .ext-footer__top-content__second {
+    width: 50%;
+    flex-shrink: 0;
+    flex-grow: 0;
+}
+}
+@media (max-width: 575px) {
+.ext-footer__top-content__inner,
+  .ext-footer__bottom-content__inner {
+    flex-direction: column-reverse;
+}
+}
+/* Layout - first row */
+.ext-footer__top-content {
+  background: var(--bui_color_primary);
+}
+/* Footer links */
+/*
+  Due some pages (at least 1 we have noticed) load BUI as part of their application CSS,
+  which comes after Golem CSS, we need extra specificity here (.ext-footer):
+*/
+.ext-footer .ext-footer__link,
+.ext-footer .ext-footer__link:visited,
+.ext-footer .ext-footer__link:hover {
+  color: var(--bui_color_white);
+}
+.ext-footer .ext-footer__link:active,
+.ext-footer .ext-footer__link:focus {
+  color: var(--bui_color_grayscale_light);
+}
+.ext-footer__link {
+  display: inline-block;
+  margin: var(--bui_unit_medium) var(--bui_unit_large) var(--bui_unit_large) 0;
+}
+@media (max-width: 991px) {
+.ext-footer__link {
+    display: block;
+}
+}
+@media (max-width: 575px) {
+.ext-footer__link {
+    text-align: center;
+}
+}
+/* Footer CTAs */
+.ext-footer__ctas {
+  text-align: right;
+}
+.ext-footer__cta {
+  margin: var(--bui_unit_medium) 0;
+}
+.ext-footer__cta:last-child {
+  margin-left: var(--bui_unit_larger);
+}
+@media (max-width: 1200px) {
+.ext-footer__cta,
+  .ext-footer__cta .bui-button {
+    width: 250px;
+}
+}
+@media (max-width: 575px) {
+.ext-footer__ctas {
+    text-align: center;
+    margin-bottom: var(--bui_unit_medium);
+}
+.ext-footer__cta {
+    margin-bottom: var(--bui_unit_large);
+    display: block;
+}
+.ext-footer__cta:first-child {
+    margin-right: 0;
+}
+.ext-footer__cta:last-child {
+    margin-left: 0;
+}
+}
+/* Layout - second row */
+.ext-footer__bottom-content {
+  background: var(--bui_color_primary);
+}
+/* Copyright */
+.ext-footer__bottom-content__first {
+  color: var(--bui_color_white);
+}
+
+
+/*# sourceMappingURL=https://istatic.booking.com/internal-static/capla/static/css/32199d33.3cc3cf7c.chunk.css.map*/

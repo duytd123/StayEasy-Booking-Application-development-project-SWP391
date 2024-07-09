@@ -6,13 +6,22 @@
 package Controller;
 
 import Dao.HouseDAO;
+import Dao.HouseImgDAO;
+import Dao.LocationDAO;
+import Dao.MenuDAO;
 import Model.House;
+import Model.Location;
+import Model.Menu;
+import configs.Validate;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -38,7 +47,7 @@ public class SearchHouseMain extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchHouseMain</title>");            
+            out.println("<title>Servlet SearchHouseMain</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet SearchHouseMain at " + request.getContextPath() + "</h1>");
@@ -58,22 +67,52 @@ public class SearchHouseMain extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String location = request.getParameter("location");
+        String menu = request.getParameter("menu");
+        int locationId = -1;
+        int menuId = -1;
+        try {
+            locationId = Integer.parseInt(location);
+            request.setAttribute("currentLocation", locationId);
+        } catch (Exception e) {
+            System.out.println("Location error: " + e);
+        }
+        try {
+            menuId = Integer.parseInt(menu);
+            request.setAttribute("currentMenu", menuId);
+        } catch (Exception e) {
+            System.out.println("Location error: " + e);
+        }
 
+        LocationDAO locationDAO = new LocationDAO();
+        MenuDAO menuDao = new MenuDAO();
+        List<Menu> menus = menuDao.getMenu();
+        List<Location> locations = locationDAO.getLocation();
 
-    throws ServletException, IOException {
-    String whereTo = request.getParameter("whereTo");
-    String arrivals = request.getParameter("arrivals");
-    String guests = request.getParameter("guests"); // Access other fields
-    String leaving = request.getParameter("leaving");
-    
-    
-    HouseDAO dao = new HouseDAO();
-    List<House> listHouse = dao.searchHouse(whereTo, arrivals, guests, leaving);  
+        String whereTo = request.getParameter("whereTo");
+        String arrivals = request.getParameter("arrivals");
+        String guests = request.getParameter("guests");
+        String leaving = request.getParameter("leaving");
 
-    request.setAttribute("list", listHouse);
-    request.getRequestDispatcher("Listhousemain.jsp").forward(request, response);
-}
+        if (!Validate.checkDate(arrivals) || !Validate.checkDate(leaving)) {
+            response.sendRedirect("error-page.jsp");
+            return;
+        }
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate start = LocalDate.parse(arrivals, dateFormatter);
+        LocalDate end = LocalDate.parse(leaving, dateFormatter);
+        Date sqlStartDate = Date.valueOf(start);
+        Date sqlEndDate = Date.valueOf(end);
+        HouseDAO dao = new HouseDAO();
+        List<House> listHouse = dao.searchfindHouse(whereTo, sqlStartDate, guests, sqlEndDate, locationId, menuId);
+        HouseImgDAO dao2 = new HouseImgDAO();
 
+        request.setAttribute("list", listHouse);
+        request.setAttribute("menus", menus);
+        request.setAttribute("locations", locations);
+        request.getRequestDispatcher("Listhousemain.jsp").forward(request, response);
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -99,16 +138,12 @@ public class SearchHouseMain extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-
-    
-    
     public static void main(String[] args) {
-        HouseDAO dao = new HouseDAO();
-        List<House> listHouse = dao.searchHouse("o", "2024-05-30", "2", "2024-05-31");
-        for(House h : listHouse){
-            System.out.println(h.getHouseid());
-        }
+//        HouseDAO dao = new HouseDAO();
+//        List<House> listHouse = dao.searchHouse("o", "2024-05-30", "2", "2024-05-31");
+//        for (House h : listHouse) {
+//            System.out.println(h.getHouseid());
+//        }
     }
-
 
 }

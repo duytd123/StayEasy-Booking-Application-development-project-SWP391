@@ -93,6 +93,7 @@
         }
 
         .image_wrapper {
+            position: relative;
             display: inline-block;
             transition: transform 0.3s ease;
         }
@@ -125,6 +126,7 @@
         }
 
     </style>
+
     <body>
 
         <!-- Include header -->
@@ -173,6 +175,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="subscribe_form">
                         <form action="SignUpServlet" method="get">
                             <input id="emailDiscount" type="email" autocomplete="off" placeholder="Go to sigup">
@@ -204,26 +207,26 @@
 
             <div class="box-container">
                 <div class="box">
-                    <img src="Images/g-1.jpg" alt="">
+                    <img src="Images/HALONG.jpg" alt="">
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Ha Long</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
                 </div>
                 <div class="box">
-                    <img src="Images/g-2.jpg" alt="">
+                    <img src="Images/da-nang.jpg" alt="">
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Da Nang</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
                 </div>
                 <!-- Add more gallery boxes as needed -->
                 <div class="box">
-                    <img src="Images/g-2.jpg" alt="">
+                    <img src="Images/con-dao.jpg" alt="">
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Con Dao</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
@@ -233,29 +236,29 @@
 
 
         <section class="gallery" id="gallery">
-
             <div class="box-container">
                 <div class="box">
-                    <img src="Images/g-1.jpg" alt="">
+                    <img src="Images/Da-Lat.jpg" alt="">
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Da Lat</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
                 </div>
                 <div class="box">
-                    <img src="Images/g-2.jpg" alt="">
+                    <img src="Images/nhatrang.png" alt="">
+                    <<h2></h2>L
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Nha Trang</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
                 </div>
                 <!-- Add more gallery boxes as needed -->
                 <div class="box">
-                    <img src="Images/g-2.jpg" alt="">
+                    <img src="Images/Sa-pa.jpg" alt="">
                     <div class="content">
-                        <h3>About more</h3>
+                        <h3>Sa Pa</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
@@ -290,10 +293,10 @@
                         <% String email = (String)session.getAttribute("email"); %>
                         <input type="email" name="Email" placeholder="Email" value="<%= email != null ? email : "" %>">
                     </div>
-<!--                    <div class="inputBox">
-                        <input type="number" name="Number" placeholder="Number">
-                        <input type="text" name="Subject" placeholder="Subject">
-                    </div>-->
+                    <!--                    <div class="inputBox">
+                                            <input type="number" name="Number" placeholder="Number">
+                                            <input type="text" name="Subject" placeholder="Subject">
+                                        </div>-->
                     <textarea name="Message" placeholder="Message" cols="30" rows="10"></textarea>
                     <input type="submit" class="btn" value="Send message">
                 </form>
@@ -319,7 +322,6 @@
 
         <!-- Include footer -->
         <%@ include file="footer.jsp" %>
-
         <script>
             const scriptURL = "https://script.google.com/macros/s/AKfycbzmx3GEyLiss69xqkLRzbnbatnyo3kYTUCatb3PQUEGjxJbL3HubmFjoPFAYxoWXylIZg/exec";
             const form = document.forms["submit-to-google-sheet"];
@@ -330,7 +332,64 @@
                         .catch((error) => console.error("Error!", error.message));
             });
         </script>
+        <script>
+            window.onload = function () {
+                var today = new Date().toISOString().split('T')[0];
+                var arrivals = document.querySelector('input[name="arrivals"]');
+                var leaving = document.querySelector('input[name="leaving"]');
+                var guests = document.querySelector('input[name="guests"]');
+                var form = document.getElementById('bookingForm');
 
+                arrivals.setAttribute('min', today);
+                leaving.setAttribute('min', today);
+
+                arrivals.addEventListener('change', function () {
+                    var arrivalDate = this.value;
+                    leaving.setAttribute('min', arrivalDate);
+                });
+
+                form.addEventListener('submit', function (event) {
+                    var guestsValue = parseInt(guests.value);
+                    if (guestsValue <= 0) {
+                        event.preventDefault();
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Number of guests must be greater than 0!',
+                        });
+                    }
+                });
+            }
+        </script>
+        <script>
+            let currentIndex = 0;
+            const images = document.querySelectorAll('.image_wrapper img');
+            let container = document.querySelector('.image_wrapper');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const imageWidth = images[0].offsetWidth + 10;
+            console.log(container)
+
+            function nextImages() {
+                if (currentIndex < images.length - 1) {
+                    currentIndex++;
+
+                } else {
+                    currentIndex = 0;
+                }
+                container.style.transform = "translateX(-" + (currentIndex * imageWidth) + "px)";
+            }
+
+            function prevImages() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                } else {
+                    currentIndex = images.length - 1;
+                }
+                container.style.transform = "translateX(-" + (currentIndex * imageWidth) + "px)";
+            }
+        </script>
         <!-- jquery cdn link  -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>

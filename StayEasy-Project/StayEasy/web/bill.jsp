@@ -1,4 +1,3 @@
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -14,27 +13,8 @@
     </head>
     <body>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
-        <link rel="stylesheet" href="StyleSheet.css">
-        <link rel="stylesheet" href="css/housepage.css">
-        <link rel="stylesheet" href="css/style.css">
-        <div class="container-xl px-4 mt-4">
-            <!-- Account page navigation-->
-            <nav class="nav nav-borders">
-                <a class="nav-link" href="Index.jsp"  target="">Home</a>
-                <a class="nav-link" href="user.jsp" target="">Profile</a>
-                <a class="nav-link active" href="BillUserServlet" target="">Billing</a>
-                <a class="nav-link" href="security.jsp" target="">Security</a>
-            </nav>
+        
+           <div class="container-xl px-4 mt-4">
             <hr class="mt-0 mb-4">
             <div class="row">
                 <div class="col-lg-4 mb-4">
@@ -128,6 +108,12 @@
             </div>
         </div>
 
+            
+            
+            
+            
+            
+            
         <style type="text/css">
             body{
                 margin-top:20px;

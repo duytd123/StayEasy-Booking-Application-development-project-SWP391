@@ -36,7 +36,7 @@ public class mainContronller extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String action = request.getParameter("action");
             if(action==null || action.equals("")){
-                url = "Index.jsp";
+                url = "home";
             }
             else if(action.equals("")){
                 url = "search";

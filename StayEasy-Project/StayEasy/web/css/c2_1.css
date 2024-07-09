@@ -1,0 +1,19 @@
+/* media size definitions */
+/* fonts definitions */
+html,
+body,
+body > div[data-capla-component] {
+  height: 100%;
+}
+.full-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+/* This is to make footer stick to the bottom. */
+.extranet-page-content {
+  flex: 1 0 auto;
+}
+
+
+/*# sourceMappingURL=https://istatic.booking.com/internal-static/capla/static/css/f7728259.a591419f.chunk.css.map*/

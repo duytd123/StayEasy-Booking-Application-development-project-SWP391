@@ -19,3 +19,19 @@ formBtns.addEventListener('click', () => {
 formClose.addEventListener('click', () => {
     loginForm.classList.remove('active');
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const readMoreBtns = document.querySelectorAll('.read-more-btn');
+    
+    readMoreBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const description = btn.previousElementSibling;
+            description.classList.toggle('full-description');
+            if (description.classList.contains('full-description')) {
+                btn.textContent = 'Read less';
+            } else {
+                btn.textContent = 'Read more';
+            }
+        });
+    });
+});
+

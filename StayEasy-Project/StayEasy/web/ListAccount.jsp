@@ -98,9 +98,8 @@
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-
-                                    <th>ID</th>
-                                    <th>Image</th>
+                                    <th>Account_ID</th>
+                                    <th>Account_Img</th>
                                     <th>Full Name</th>
                                     <th>Username</th>
                                     <th>Password</th>

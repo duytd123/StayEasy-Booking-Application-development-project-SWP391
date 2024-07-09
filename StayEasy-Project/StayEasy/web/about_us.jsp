@@ -52,7 +52,6 @@
         </style>
     </head>
 
-    <%@ include file="header.jsp" %>
     
     <body>           
         <!-- Content

@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-
 /**
  *
  * @author Admin
@@ -37,15 +36,22 @@ public class ListCommentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            AccountDAO adao = new AccountDAO();
-        Account a = adao.getAccounts();
-            CommentDAO dao = new CommentDAO();
-            List<Comment> list = dao.getComment();
-            request.setAttribute("account", a);
-            request.setAttribute("Comment", list);
-            request.getRequestDispatcher("ListComment.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+
+            Account loggedInUser = (Account) request.getSession().getAttribute("acc");
+            if (loggedInUser != null) {
+                int hostId = loggedInUser.getUserid();
+
+                CommentDAO dao = new CommentDAO();
+                List<Comment> list = dao.getCommentsByHouseId(hostId);
+
+                request.setAttribute("commentList", list);
+
+                request.getRequestDispatcher("DashBoardHostComment.jsp").forward(request, response);
+            } else {
+                // If user is not logged in, handle accordingly (redirect to login or show error)
+                response.sendRedirect("LoginServlet"); // Adjust login servlet URL
+            }
         }
     }
 
