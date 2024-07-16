@@ -6,7 +6,7 @@
 package Dao;
 
 import Connect.DBContext;
-import Model.Menu;
+import Model.Role;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,9 +17,9 @@ import java.util.List;
  *
  * @author Admin
  */
-public class MenuDAO {
+public class RoleDAO {
     Connection con;
-    public MenuDAO(){
+    public RoleDAO(){
         DBContext dbcontext = new DBContext();
         try {
             con = dbcontext.connection;
@@ -29,43 +29,38 @@ public class MenuDAO {
         }
     }
     
-    public List<Menu> getMenu(){
-        String sql = "select * from dbo.Menu";
-        List<Menu> list = new ArrayList<>();
+     public List<Role> getRole(){
+        String sql = "select * from dbo.Role";
+        List<Role> list = new ArrayList<>();
         try {
-
+            //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
             while(resultSet.next()){
-
-                int menuid = resultSet.getInt(1);
-                String menuname = resultSet.getString(2);
-                Menu m = new Menu(menuid, menuname);
-                list.add(m);
+                // lấy value theo từng cột
+                int roleid = resultSet.getInt(1);
+                String rolename = resultSet.getString(2);
+                Role r = new Role(roleid, rolename);
+                list.add(r);
             }
         } catch (Exception e) {
             System.out.println("error: "+e);
         }
         
         return list;
-    }
-    
-     public Menu getMenuById(int id) {
-        String sql = "SELECT * FROM dbo.Menu WHERE menu_id = ?";
-        Menu menu = null;
-        try {
-            PreparedStatement pre = con.prepareStatement(sql);
-            pre.setInt(1, id);
-            ResultSet resultSet = pre.executeQuery();
-            if (resultSet.next()) {
-                int menuId = resultSet.getInt("id");
-                String menuName = resultSet.getString("name");
-                menu = new Menu(menuId, menuName);
+     }
+      public static void main(String[] args) {
+        RoleDAO roleDAO = new RoleDAO();
+        List<Role> roles = roleDAO.getRole();
+        
+        if (!roles.isEmpty()) {
+            System.out.println("Roles fetched successfully:");
+            for (Role role : roles) {
+                System.out.println("Role ID: " + role.getId() + ", Role Name: " + role.getName());
             }
-        } catch (Exception e) {
-            System.out.println("Error: " + e);
+        } else {
+            System.out.println("No roles found or there was an error fetching roles.");
         }
-        return menu;
     }
 }

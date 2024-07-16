@@ -73,14 +73,13 @@
 
 <header>
     <div id="menu-bar" class="fas fa-bars"></div>
-    <a href="home" class="logo"><span>Welcome</span>Stay<span>Ease</span>Booking</a>
+    <a href="home" class="logo">Stay<span>Easy</span>Booking</a>
     <nav class="navbar">
         <a href="home">Home</a>
-        <a href="#book">Book</a>
-        <a href="aboutus">About Us</a>
-        <a href="#packages">Room</a>
-        <a href="#contact">Contact</a>
-        <a href="hostpage" >Ready a partner</a>
+            <a href="#book">Book</a>
+                <a href="aboutus">About Us</a>
+                    <a href="#packages">Room</a>
+                        <a href="#contact">Contact</a>
         <c:if test="${sessionScope.acc != null}">
             <c:choose>
                 <c:when test="${acc.role.id == 0}">
@@ -90,7 +89,7 @@
                     <a href="DashboardHostServlet">Dashboard</a>
                 </c:when>
                 <c:otherwise>
-                    <!-- Additional roles can be added here -->
+                    <a href="hostpage" >Ready a partner</a>
                 </c:otherwise>
             </c:choose>
         </c:if>

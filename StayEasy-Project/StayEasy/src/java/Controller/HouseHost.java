@@ -32,13 +32,13 @@ public class HouseHost extends HttpServlet {
 
             // Retrieve houses for the logged-in host
             HouseDAO houseDAO = new HouseDAO();
-            List<House> houseList = houseDAO.getHousesByHost(hostId); // Adjust method name if necessary
+        //    List<House> houseList = houseDAO.getHousesByHost(hostId); // Adjust method name if necessary
 
             // Log houses retrieved
-            System.out.println("Number of houses retrieved: " + houseList.size());
+        //    System.out.println("Number of houses retrieved: " + houseList.size());
 
             // Set the house list as a request attribute
-            request.setAttribute("HouseList", houseList);
+        //    request.setAttribute("HouseList", houseList);
 
             // Forward to ListHouse.jsp to display the houses
             request.getRequestDispatcher("/HostIndex.jsp").forward(request, response);

@@ -4,25 +4,20 @@
  */
 package Controller;
 
-import Dao.AccountDAO;
-import Dao.HouseDAO;
-import Model.Account;
-import Model.House;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
- * @author Admin
+ * @author badao
  */
-@WebServlet(name = "DashboardServlet", urlPatterns = {"/DashboardServlet"})
-public class DashboardServlet extends HttpServlet {
+public class Error extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +36,10 @@ public class DashboardServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DashboardServlet</title>");
+            out.println("<title>Servlet Error</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DashboardServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Error at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,28 +57,7 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //count list user 
-        AccountDAO adao = new AccountDAO();
-        int countUser = adao.countAccountByRole(2);
-        int countAdmin = adao.countAccountByRole(0);
-        int countAll = adao.countAccount();
-
-        //get 3 house best 
-        HouseDAO hdao = new HouseDAO();
-        List<House> listHouse = hdao.getNameThreeHouseBest();
-
-        //get 3 Account best
-        AccountDAO accountDAO = new AccountDAO();
-        List<Account> listAcount = accountDAO.getThreeUserMaxBill();
-
-        request.setAttribute("countUser", countUser);
-        request.setAttribute("listHouse", listHouse);
-        request.setAttribute("listAcount", listAcount);
-        request.setAttribute("listHouse", listHouse);
-        request.setAttribute("countAdmin", countAdmin);
-        request.setAttribute("countAll", countAll);
-        request.getRequestDispatcher("AdminIndex.jsp").forward(request, response);
+        request.getRequestDispatcher("Error.jsp").forward(request, response);
     }
 
     /**
@@ -97,7 +71,27 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        session.removeAttribute("mess");
+//            Account agmail = (Account)session.getAttribute("acc");
+//            AccountDAO dao = new AccountDAO();
+//            Account acc = dao.checkAccountByEmail(agmail.getEmail());
+//            if(acc != null){
+        boolean a = (boolean) session.getAttribute("rememberme");
+        if (!a) {
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (int i = 0; i < cookies.length; i++) {
+                    cookies[i].setMaxAge(0);
+                    response.addCookie(cookies[i]);
+                }
+            }
+        }
+        session.removeAttribute("acc");
+        session.removeAttribute("rememberme");
+        response.sendRedirect("home");
     }
 
     /**

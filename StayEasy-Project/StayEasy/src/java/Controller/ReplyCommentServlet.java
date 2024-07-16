@@ -4,25 +4,28 @@
  */
 package Controller;
 
-import Dao.AccountDAO;
-import Dao.HouseDAO;
+import Dao.CommentDAO;
 import Model.Account;
-import Model.House;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
+import Model.CommentWithInfo;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "DashboardServlet", urlPatterns = {"/DashboardServlet"})
-public class DashboardServlet extends HttpServlet {
+@WebServlet(name = "ReplyCommentServlet", urlPatterns = {"/replycomment"})
+public class ReplyCommentServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,19 +38,7 @@ public class DashboardServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DashboardServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DashboardServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,27 +54,15 @@ public class DashboardServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //count list user 
-        AccountDAO adao = new AccountDAO();
-        int countUser = adao.countAccountByRole(2);
-        int countAdmin = adao.countAccountByRole(0);
-        int countAll = adao.countAccount();
+        int commentId = Integer.parseInt(request.getParameter("commentId"));
 
-        //get 3 house best 
-        HouseDAO hdao = new HouseDAO();
-        List<House> listHouse = hdao.getNameThreeHouseBest();
+        // Retrieve comment details using DAO
+        CommentDAO dao = new CommentDAO();
+        CommentWithInfo comment = dao.getReplyCommentDetail(commentId);
 
-        //get 3 Account best
-        AccountDAO accountDAO = new AccountDAO();
-        List<Account> listAcount = accountDAO.getThreeUserMaxBill();
-
-        request.setAttribute("countUser", countUser);
-        request.setAttribute("listHouse", listHouse);
-        request.setAttribute("listAcount", listAcount);
-        request.setAttribute("listHouse", listHouse);
-        request.setAttribute("countAdmin", countAdmin);
-        request.setAttribute("countAll", countAll);
-        request.getRequestDispatcher("AdminIndex.jsp").forward(request, response);
+        // Set comment attribute and forward to mngreply.jsp
+        request.setAttribute("comment", comment);
+        request.getRequestDispatcher("dashboardhost/mngreply.jsp").forward(request, response);
     }
 
     /**
@@ -97,7 +76,18 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        String reply = request.getParameter("reply");
+        int commentId = Integer.parseInt(request.getParameter("commentId"));
+
+        CommentDAO dao = new CommentDAO();
+        dao.addReplyToComment(commentId, reply);
+
+        HttpSession session = request.getSession();
+        session.setAttribute("replySuccess", true);
+
+        // Redirect back to mngcomment.jsp
+        response.sendRedirect(request.getContextPath() + "/commentmanager");
     }
 
     /**

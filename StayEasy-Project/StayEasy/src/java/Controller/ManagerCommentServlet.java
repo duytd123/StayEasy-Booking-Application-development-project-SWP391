@@ -4,25 +4,27 @@
  */
 package Controller;
 
-import Dao.AccountDAO;
-import Dao.HouseDAO;
+import Dao.CommentDAO;
 import Model.Account;
-import Model.House;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
+import Model.CommentWithInfo;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "DashboardServlet", urlPatterns = {"/DashboardServlet"})
-public class DashboardServlet extends HttpServlet {
+@WebServlet(name = "ManagerCommentServlet", urlPatterns = {"/commentmanager"})
+public class ManagerCommentServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,16 +39,16 @@ public class DashboardServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DashboardServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DashboardServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            Account loggedInUser = (Account) request.getSession().getAttribute("acc");
+            if (loggedInUser != null) {
+                int hostId = loggedInUser.getUserid();
+                CommentDAO dao = new CommentDAO();
+                List<CommentWithInfo> list = dao.getCommentsByHouseId(hostId);
+                request.setAttribute("commentList", list);
+                request.getRequestDispatcher("dashboardhost/mngcomment.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("LoginServlet"); 
+            }
         }
     }
 
@@ -62,28 +64,7 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //count list user 
-        AccountDAO adao = new AccountDAO();
-        int countUser = adao.countAccountByRole(2);
-        int countAdmin = adao.countAccountByRole(0);
-        int countAll = adao.countAccount();
-
-        //get 3 house best 
-        HouseDAO hdao = new HouseDAO();
-        List<House> listHouse = hdao.getNameThreeHouseBest();
-
-        //get 3 Account best
-        AccountDAO accountDAO = new AccountDAO();
-        List<Account> listAcount = accountDAO.getThreeUserMaxBill();
-
-        request.setAttribute("countUser", countUser);
-        request.setAttribute("listHouse", listHouse);
-        request.setAttribute("listAcount", listAcount);
-        request.setAttribute("listHouse", listHouse);
-        request.setAttribute("countAdmin", countAdmin);
-        request.setAttribute("countAll", countAll);
-        request.getRequestDispatcher("AdminIndex.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -96,8 +77,22 @@ public class DashboardServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {        
+            Account loggedInUser = (Account) request.getSession().getAttribute("acc");
+            if (loggedInUser != null) {
+                int hostId = loggedInUser.getUserid();
+                String txtSearch = request.getParameter("valueSearch");
+                
+                CommentDAO dao = new CommentDAO();
+
+                List<CommentWithInfo> commentList = dao.getCommentsWithInfoByHouseNameAndHost(txtSearch, hostId);
+
+                request.setAttribute("commentList", commentList);
+                request.getRequestDispatcher("dashboardhost/mngcomment.jsp").forward(request, response);
+
+            } else {
+                response.sendRedirect("LoginServlet"); 
+            }     
     }
 
     /**

@@ -1,28 +1,28 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Controller;
 
-import Dao.AccountDAO;
 import Dao.HouseDAO;
+import Dao.LocationDAO;
+import Dao.MenuDAO;
 import Model.Account;
-import Model.House;
+import Model.Location;
+import Model.Menu;
+import Model.HouseHost;
+import java.io.IOException;
+import java.util.List;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
-/**
- *
- * @author Admin
- */
-@WebServlet(name = "DashboardServlet", urlPatterns = {"/DashboardServlet"})
-public class DashboardServlet extends HttpServlet {
+@WebServlet(name = "UpdateHouseControl", urlPatterns = {"/updatehouse"})
+public class UpdateHouseControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,17 +36,34 @@ public class DashboardServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DashboardServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DashboardServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        request.setCharacterEncoding("UTF-8");
+
+        Account loggedInUser = (Account) request.getSession().getAttribute("acc");
+        if (loggedInUser != null) {
+            try {
+                int hostId = loggedInUser.getUserid();
+                String id_raw = request.getParameter("hid");
+                int id = Integer.parseInt(id_raw);
+                HouseDAO daoH = new HouseDAO();
+                HouseHost h = daoH.getHouseByHouseIDandHost(id, hostId);
+                
+                LocationDAO daoL = new LocationDAO();
+                MenuDAO daoM = new MenuDAO();
+                List<Location> listL = daoL.getLocation();
+                List<Menu> listM = daoM.getMenu();
+
+                request.setAttribute("detail", h);
+                request.setAttribute("listLoca", listL);
+                request.setAttribute("listMenu", listM);
+                request.getRequestDispatcher("dashboardhost/updatehouse.jsp").forward(request, response);
+
+            } catch (NumberFormatException e) {
+               
+                e.printStackTrace();
+                response.sendRedirect("error.jsp");
+            }
+        } else {
+            response.sendRedirect("LoginServlet");
         }
     }
 
@@ -62,28 +79,7 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        //count list user 
-        AccountDAO adao = new AccountDAO();
-        int countUser = adao.countAccountByRole(2);
-        int countAdmin = adao.countAccountByRole(0);
-        int countAll = adao.countAccount();
-
-        //get 3 house best 
-        HouseDAO hdao = new HouseDAO();
-        List<House> listHouse = hdao.getNameThreeHouseBest();
-
-        //get 3 Account best
-        AccountDAO accountDAO = new AccountDAO();
-        List<Account> listAcount = accountDAO.getThreeUserMaxBill();
-
-        request.setAttribute("countUser", countUser);
-        request.setAttribute("listHouse", listHouse);
-        request.setAttribute("listAcount", listAcount);
-        request.setAttribute("listHouse", listHouse);
-        request.setAttribute("countAdmin", countAdmin);
-        request.setAttribute("countAll", countAll);
-        request.getRequestDispatcher("AdminIndex.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

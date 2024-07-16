@@ -11,8 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-@WebServlet(name = "SignUpServlet", urlPatterns = {"/SignUpServlet"})
-public class SignUpServlet extends HttpServlet {
+@WebServlet(name = "SignUpServlet1", urlPatterns = {"/SignUpServlet1"})
+public class SignUpServlet1 extends HttpServlet {
     
     private void setErrorAndForward(HttpServletRequest request, HttpServletResponse response, String message, String username, String fullname, String email, String phone)
             throws ServletException, IOException {
@@ -27,7 +27,7 @@ public class SignUpServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("signup.jsp").forward(request, response);
+        request.getRequestDispatcher("signup_1.jsp").forward(request, response);
     }
     
     @Override
@@ -90,7 +90,7 @@ public class SignUpServlet extends HttpServlet {
             return;
         }
         
-        Role role = new Role(2, "customer");
+        Role role = new Role(1, "host");
         Account newAccount = new Account(-1, fullname, "", username, password, email, phone, 1, role);
         adao.signupAccount(newAccount);
         
@@ -100,6 +100,6 @@ public class SignUpServlet extends HttpServlet {
     
     @Override
     public String getServletInfo() {
-        return "Sign Up Servlet";
+        return "Sign Up Servlet1";
     }
 }
