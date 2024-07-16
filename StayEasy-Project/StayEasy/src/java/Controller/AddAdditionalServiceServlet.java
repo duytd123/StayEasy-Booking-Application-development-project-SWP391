@@ -77,7 +77,7 @@ public class AddAdditionalServiceServlet extends HttpServlet {
         AdditionalService a = new AdditionalService(-1, addservicename, addservicedesc);
         AdditionalServiceDAO dao = new AdditionalServiceDAO();
         dao.addAdditionalService(a);
-        response.sendRedirect("ListAddService");
+        response.sendRedirect("ListAddService?page=1&search=");
     }
 
     /**

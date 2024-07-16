@@ -87,7 +87,7 @@ public class EditAccountServlet extends HttpServlet {
         Account a = new Account(id, fullname, userimg, username, password, email, phone, status, role);
         AccountDAO dao = new AccountDAO();
         dao.editAccount(a);
-        response.sendRedirect("ListAccountServlet");
+        response.sendRedirect("ListAccountServlet?page=1&search=");
     }
 
     /**

@@ -4,6 +4,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -52,9 +53,9 @@
                         <a href="DashboardServlet"><span>Home</span></a>
                         <a href="ListHouseServlet">Room</a>
                         <a href="ListBillServlet">Orders</a>
-                        <a href="ListAccountServlet">Users</a>
+                        <a href="ListAccountServlet?page=1&search=">Users</a>
                         <a href="ListAddService">Service</a>
-                        <a href="ListCommentServlet">Messages</a>
+                        <a href="ListCommentServlet"></a>
                     </nav>
 
                     <div class="icons">
@@ -70,9 +71,10 @@
 
                 </div>
             </header>
+                        
 
-            <table>
-                <form action="SearchAddServiceServlet" class="search-bar-container"  method="post"  >
+            <table style="width: 100px; margin: auto">
+                <form action="ListAddService?page=1" class="search-bar-container  ml-3 my-53 "  method="get"  >
                     <input style="height: 60px;font-size: 40px;" type="text" name="search" id="search-bar" placeholder="Search here..."">
                     <button class="fas fa-search" style="height: 60px; font-size: 40px; background-color: #fff" value="search" type="submit"></button>
                 </form>
@@ -103,6 +105,16 @@
                 }
                 %>
             </table>
+            <nav class="mx-5 mt-3" aria-label="Page navigation example">
+                <ul class="pagination">
+                    <c:forEach var="i" begin="1" end="${count}">
+                        <li class="page-item"><a class="page-link" href="ListAddService?page=${i}&search=${search}">${i}</a></li>
+                    </c:forEach>
+                   
+                   
+                    
+                </ul>
+            </nav>
         </div>
     </body>
     <script src="admin_script.js"></script>

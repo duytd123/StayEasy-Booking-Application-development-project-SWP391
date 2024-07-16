@@ -15,7 +15,9 @@ public class DBContext {
             
             String username = "sa";
 
-            String password = "12345";
+
+            String password = "1234";
+
 
           
             String url = "jdbc:sqlserver://localhost:1433;databaseName=HouseBooking2";

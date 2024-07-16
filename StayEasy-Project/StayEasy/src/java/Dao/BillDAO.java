@@ -32,6 +32,28 @@ public class BillDAO {
         }
     }
 
+      public float TotalBill() {
+        String sql = "  select sum (Bill.total) from Bill ";
+        float count = 0;
+
+        try {
+            //tạo khay chứa câu lệnh
+            PreparedStatement pre = con.prepareStatement(sql);
+            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt(1);
+
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+
+        return count;
+    }
+
+
+
     public List<Bill> getBill() {
         String sql = "select * from Bill";
         List<Bill> list = new ArrayList<>();
@@ -160,7 +182,7 @@ public class BillDAO {
         }
         return id;
     }
-
+  
     public Bill getBillbyId(int id) {
         String sql = "select * from Bill where bill_id = ?";
         Bill b = new Bill();
@@ -284,6 +306,7 @@ public class BillDAO {
         }
         return bills;
     }
+
 
     public double calculateTotalMoneyForHost(int hostId) {
         double totalMoney = 0.0;
