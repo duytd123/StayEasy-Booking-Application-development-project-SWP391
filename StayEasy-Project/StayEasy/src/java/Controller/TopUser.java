@@ -1,27 +1,31 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package Controller;
 
+import Dao.AccountDAO;
 import Dao.HouseDAO;
+import Model.Bill;
+import Model.Bill1;
 import Model.House;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 /**
  *
- * @author Admin
+ * @author khanh vi duy
  */
-public class ListHouseServlet extends HttpServlet {
- 
-    /**
+@WebServlet(name="TopUser", urlPatterns={"/TopUser"})
+public class TopUser extends HttpServlet {
+  /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -35,10 +39,15 @@ public class ListHouseServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HouseDAO dao = new HouseDAO();
-            List<House> list = dao.getHouse();
-            request.setAttribute("HouseList", list);
-            request.getRequestDispatcher("admin1/mnproduct.jsp").forward(request, response);
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet DashboardServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet DashboardServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -54,7 +63,28 @@ public class ListHouseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        //count list user 
+        AccountDAO adao = new AccountDAO();
+        int countUser = adao.countAccountByRole(2);
+        int countAdmin = adao.countAccountByRole(0);
+        int countAll = adao.countAccount();
+        
+        //get 3 house best 
+        HouseDAO hdao = new HouseDAO();
+        List<House> listHouse = hdao.getNameThreeHouseBest();
+
+        //get 3 Account best
+         AccountDAO bill = new AccountDAO();
+        List<Bill1> listbill = bill.getThreeUserMaxBill();
+
+        request.setAttribute("countUser", countUser);
+        request.setAttribute("listHouse", listHouse);
+        request.setAttribute("listBill", listbill);
+        request.setAttribute("listHouse", listHouse);
+        request.setAttribute("countAdmin", countAdmin);
+        request.setAttribute("countAll", countAll);
+        request.getRequestDispatcher("admin1/top5customer.jsp").forward(request, response);
     }
 
     /**

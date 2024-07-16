@@ -31,7 +31,26 @@ public class BillDAO {
             System.out.println("error: " + e);
         }
     }
-    
+      public float TotalBill() {
+        String sql = "  select sum (Bill.total) from Bill ";
+        float count = 0;
+
+        try {
+            //tạo khay chứa câu lệnh
+            PreparedStatement pre = con.prepareStatement(sql);
+            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt(1);
+
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+
+        return count;
+    }
+
 
     public List<Bill> getBill() {
         String sql = "select * from Bill";
@@ -161,7 +180,7 @@ public class BillDAO {
         }
         return id;
     }
-
+  
     public Bill getBillbyId(int id) {
         String sql = "select * from Bill where bill_id = ?";
         Bill b = new Bill();
@@ -259,33 +278,6 @@ public List<Bill> getBillByDate(String dateString){
         } catch (Exception e) {
             System.out.println("error :  " + e);
         }
-    }
-    
-    
-    public List<Bill> getBillsByHostId(int hostId) {
-        List<Bill> bills = new ArrayList<>();
-        String sql = "SELECT b.bill_id, b.date, b.total, b.status, b.user_id " +
-                     "FROM Bill b " +
-                     "INNER JOIN Bill_detail bd ON b.bill_id = bd.bill_id " +
-                     "INNER JOIN House h ON bd.house_id = h.house_id " +
-                     "WHERE h.host_id = ?";
-        try {
-            PreparedStatement pre = con.prepareStatement(sql);
-            pre.setInt(1, hostId);
-            ResultSet resultSet = pre.executeQuery();
-            while (resultSet.next()) {
-                int billId = resultSet.getInt("bill_id");
-                Date date = resultSet.getDate("date");
-                float total = resultSet.getFloat("total");
-                int status = resultSet.getInt("status");
-                int userId = resultSet.getInt("user_id");
-                Bill bill = new Bill(billId, date, total, status, userId);
-                bills.add(bill);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bills;
     }
     
 

@@ -627,4 +627,25 @@ public class HouseDAO {
 
         return list;
     }
+    
+    public int countHouse() {
+        String sql = "select * from dbo.House ";
+        int count = 0;
+
+        try {
+            //tạo khay chứa câu lệnh
+            PreparedStatement pre = con.prepareStatement(sql);
+            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                count = resultSet.getInt(1);
+
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+
+        return count;
+    }
+
 }
