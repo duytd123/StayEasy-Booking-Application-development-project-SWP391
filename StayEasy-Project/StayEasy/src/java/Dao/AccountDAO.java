@@ -330,6 +330,62 @@ public class AccountDAO {
 
         return a;
     }
+        public int getPage(String search){
+        String sql = "";
+        if(search.isEmpty()){
+          sql ="  select count(*) from Users";
+        }
+        else{
+            sql ="  select count(*) from Users where fullname like ?";
+        }
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            if(!search.isEmpty()){
+                ps.setString(1, "%"+search +"%");
+            }
+            ResultSet rs=  ps.executeQuery();
+            if(rs.next()){
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println( e);
+        }
+        return -1;
+    }
+        public List<Account> getpagination(int index, String search) {
+        List<Account> list = new ArrayList<>();
+        System.out.println("hihi" + search);
+        String sql = "with p as (select ROW_NUMBER() over (order by user_id asc) as num, * from Users where fullname like ?) \n"
+                + "select * from p where num between ? * 5 - (5-1) and ? * 5";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+             ps.setString(1, "%"+ search +"%");
+            ps.setInt(2, index );
+            ps.setInt(3, index);
+
+            ResultSet resultSet = ps.executeQuery();
+            while (resultSet.next()) {
+
+                int userid = resultSet.getInt(2);
+                String fullname = resultSet.getString(3);
+                String userimg = resultSet.getString(4);
+                String username = resultSet.getString(5);
+                String password = resultSet.getString(6);
+                String email = resultSet.getString(7);
+                String phone = resultSet.getString(8);
+                int status = resultSet.getInt(9);
+                int roleid = resultSet.getInt(10);
+
+                //tạo model hứng giữ liệu
+                Role role = new Role(roleid, null);
+                Account a = new Account(userid, fullname, userimg, username, password, email, phone, status, role);
+                list.add(a);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 
     public Account checkAccountByEmail(String emailInput) {
         try {

@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="Model.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,21 +43,7 @@
                 width: 100%;
                 min-width: 1000px;
             }
-            .search-bar-container {
-                display: flex;
-                align-items: center;
 
-            }
-            .search-bar-container input {
-                flex-grow: 1;
-                height: 40px;
-                font-size: 20px;
-            }
-            .search-bar-container button {
-                height: 40px;
-                font-size: 20px;
-                background-color: #fff;
-            }
         </style>
     </head>
     <body>
@@ -74,9 +61,9 @@
                         <a href="DashboardServlet"><span>Home</span></a>
                         <a href="ListHouseServlet">Room</a>
                         <a href="ListBillServlet">Orders</a>
-                        <a href="ListAccountServlet">Users</a>
-                        <a href="ListAddService">Service</a>
-                        <a href="ListCommentServlet">Messages</a>
+                        <a href="ListAccountServlet?page=1&search=">Users</a>
+                        <a href="ListAddService?page=1&search=">Service</a>
+                        <a href="ListCommentServlet"></a>
                     </nav>
                     <div class="icons">
                         <div id="menu-btn" class="fas fa-bars"></div>
@@ -90,19 +77,32 @@
             </header>
             <section class="dashboard">
                 <div class="container-fluid">
-                    <form action="SearchAccountServlet" class="search-bar-container" method="post">
-                        <input type="text" name="search" id="search-bar" placeholder="Search here...">
-                        <button class="fas fa-search" value="search" type="submit"></button>
+                    <form action="ListAccountServlet" style="display: flex ; border: 1px solid #ccc; border-radius: 10px; width: 20vw;; padding: 0" class="mb-5">
+                        <input type="hidden" name="page" value="1">
+                        <input style="    width: 90%; border-radius: 10px; padding: 0 20px;" type="text" name="search" id="search-bar" placeholder="Search here...">
+                        <button style="    width: 10%;
+                                text-align: center;
+                                margin: 0;" class=" btn btn-primary" value="search" type="submit">
+                            <i class="fas fa-search pr-3" ></i>
+                        </button>
+
+
                     </form>
-                    <div class="table-responsive table-container">
-                        <table class="table table-striped table-bordered">
+
+
+
+                    <div class="mt=5 table-responsive table-container">
+                        <c:if test="${err != null}">
+                            <div class="alert alert-warning">${err}</div>
+                        </c:if>
+                        <table class="table  table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Account_ID</th>
-                                    <th>Account_Img</th>
+                                    <th>ID</th>
+
                                     <th>Full Name</th>
                                     <th>Username</th>
-                                    <th>Password</th>
+
                                     <th>Phone</th>
                                     <th>Status</th>
                                     <th>Role</th>
@@ -115,20 +115,21 @@
                                 %>
                                 <tr>
                                     <td><%= a.getUserid() %></td>
-                                    <td><%= a.getUserimg() %></td>
+
                                     <td><%= a.getFullname() %></td>
                                     <td><%= a.getUsername() %></td>
-                                    <td><%= a.getPass() %></td>
+
                                     <td><%= a.getPhone() %></td>
                                     <td><%= (a.getStatus() == 1) ? "Active" : "inActive" %></td>
                                     <td><%= (a.getRole().getId() == 0) ? "Admin" : "User" %></td>
                                     <td>
                                         <span class="action_btn">
+                                            <a href="AddAccount.jsp">Add</a>
                                             <a href="NextEditAccountServlet?id=<%= a.getUserid() %>">Update</a>
                                             <a href="DeleteAccountServlet?id=<%= a.getUserid() %>">Delete</a>
-                                            <a href="AddAccount.jsp">Add</a>
+
                                             <%
-                                                if (a.getRole().getId() == 1) {
+                                                if (a.getRole().getId() == 1 || a.getRole().getId()==2 ) {
                                             %>
                                             <form action="UpdateStatusAccountServlet" method="post">
                                                 <input type="text" name="username" value="<%= a.getUsername() %>" hidden="true">
@@ -146,6 +147,18 @@
                                 %>
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+
+                                <c:forEach begin="1" end="${count}" var="i" >
+                                    <li class="page-item"><a class="page-link" href="ListAccountServlet?page=${i}&search=${search}">${i}</a></li>
+                                    </c:forEach>
+
+
+
+
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </section>

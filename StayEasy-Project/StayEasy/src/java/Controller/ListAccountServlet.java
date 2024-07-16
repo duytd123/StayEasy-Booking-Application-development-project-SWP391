@@ -35,9 +35,24 @@ public class ListAccountServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            String page = request.getParameter("page");
+            String search = request.getParameter("search");
+         
             AccountDAO dao = new AccountDAO();
-            List<Account> list = dao.getAllAccount();
-            request.setAttribute("AccountList", list);
+            int count = dao.getPage(search);
+            double result = count / 5.0; // Kết quả là 1.4
+            int count_page = (int) Math.ceil(result);
+            
+            List<Account> list = dao.getpagination(Integer.parseInt(page), search);
+            if(list.size() > 0){
+                 request.setAttribute("AccountList", list);
+            }
+            else{
+                request.setAttribute("err", "Không tìm thấy người dùng");
+            }
+           
+            request.setAttribute("count", count_page);
+            request.setAttribute("search", search);
             request.getRequestDispatcher("ListAccount.jsp").forward(request, response);
         }
     }
