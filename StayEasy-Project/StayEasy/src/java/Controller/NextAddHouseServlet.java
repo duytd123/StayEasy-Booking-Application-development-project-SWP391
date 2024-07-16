@@ -38,18 +38,25 @@ public class NextAddHouseServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
-        LocationDAO ldao = new LocationDAO();
-        List<Location> llist = ldao.getLocation();
-        MenuDAO mdao = new MenuDAO();
-        List<Menu> mlist = mdao.getMenu();
-        HouseDAO dao = new HouseDAO();
-        
-        request.setAttribute("llist", llist);
-        request.setAttribute("mlist", mlist);
-        
-        request.getRequestDispatcher("AddHouse.jsp").forward(request, response);
+        try {
+            String houseIdStr = request.getParameter("id"); // Get the house ID from the request
+            if (houseIdStr != null && !houseIdStr.isEmpty()) {
+                int houseId = Integer.parseInt(houseIdStr); // Convert the string ID to integer
+                HouseDAO houseDAO = new HouseDAO();
+                House house = houseDAO.getHousebyId(houseId); // Fetch the house by its ID
+                if (house != null) {
+                    request.setAttribute("house", house);
+                    request.getRequestDispatcher("EditHouse.jsp").forward(request, response);
+                } else {
+                    response.getWriter().println("House not found");
+                }
+            } else {
+                response.getWriter().println("House ID is missing");
+            }
+        } catch (NumberFormatException e) {
 
+            response.getWriter().println("Invalid house ID");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

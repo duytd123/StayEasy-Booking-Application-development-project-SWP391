@@ -31,6 +31,7 @@ public class BillDAO {
             System.out.println("error: " + e);
         }
     }
+
       public float TotalBill() {
         String sql = "  select sum (Bill.total) from Bill ";
         float count = 0;
@@ -50,6 +51,7 @@ public class BillDAO {
 
         return count;
     }
+
 
 
     public List<Bill> getBill() {
@@ -207,15 +209,16 @@ public class BillDAO {
 
         return b;
     }
-public List<Bill> getBillByDate(String dateString){
-        String sql = "select * from Bill where date = '"+dateString+"'";
+
+    public List<Bill> getBillByDate(String dateString) {
+        String sql = "select * from Bill where date = '" + dateString + "'";
         List<Bill> list = new ArrayList<>();
         try {
             //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 int billid = resultSet.getInt(1);
                 Date date = resultSet.getDate(2);
                 float total = resultSet.getFloat(3);
@@ -227,22 +230,22 @@ public List<Bill> getBillByDate(String dateString){
                 list.add(b);
             }
         } catch (Exception e) {
-            System.out.println("error: "+e);
+            System.out.println("error: " + e);
         }
-        
+
         return list;
     }
 
-    public List<Bill> getBillbyUserId(int user_id){
+    public List<Bill> getBillbyUserId(int user_id) {
         String sql = "select * from Bill where user_id = ?";
         List<Bill> list = new ArrayList<>();
-        try{
+        try {
             //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setInt(1, user_id);
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 int billid = resultSet.getInt(1);
                 Date date = resultSet.getDate(2);
                 float total = resultSet.getFloat(3);
@@ -251,22 +254,20 @@ public List<Bill> getBillByDate(String dateString){
 
                 //tạo model hứng giữ liệu
                 Bill b = new Bill(billid, date, total, status, userid);
-               
-               list.add(b);
+
+                list.add(b);
             }
         } catch (Exception e) {
-            System.out.println("error: "+e);
+            System.out.println("error: " + e);
         }
-        
+
         return list;
     }
 
-    
-    
-    public void updatebillStatus(int billid){
-        String sql = "UPDATE [dbo].[Bill]\n" +
-                "   SET [status] = ?" +
-                " WHERE bill_id = ?";
+    public void updatebillStatus(int billid) {
+        String sql = "UPDATE [dbo].[Bill]\n"
+                + "   SET [status] = ?"
+                + " WHERE bill_id = ?";
         try {
             //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
@@ -279,6 +280,144 @@ public List<Bill> getBillByDate(String dateString){
             System.out.println("error :  " + e);
         }
     }
-    
 
+    public List<Bill> getBillsByHostId(int hostId) {
+        List<Bill> bills = new ArrayList<>();
+        String sql = "SELECT b.bill_id, b.date, b.total, b.status, b.user_id "
+                + "FROM Bill b "
+                + "INNER JOIN Bill_detail bd ON b.bill_id = bd.bill_id "
+                + "INNER JOIN House h ON bd.house_id = h.house_id "
+                + "WHERE h.host_id = ?";
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, hostId);
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                int billId = resultSet.getInt("bill_id");
+                Date date = resultSet.getDate("date");
+                float total = resultSet.getFloat("total");
+                int status = resultSet.getInt("status");
+                int userId = resultSet.getInt("user_id");
+                Bill bill = new Bill(billId, date, total, status, userId);
+                bills.add(bill);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bills;
+    }
+
+
+    public double calculateTotalMoneyForHost(int hostId) {
+        double totalMoney = 0.0;
+        String sql = "SELECT SUM(bd.price) AS total_money "
+                + "FROM Bill_detail bd "
+                + "INNER JOIN Bill b ON bd.bill_id = b.bill_id "
+                + "WHERE b.status = 1 AND bd.house_id IN "
+                + "(SELECT h.house_id FROM House h WHERE h.host_id = ?)";
+        try (PreparedStatement pre = con.prepareStatement(sql)) {
+            pre.setInt(1, hostId);
+            try (ResultSet rs = pre.executeQuery()) {
+                if (rs.next()) {
+                    totalMoney = rs.getDouble("total_money");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return totalMoney;
+    }
+
+    public int countPendingBillsForHost(int hostId) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) AS pending_count "
+                + "FROM Bill_detail bd "
+                + "INNER JOIN Bill b ON bd.bill_id = b.bill_id "
+                + "INNER JOIN House h ON bd.house_id = h.house_id "
+                + "WHERE b.status = 0 AND h.host_id = ?";
+
+        try (PreparedStatement pre = con.prepareStatement(sql)) {
+            pre.setInt(1, hostId);
+            try (ResultSet rs = pre.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt("pending_count");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public double totalMoneyWeek(int day, int from, int to, int year, int month, int hostId) {
+        String sql = "";
+        if (from > to) {
+            sql = "SELECT SUM(b.total) AS TotalRevenue\n"
+                    + "FROM [HouseBooking2].[dbo].[Bill] b\n"
+                    + "JOIN [HouseBooking2].[dbo].[Bill_detail] bd ON b.bill_id = bd.bill_id\n"
+                    + "JOIN [HouseBooking2].[dbo].[House] h ON bd.house_id = h.house_id\n"
+                    + "WHERE h.host_id = ?\n"
+                    + "  AND ((DAY(b.[date]) >= ? AND MONTH(b.[date]) = ?) OR (DAY(b.[date]) <= ? AND MONTH(b.[date]) = ?))\n"
+                    + "  AND YEAR(b.[date]) = ?\n"
+                    + "  AND DATEPART(dw, b.[date]) = ?";
+        } else {
+            sql = "SELECT SUM(b.total) AS TotalRevenue\n"
+                    + "FROM [HouseBooking2].[dbo].[Bill] b\n"
+                    + "JOIN [HouseBooking2].[dbo].[Bill_detail] bd ON b.bill_id = bd.bill_id\n"
+                    + "JOIN [HouseBooking2].[dbo].[House] h ON bd.house_id = h.house_id\n"
+                    + "WHERE h.host_id = ?\n"
+                    + "  AND DAY(b.[date]) BETWEEN ? AND ?\n"
+                    + "  AND MONTH(b.[date]) = ?\n"
+                    + "  AND YEAR(b.[date]) = ?\n"
+                    + "  AND DATEPART(dw, b.[date]) = ?";
+        }
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, hostId);
+            if (from > to) {
+                st.setInt(2, from);
+                st.setInt(3, month);
+                st.setInt(4, to);
+                st.setInt(5, (month + 1));
+                st.setInt(6, year);
+                st.setInt(7, day);
+            } else {
+                st.setInt(2, from);
+                st.setInt(3, to);
+                st.setInt(4, month);
+                st.setInt(5, year);
+                st.setInt(6, day);
+            }
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public double totalMoneyMonth(int month, int year, int hostId) {
+        String sql = "SELECT SUM(b.total) AS TotalRevenue\n"
+                + "FROM [HouseBooking2].[dbo].[Bill] b\n"
+                + "JOIN [HouseBooking2].[dbo].[Bill_detail] bd ON b.bill_id = bd.bill_id\n"
+                + "JOIN [HouseBooking2].[dbo].[House] h ON bd.house_id = h.house_id\n"
+                + "WHERE h.host_id = ?\n"
+                + "  AND MONTH(b.[date]) = ?\n"
+                + "  AND YEAR(b.[date]) = ?";
+        try {
+            PreparedStatement st = con.prepareStatement(sql);
+            st.setInt(1, hostId);
+            st.setInt(2, month);
+            st.setInt(3, year);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

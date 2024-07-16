@@ -7,8 +7,9 @@ package Dao;
 
 import Connect.DBContext;
 import Model.Account;
+
 import Model.Bill;
-import Model.Bill1;
+
 import Model.Role;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -79,6 +80,9 @@ public class AccountDAO {
         }
         return null;
     }
+    
+    
+    
 
     public void changePassword(Account s) {
         String sql = "Update Users set password = ? where username = ? and [status] = 1";
@@ -137,7 +141,7 @@ public class AccountDAO {
         }
         return null;
     }
-
+    
     public void updatePassByUserName(String pass, String username) {
         String sql = "update Users set Password = ? where UserName= ?";
         try {
@@ -148,8 +152,8 @@ public class AccountDAO {
         } catch (Exception e) {
         }
     }
-
-    public String checkEmailExist(String email) {
+    
+     public String checkEmailExist(String email) {
         try {
             String sql = "SELECT * FROM Users WHERE Email = ?";
             PreparedStatement st = con.prepareStatement(sql);
@@ -162,6 +166,38 @@ public class AccountDAO {
         }
         return null;
     }
+
+
+    public List<Account> getThreeUserMaxBill() {
+        String sql = "select top 3 Users.user_id,username, MAX(Bill.total)\n"
+                + "from Bill ,Users\n"
+                + "where Bill.user_id = Users.user_id\n"
+                + "group by Users.user_id ,username";
+        List<Account> list = new ArrayList<>();
+        try {
+            //tạo khay chứa câu lệnh
+            PreparedStatement pre = con.prepareStatement(sql);
+            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                int userid = resultSet.getInt(1);
+                String username = resultSet.getString(2);
+                float total = resultSet.getFloat(3);
+
+                //tạo model hứng giữ liệu
+                Account account = new Account();
+                account.setUserid(userid);
+                account.setUsername(username);
+                account.setTotal(total);
+                list.add(account);
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+
+        return list;
+    }
+
 
     public int countAccountByRole(int role) {
         String sql = "select count(*) from Users where role_id = ?";

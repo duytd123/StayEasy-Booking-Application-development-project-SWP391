@@ -45,12 +45,12 @@ public class DashboardHostServlet extends HttpServlet {
             int hostId = loggedInUser.getUserid(); 
          
             HouseDAO houseDAO = new HouseDAO();
-            List<House> houseList = houseDAO.getHousesByHost(hostId); 
+        //    List<House> houseList = houseDAO.getHousesByHost(hostId); 
 
-            System.out.println("Number of houses retrieved: " + houseList.size());
+       //     System.out.println("Number of houses retrieved: " + houseList.size());
 
             // Set the house list as a request attribute
-            request.setAttribute("HouseList", houseList);
+        //    request.setAttribute("HouseList", houseList);
 
             // Forward to ListHouse.jsp to display the houses
             request.getRequestDispatcher("/HostIndex.jsp").forward(request, response);

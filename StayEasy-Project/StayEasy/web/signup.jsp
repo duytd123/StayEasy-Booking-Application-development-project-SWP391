@@ -30,7 +30,13 @@
                     $('#email').val(email);
                 }
             });
+
         </script>
+        <style>
+            h1{
+                font-family: Arial;
+            }
+        </style>
     </head>
     <body>
         <div class="container">

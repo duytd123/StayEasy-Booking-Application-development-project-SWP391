@@ -197,44 +197,45 @@ public class CommentDAO {
         return comment1;
     }
 
-    public List<CommentWithInfo> getAllCommentsWithUserInfo() {
-        String sql = "SELECT c.cid, c.userid, c.houseid, c.comment, c.date, "
-                + "u.fullname, h.house_name "
+//    public List<CommentWithInfo> getAllCommentsWithUserInfo() {
+//        String sql = "SELECT c.cid, c.userid, c.houseid, c.comment, c.date, "
+//                + "u.fullname, h.house_name "
+//                + "FROM Comment c "
+//                + "INNER JOIN House h ON c.houseid = h.house_id "
+//                + "INNER JOIN Users u ON c.userid = u.user_id";
+//
+//        List<CommentWithInfo> commentList = new ArrayList<>();
+//
+//        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+//            ResultSet rs = stmt.executeQuery();
+//
+//            while (rs.next()) {
+//                int cid = rs.getInt("cid");
+//                int userid = rs.getInt("userid");
+//                int houseid = rs.getInt("houseid");
+//                String comment = rs.getString("comment");
+//                Date date = rs.getDate("date");
+//                String username = rs.getString("username");
+//                String houseName = rs.getString("house_name");
+//
+//                Comment commentObj = new Comment(cid, userid, houseid, comment, date);
+//                CommentWithInfo commentWithInfo = new CommentWithInfo(commentObj, username, houseName);
+//                commentList.add(commentWithInfo);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Error fetching comments: " + e);
+//        }
+//
+//        return commentList;
+//    }
+    public List<CommentWithInfo> getCommentsByHouseId(int hostId) {
+        String sql = "SELECT c.cid, c.userid, c.houseid, c.comment, c.date, c.reply, "
+                + "u.fullname, u.phone, u.email, h.house_name "
                 + "FROM Comment c "
                 + "INNER JOIN House h ON c.houseid = h.house_id "
-                + "INNER JOIN Users u ON c.userid = u.user_id";
-
-        List<CommentWithInfo> commentList = new ArrayList<>();
-
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                int cid = rs.getInt("cid");
-                int userid = rs.getInt("userid");
-                int houseid = rs.getInt("houseid");
-                String comment = rs.getString("comment");
-                Date date = rs.getDate("date");
-                String username = rs.getString("username");
-                String houseName = rs.getString("house_name");
-
-                Comment commentObj = new Comment(cid, userid, houseid, comment, date);
-                CommentWithInfo commentWithInfo = new CommentWithInfo(commentObj, username, houseName);
-                commentList.add(commentWithInfo);
-            }
-        } catch (Exception e) {
-            System.out.println("Error fetching comments: " + e);
-        }
-
-        return commentList;
-    }
-
-    public List<Comment> getCommentsByHouseId(int hostId) {
-        String sql = "SELECT c.cid, c.userid, c.houseid, c.comment, c.date "
-                + "FROM Comment c "
-                + "INNER JOIN House h ON c.houseid = h.house_id "
+                + "INNER JOIN Users u ON c.userid = u.user_id "
                 + "WHERE h.host_id = ?";
-        List<Comment> list = new ArrayList<>();
+        List<CommentWithInfo> list = new ArrayList<>();
         try {
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setInt(1, hostId);
@@ -245,7 +246,12 @@ public class CommentDAO {
                 int houseid = resultSet.getInt("houseid");
                 String comment = resultSet.getString("comment");
                 Date date = resultSet.getDate("date");
-                Comment m = new Comment(cid, userid, houseid, comment, date);
+                String fullname = resultSet.getString("fullname");
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String houseName = resultSet.getString("house_name");
+                String reply = resultSet.getString("reply");
+                CommentWithInfo m = new CommentWithInfo(cid, userid, houseid, comment, date, fullname, phone, email, houseName, reply);
                 list.add(m);
             }
         } catch (Exception e) {
@@ -253,4 +259,87 @@ public class CommentDAO {
         }
         return list;
     }
+
+    public List<CommentWithInfo> getCommentsWithInfoByHouseNameAndHost(String txtSearch, int hostId) {
+        String sql = "SELECT c.cid, c.userid, c.houseid, c.comment, c.date, c.reply, "
+                + "u.fullname, u.phone, u.email, h.house_name "
+                + "FROM Comment c "
+                + "INNER JOIN Users u ON c.userid = u.user_id "
+                + "INNER JOIN House h ON c.houseid = h.house_id "
+                + "WHERE h.house_name LIKE ? AND h.host_id = ?";
+        List<CommentWithInfo> commentList = new ArrayList<>();
+
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setString(1, "%" + txtSearch + "%");
+            pre.setInt(2, hostId);
+            try (ResultSet resultSet = pre.executeQuery()) {
+                while (resultSet.next()) {
+                    int cid = resultSet.getInt("cid");
+                    int userid = resultSet.getInt("userid");
+                    int houseid = resultSet.getInt("houseid");
+                    String comment = resultSet.getString("comment");
+                    Date date = resultSet.getDate("date");
+                    String fullname = resultSet.getString("fullname");
+                    String phone = resultSet.getString("phone");
+                    String email = resultSet.getString("email");
+                    String houseNameResult = resultSet.getString("house_name");
+                    String reply = resultSet.getString("reply");
+                    CommentWithInfo m = new CommentWithInfo(cid, userid, houseid, comment, date, fullname, phone, email, houseNameResult, reply);
+                    commentList.add(m);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error in getCommentsWithInfoByHouseNameAndHost: " + e.getMessage());
+        }
+        return commentList;
+    }
+
+    public void addReplyToComment(int commentId, String reply) {
+        String sql = "UPDATE Comment SET reply = ? WHERE cid = ?";
+        try (PreparedStatement pre = con.prepareStatement(sql)) {
+            pre.setString(1, reply);
+            pre.setInt(2, commentId);
+            int rowsUpdated = pre.executeUpdate();
+            if (rowsUpdated == 0) {
+                System.out.println("No comment found with ID: " + commentId);
+               
+            }
+        } catch (Exception e) {
+            System.out.println("Error in addReplyToComment: " + e.getMessage());
+            
+        }
+    }
+
+    public CommentWithInfo getReplyCommentDetail(int commentId) {
+        CommentWithInfo comment = null;
+        String sql = "SELECT c.cid, c.userid, c.houseid, c.comment, c.date, u.fullname, u.email, u.phone, c.reply, h.house_name "
+                + "FROM Comment c "
+                + "JOIN Users u ON c.userid = u.user_id "
+                + "JOIN House h ON c.houseid = h.house_id "
+                + "WHERE c.cid = ?";
+        try (PreparedStatement pre = con.prepareStatement(sql)) {
+            pre.setInt(1, commentId);
+            try (ResultSet rs = pre.executeQuery()) {
+                if (rs.next()) {
+                    int cid = rs.getInt("cid");
+                    int userid = rs.getInt("userid");
+                    int houseid = rs.getInt("houseid");
+                    String commentText = rs.getString("comment");
+                    Date date = rs.getDate("date");
+                    String fullname = rs.getString("fullname");
+                    String email = rs.getString("email");
+                    String phone = rs.getString("phone");
+                    String houseName = rs.getString("house_name");
+                    String reply = rs.getString("reply");
+
+                    comment = new CommentWithInfo(cid, userid, houseid, commentText, date, fullname, phone, email, houseName, reply);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error in getReplyCommentDetail: " + e.getMessage());
+        }
+        return comment;
+    }
+
 }

@@ -11,7 +11,19 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-
+        <link href="stylesheet" rel="stylesheet">
+        <link rel="stylesheet" href="list.css">
+        <link rel="stylesheet" href="housepage.css">
+        <link rel="stylesheet" href="css/list_house_main.css">
+        <link rel="stylesheet" href="assets/css/style.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user.jsp">
+        <link rel="stylesheet" href="list_house_main.css">
+        <link rel="stylesheet" href="StyleSheet.css">
+        <link rel="stylesheet" href="css/housepage.css">
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
 
@@ -30,7 +42,7 @@
         %>
 
         <div class="container-xl px-4 mt-4">
-
+            <!-- Account page navigation-->
             <nav class="nav nav-borders">
                 <a class="nav-link" href="home" target="">Home</a>
                 <a class="nav-link active" href="UserServlet"  target="">Profile</a>
@@ -40,14 +52,18 @@
             <hr class="mt-0 mb-4">
             <div class="row">
                 <div class="col-xl-4">
+                    <!-- Profile picture card-->
                     <div class="card mb-4 mb-xl-0">
                         <div class="card-header">Profile Picture</div>
                         <form action="UserServlet" method="post" enctype="multipart/form-data">
 
                             <div class="card-body text-center">
+                                <!-- Profile picture image-->
                                 <img class="img-account-profile rounded-circle mb-2"  src="<%=userimg%>" >
 
+                                <!-- Profile picture help block-->
                                 <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                                <!-- Profile picture upload button--> 
 
                                 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
                                 <main class="main_full">
@@ -75,28 +91,35 @@
                     </div>
                 </div>
                 <div class="col-xl-8">
+                    <!-- Account details card-->
                     <p class="text-danger">${mess}</p>
                     <div class="card mb-4">
                         <div class="card-header">Account Details</div>
                         <div class="card-body">
                             <form  action="UserServlet" method="post" >
+                                <!-- Form Group (username)-->
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputFullname">Full Name (how your name will appear to other users on the site)</label>
                                     <input class="form-control" name="fullname" id="fullname" type="text" placeholder="Enter your username" value="${acc.fullname}">
                                 </div>
 
+                                <!-- Form Group (email address)-->
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputEmailAddress">Email address</label>
                                     <input class="form-control" name="email" id="email" type="email" placeholder="Enter your email address" value="${acc.email}">
                                 </div>
 
+                                <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
+                                    <!-- Form Group (phone number)-->
                                     <div class="col-md-6">
                                         <label class="small mb-1" for="inputPhone">Phone number</label>
                                         <input class="form-control" name="phone" id="phone" type="text" placeholder="Enter your phone number" value="${acc.phone}">
                                     </div>
                                 </div>
 
+
+                                <!-- Save changes button-->
                                 <a onclick="showConFirmModal()" class="btn btn-primary" type="button" id="sub" name="sub" value="save">Save changes</a>
                             </form>
                         </div>
@@ -117,6 +140,7 @@
                     <div class="modal-dialog" role="document">
                         <!-- Modal content-->
                         <div class="modal-content">
+
                             <div class="modal-header">
                                 <h5 class="modal-title">Confirmation</h5>
                             </div>
@@ -127,7 +151,7 @@
 
                             <div class="modal-footer">
                                 <a id="yesOption" type="button" class="btn btn-primary" >Yes</a>
-                                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>
+                                <!--                                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>-->
                             </div>
 
                         </div>

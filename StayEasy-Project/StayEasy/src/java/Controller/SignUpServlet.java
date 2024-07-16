@@ -21,13 +21,13 @@ public class SignUpServlet extends HttpServlet {
         request.setAttribute("fullname", fullname);
         request.setAttribute("email", email);
         request.setAttribute("phone", phone);
-        request.getRequestDispatcher("SignUpServlet").forward(request, response);
+        request.getRequestDispatcher("signup.jsp").forward(request, response);
     }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("SignUpServlet").forward(request, response);
+        request.getRequestDispatcher("signup.jsp").forward(request, response);
     }
     
     @Override

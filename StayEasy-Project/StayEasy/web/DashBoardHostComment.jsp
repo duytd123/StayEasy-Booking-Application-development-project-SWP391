@@ -24,6 +24,19 @@
         <link rel="stylesheet" data-href="c4.css" href="css/c4.css">
         <link rel="stylesheet" data-href="c5.css" href="css/c5.css"> 
         <link rel="stylesheet" data-href="c6.css" href="css/c6.css"> 
+        <link href="stylesheet" rel="stylesheet">
+        <link rel="stylesheet" href="list.css">
+        <link rel="stylesheet" href="housepage.css">
+        <link rel="stylesheet" href="css/list_house_main.css">
+        <link rel="stylesheet" href="assets/css/style.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user.jsp">
+        <link rel="stylesheet" href="list_house_main.css">
+        <link rel="stylesheet" href="StyleSheet.css">
+        <link rel="stylesheet" href="css/housepage.css">
+        <link rel="stylesheet" href="css/style.css">
         <style>
             header {
                 display: flex;
@@ -322,6 +335,7 @@
                 <div class="extranet-common-header">
                     <header class="ext-header ext-header--animated">
                         <div class="ext-header__container">
+
                             <section class="ext-header__logo-container">
                                 <div>                                     
                                 </div>
@@ -329,7 +343,9 @@
                                     <!---->
                                 </div>
                             </section>
+
                             <div class="ext-header__side-items">
+
                                 <div class="ext-search__bar" data-v-ed37d1ee>
                                     <button class="ext-search-trigger ext-search-trigger--md-hidden" data-v-ed37d1ee>
                                         <span aria-hidden="true" role="presentation" class="bui-icon bui-icon--medium" data-v-ed37d1ee data-v-ed37d1ee>
@@ -343,17 +359,11 @@
                                             <div class="ext-search-input__wrap" data-v-ed37d1ee>
                                                 <input type="text" name="query" aria-label="Search pages and reservations" placeholder="Search pages and reservations" autocomplete="off" data-test-id="search-input" value="" class="ext-search-input">
                                                 <button type="button" title="Cancel" aria-label="Cancel" data-test-id="search-cancel-btn" class="ext-search-input__icon-wrap" style="display:none;">
-                                                    <span aria-hidden="true" role="presentation" class="bui-icon bui-icon--small bui-icon--color-neutral_alt">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true" class="ext-search-input__icon--transparent ext-search-input__icon ext-search-input__icon--animated">
-                                                        <path d="m13.31 12 6.89-6.89a.93.93 0 1 0-1.31-1.31L12 10.69 5.11 3.8A.93.93 0 0 0 3.8 5.11L10.69 12 3.8 18.89a.93.93 0 0 0 1.31 1.31L12 13.31l6.89 6.89a.93.93 0 1 0 1.31-1.31z"></path>
-                                                        </svg>
-                                                    </span>
+
                                                 </button>
                                                 <button type="button" data-test-id="search-icon" title="Search pages and reservations" aria-label="Search pages and reservations" class="ext-search-input__icon-wrap" style="display:;">
                                                     <span aria-hidden="true" role="presentation" class="bui-icon bui-icon--small bui-icon--color-action">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-hidden="true" class="ext-search-input__icon ext-search-input__icon-search">
-                                                        <path d="M17.464 6.56a8.313 8.313 0 1 1-15.302 6.504A8.313 8.313 0 0 1 17.464 6.56m1.38-.586C16.724.986 10.963-1.339 5.974.781.988 2.9-1.337 8.662.783 13.65s7.881 7.312 12.87 5.192c4.987-2.12 7.312-7.881 5.192-12.87zM15.691 16.75l7.029 7.03a.75.75 0 0 0 1.06-1.06l-7.029-7.03a.75.75 0 0 0-1.06 1.06"></path>
-                                                        </svg>
+
                                                     </span>
                                                 </button>
                                             </div>
@@ -379,6 +389,8 @@
                                         </a>
                                     </c:if>
                                 </div>
+
+
                             </div>
                         </div>
 
@@ -402,53 +414,57 @@
                                             </div>
                                         </div>
                                         <ul class="ext-navigation-top-item__list">
-                                            <li data-nav-tag="group_overview" class="ext-navigation-top-item ext-navigation-top-item--active">
+                                            <li class="ext-navigation-top-item">
                                                 <a href="DashboardHostServlet" data-test-id="item-link" class="ext-navigation-top-item__link">
-                                                    <span class="ext-navigation-top-item__icon">
-                                                        <!---->
-                                                    </span>
+
                                                     <span class="ext-navigation-top-item__title">
                                                         <span class="ext-navigation-top-item__title-text">Group homepage</span>
-                                                        <!---->
-                                                        <!---->
+
                                                     </span>
-                                                    <!---->
-                                                    <!---->
+
                                                 </a>
                                                 <div class="ext-navigation-top-item__submenu">
-                                                    <!---->
+
                                                 </div>
                                             </li>
-                                            <li data-nav-tag="group_reviews" class="ext-navigation-top-item">
+
+                                            <li  class="ext-navigation-top-item">
+                                                <a href="AddHouseHost" data-test-id="item-link" class="ext-navigation-top-item__link">
+                                                    <span class="ext-navigation-top-item__icon">
+
+                                                    </span>
+                                                    <span class="ext-navigation-top-item__title">
+                                                        <span class="ext-navigation-top-item__title-text">Add new house</span>
+
+                                                    </span>
+
+                                                </a>
+                                                <div class="ext-navigation-top-item__submenu">
+
+                                                </div>
+                                            </li>
+
+
+                                            <li  class="ext-navigation-top-item">
                                                 <a href="HostComment" data-test-id="item-link" class="ext-navigation-top-item__link">
                                                     <span class="ext-navigation-top-item__icon">
-                                                        <!---->
                                                     </span>
                                                     <span class="ext-navigation-top-item__title">
                                                         <span class="ext-navigation-top-item__title-text">Reviews</span>
-
                                                     </span>
-
                                                 </a>
                                                 <div class="ext-navigation-top-item__submenu">
-                                                    <!---->
                                                 </div>
                                             </li>
-                                            <li data-nav-tag="group_bill" class="ext-navigation-top-item">
+                                            <li class="ext-navigation-top-item">
                                                 <a href="BillHostServlet" data-test-id="item-link" class="ext-navigation-top-item__link">
                                                     <span class="ext-navigation-top-item__icon">
-                                                        <!---->
                                                     </span>
                                                     <span class="ext-navigation-top-item__title">
                                                         <span class="ext-navigation-top-item__title-text">Bill</span>
-                                                        <!---->
-                                                        <!---->
                                                     </span>
-                                                    <!---->
-                                                    <!---->
                                                 </a>
                                                 <div class="ext-navigation-top-item__submenu">
-                                                    <!---->
                                                 </div>
                                             </li>                                            
                                         </ul>

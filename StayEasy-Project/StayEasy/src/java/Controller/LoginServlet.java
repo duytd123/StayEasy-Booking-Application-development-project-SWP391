@@ -82,17 +82,20 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         boolean rememberMe = request.getParameter("rememberme") != null;
 
-        // Use UserDAO to check user credentials and WalletDAO to retrieve wallet information
+        
         AccountDAO dao = new AccountDAO();
         Account a = dao.getAccountLogin(username, password);
 
         if (a != null) {
             // If credentials are valid
             HttpSession session = request.getSession();
-            session.setAttribute("acc", a);
+            String image = a.getUserimg();
+            session.setAttribute("acc", a);        
             session.setAttribute("username", a.getUsername());
             session.setAttribute("email", a.getEmail());
             session.setAttribute("rememberme", rememberMe);
+            session.setAttribute("imageUser", image);
+           
 
             // Manage cookies based on the "remember me" flag
             if (rememberMe) {
@@ -102,6 +105,7 @@ public class LoginServlet extends HttpServlet {
                 cPassword.setMaxAge(60 * 60 * 24); // 24 hours
                 response.addCookie(cUsername);
                 response.addCookie(cPassword);
+                
             } else {
                 // Clear cookies if "remember me" is not checked
                 Cookie[] cookies = request.getCookies();
@@ -121,12 +125,12 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("DashboardServlet");
             } else if (a.getRole().getId() == 1 && a.getStatus() == 1) {
                 //Host role
-                response.sendRedirect("DashboardHostServlet"); // Modify as needed
+                response.sendRedirect("host"); 
             } else if (a.getRole().getId() == 2 && a.getStatus() == 1) {
                 // Customer role
                 response.sendRedirect("home");
             } else {
-                response.sendRedirect("Error.jsp");
+                response.sendRedirect("error");
             }
         } else {
             request.setAttribute("mess", "Wrong username or password!!!");

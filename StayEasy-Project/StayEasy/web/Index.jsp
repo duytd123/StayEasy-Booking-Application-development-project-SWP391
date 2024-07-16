@@ -124,6 +124,56 @@
         #nextBtn {
             right: 0;
         }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        header .navbar a {
+            margin: 0 10px;
+            color: #333;
+            text-decoration: none;
+            font-size: 2em;
+        }
+
+        header .navbar a:hover {
+            color: #007bff;
+        }
+
+        header .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        header .icons .fas {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        header .user-fullname {
+            font-weight: bold;
+            color: #fd7e14;
+            margin-left: 20px;
+            font-size: 1.6em;
+        }
+
+        .icon-link {
+            color: #333;
+        }
+
+        .icon-link:hover {
+            color: #007bff;
+        }
 
     </style>
 

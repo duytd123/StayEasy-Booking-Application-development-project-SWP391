@@ -50,7 +50,7 @@ public class LogoutServlet extends HttpServlet {
 //            }
         session.removeAttribute("acc");
         session.removeAttribute("rememberme");
-        response.sendRedirect("Index.jsp");
+        response.sendRedirect("home");
 
     }
 

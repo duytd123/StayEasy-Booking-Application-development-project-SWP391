@@ -6,18 +6,24 @@
 package Dao;
 
 import Connect.DBContext;
+import Model.BillDetail;
 import Model.House;
+import Model.HouseHost;
 import Model.HouseImg;
 import Model.Location;
 import Model.Menu;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.sql.*;
+import java.util.Date;
 import java.util.List;
-
+import java.sql.*;
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -26,6 +32,9 @@ import java.util.List;
 public class HouseDAO {
 
     Connection con;
+    public LocationDAO ld = new LocationDAO();
+    public MenuDAO md = new MenuDAO();
+    public DecimalFormat df = new DecimalFormat("###.##");
 
     public HouseDAO() {
         DBContext dbcontext = new DBContext();
@@ -100,34 +109,325 @@ public class HouseDAO {
         return list;
     }
 
-    public List<House> getHousesByHost(int hostId) {
-        String sql = "SELECT * FROM House WHERE host_id = ?";
-        List<House> list = new ArrayList<>();
+    public List<BillDetail> getBookingDetails(int hostId) throws SQLException {
+        List<BillDetail> bookings = new ArrayList<>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            // SQL query to retrieve booking details for houses controlled by the host
+            String sql = "SELECT bd.bill_detail_id, bd.bill_id, bd.house_id, bd.start_date, bd.end_date, bd.note "
+                    + "FROM Bill_detail bd "
+                    + "INNER JOIN House h ON bd.house_id = h.house_id "
+                    + "WHERE h.host_id = ?";
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, hostId);
+
+            // Execute query and process result set
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int billDetailId = rs.getInt("bill_detail_id");
+                int billId = rs.getInt("bill_id");
+                int houseId = rs.getInt("house_id");
+                Calendar startDate = Calendar.getInstance();
+                startDate.setTime(rs.getDate("start_date"));
+                Calendar endDate = Calendar.getInstance();
+                endDate.setTime(rs.getDate("end_date"));
+                String note = rs.getString("note");
+
+                BillDetail booking = new BillDetail(billDetailId, billId, houseId, startDate.getTime(), endDate.getTime(), note);
+                bookings.add(booking);
+            }
+        } finally {
+
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+        }
+
+        return bookings;
+    }
+
+    public List<HouseHost> getHousesByHost(int hostId) {
+        String sql = "SELECT h.house_id, h.post_date, h.house_name, h.review, h.house_price, h.status, h.address, "
+                + "h.description, h.discount, h.loca_id, h.menu_id, STRING_AGG(hi.img_link, ',') AS images "
+                + "FROM House h "
+                + "LEFT JOIN House_img hi ON h.house_id = hi.house_id "
+                + "WHERE h.host_id = ? "
+                + "GROUP BY h.house_id, h.post_date, h.house_name, h.review, h.house_price, h.status, h.address, "
+                + "h.description, h.discount, h.loca_id, h.menu_id";
+
+        List<HouseHost> list = new ArrayList<>();
+        PreparedStatement pre = null;
+        ResultSet rs = null;
+
+        try {
+            pre = con.prepareStatement(sql);
+            pre.setInt(1, hostId);
+            rs = pre.executeQuery();
+
+            while (rs.next()) {
+                int houseId = rs.getInt("house_id");
+                Date postDate = rs.getDate("post_date");
+                String houseName = rs.getString("house_name");
+                String review = rs.getString("review");
+                float housePrice = rs.getFloat("house_price");
+                int status = rs.getInt("status");
+                String address = rs.getString("address");
+                String description = rs.getString("description");
+                double discount = rs.getDouble("discount");
+                int locationId = rs.getInt("loca_id");
+                int menuId = rs.getInt("menu_id");
+                String image = rs.getString("images");
+
+                String[] imageArray = (image != null) ? image.split(",") : new String[0];
+
+                // Assuming ld and md are your LocationDAO and MenuDAO instances
+                Location l = ld.getLocationById(locationId); // Implement ld as your LocationDAO
+                Menu m = md.getMenuById(menuId); // Implement md as your MenuDAO
+
+                List<String> imagesList = new ArrayList<>();
+                if (imageArray.length > 0) {
+                    imagesList.addAll(Arrays.asList(imageArray));
+                }
+
+                HouseHost house = new HouseHost(houseId, postDate, houseName, review, housePrice, status, address, description, discount, l, m, imagesList);
+                list.add(house);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle or log the exception appropriately
+        }
+        return list;
+    }
+
+    public List<HouseHost> getListByPage(List<HouseHost> list, int start, int end) {
+        ArrayList<HouseHost> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
+
+    public HouseHost getHouseByHouseIDandHost(int houseId, int hostId) {
+        String sql = "SELECT h.house_id, h.post_date, h.house_name, h.review, h.house_price, h.status, h.address, "
+                + "h.description, h.discount, h.loca_id, h.menu_id, STRING_AGG(hi.img_link, ',') AS images "
+                + "FROM House h "
+                + "LEFT JOIN House_img hi ON h.house_id = hi.house_id "
+                + "WHERE h.house_id = ? AND h.host_id = ? "
+                + "GROUP BY h.house_id, h.post_date, h.house_name, h.review, h.house_price, h.status, h.address, "
+                + "h.description, h.discount, h.loca_id, h.menu_id";
+
+        try (PreparedStatement pre = con.prepareStatement(sql)) {
+            pre.setInt(1, houseId);
+            pre.setInt(2, hostId);
+            ResultSet rs = pre.executeQuery();
+
+            if (rs.next()) {
+                int retrievedHouseId = rs.getInt("house_id");
+                Date postDate = rs.getDate("post_date");
+                String houseName = rs.getString("house_name");
+                String review = rs.getString("review");
+                float housePrice = rs.getFloat("house_price");
+                int status = rs.getInt("status");
+                String address = rs.getString("address");
+                String description = rs.getString("description");
+                double discount = rs.getDouble("discount");
+                int locationId = rs.getInt("loca_id");
+                int menuId = rs.getInt("menu_id");
+                String image = rs.getString("images");
+
+                String[] imageArray = (image != null) ? image.split(",") : new String[0];
+
+                Location l = ld.getLocationById(locationId);
+                Menu m = md.getMenuById(menuId);
+
+                List<String> imagesList = new ArrayList<>();
+                if (imageArray.length > 0) {
+                    imagesList.addAll(Arrays.asList(imageArray));
+                }
+
+                return new HouseHost(retrievedHouseId, postDate, houseName, review, housePrice, status, address, description, discount, l, m, imagesList);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching house by house_id and host_id: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public List<HouseHost> getHouseWithInfoByHouseNameAndHost(String txtSearch, int hostId) {
+        String sql = "SELECT h.house_id, h.post_date, h.house_name, h.review, h.house_price, h.status, "
+                + "h.address, h.description, h.discount, h.loca_id, h.menu_id, STRING_AGG(hi.img_link, ',') AS images "
+                + "FROM House h "
+                + "LEFT JOIN House_img hi ON h.house_id = hi.house_id "
+                + "WHERE h.house_name LIKE ? AND h.host_id = ? "
+                + "GROUP BY h.house_id, h.post_date, h.house_name, h.review, h.house_price, h.status, "
+                + "h.address, h.description, h.discount, h.loca_id, h.menu_id";
+
+        List<HouseHost> houseList = new ArrayList<>();
+
         try {
             PreparedStatement pre = con.prepareStatement(sql);
-            pre.setInt(1, hostId);
+            pre.setString(1, "%" + txtSearch + "%");
+            pre.setInt(2, hostId);
+
             ResultSet resultSet = pre.executeQuery();
+
             while (resultSet.next()) {
                 int houseId = resultSet.getInt("house_id");
                 Date postDate = resultSet.getDate("post_date");
                 String houseName = resultSet.getString("house_name");
                 String review = resultSet.getString("review");
-                float price = resultSet.getFloat("house_price");
+                float housePrice = resultSet.getFloat("house_price");
                 int status = resultSet.getInt("status");
                 String address = resultSet.getString("address");
                 String description = resultSet.getString("description");
-                int locationId = resultSet.getInt("loca_id");
+                double discount = resultSet.getDouble("discount");
+                int locaId = resultSet.getInt("loca_id");
                 int menuId = resultSet.getInt("menu_id");
+                String imgLink = resultSet.getString("images");
 
-                Menu menu = new Menu(menuId, null);
-                Location location = new Location(locationId, null);
-                House house = new House(houseId, postDate, houseName, review, price, status, address, description, location, menu);
-                list.add(house);
+                Location location = new Location();
+                Menu menu = new Menu();
+
+                List<String> images = new ArrayList<>();
+                if (imgLink != null) {
+                    String[] imageArray = imgLink.split(",");
+                    images.addAll(Arrays.asList(imageArray));
+                }
+
+                HouseHost house = new HouseHost(houseId, postDate, houseName, review, housePrice,
+                        status, address, description, discount, location, menu, images);
+
+                houseList.add(house);
+            }
+
+            resultSet.close();
+            pre.close();
+
+        } catch (SQLException e) {
+            System.out.println("Error in getHouseWithInfoByHouseNameAndHost: " + e.getMessage());
+        }
+
+        return houseList;
+    }
+
+//    public void insertHouse(String name, String image, double price, String description, String address,
+//            String date, double discount, int hostId, int locationId, int menuId) {
+//        String sql = "INSERT INTO [dbo].[Houses] (\n"
+//                + "    [house_name], \n"
+//                + "    [Image], \n"
+//                + "    [Price], \n"
+//                + "    [Description], \n"
+//                + "    [Address], \n"
+//                + "    [ReleaseDate], \n"
+//                + "    [Discount], \n"
+//                + "    [HostID], \n"
+//                + "    [LocationID], \n"
+//                + "    [MenuID]\n"
+//                + ")\n"
+//                + "VALUES (N'" + name + "', '" + image + "', '" + price + "', N'" + description + "', N'" + address + "', '"
+//                + date + "', '" + discount + "', '" + hostId + "', '" + locationId + "', '" + menuId + "')";
+//
+//        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+//            stmt.executeUpdate();
+//            System.out.println("House inserted successfully.");
+//        } catch (SQLException e) {
+//            System.out.println("Error inserting house: " + e.getMessage());
+//        }
+//    }
+    public void insertHouse(String name, double price, String description, String address,
+            String date, double discount, int hostId, int locationId, int menuId, String imageLinks) {
+        String insertHouseSql = "INSERT INTO [dbo].[House] ([house_name], [house_price], [description], [address], "
+                + "[post_date], [discount], [host_id], [loca_id], [menu_id]) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        String insertHouseImgSql = "INSERT INTO [dbo].[House_img] ([img_link], [house_id]) "
+                + "VALUES (?, ?)";
+
+        try {
+            try (PreparedStatement insertHouseStmt = con.prepareStatement(insertHouseSql, Statement.RETURN_GENERATED_KEYS)) {
+                insertHouseStmt.setString(1, name);
+                insertHouseStmt.setDouble(2, price);
+                insertHouseStmt.setString(3, description);
+                insertHouseStmt.setString(4, address);
+                insertHouseStmt.setString(5, date);
+                insertHouseStmt.setDouble(6, discount);
+                insertHouseStmt.setInt(7, hostId);
+                insertHouseStmt.setInt(8, locationId);
+                insertHouseStmt.setInt(9, menuId);
+
+                int rowsAffected = insertHouseStmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+
+                    try (ResultSet generatedKeys = insertHouseStmt.getGeneratedKeys()) {
+                        if (generatedKeys.next()) {
+                            int houseId = generatedKeys.getInt(1);
+
+                            try (PreparedStatement insertHouseImgStmt = con.prepareStatement(insertHouseImgSql)) {
+                                for (String imageLink : imageLinks.split(",")) {
+                                    insertHouseImgStmt.setString(1, imageLink);
+                                    insertHouseImgStmt.setInt(2, houseId);
+                                    insertHouseImgStmt.executeUpdate();
+                                }
+                                System.out.println("House and House_img inserted successfully.");
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("Error inserting House.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error inserting house: " + e.getMessage());
+        }
+    }
+
+    public void editHouse(int houseId, String name, double price, String description, String address,
+            String date, double discount, int hostId, int locationId, int menuId) {
+        String updateHouseSql = "UPDATE [dbo].[House] "
+                + "SET [house_name] = ?, [house_price] = ?, [description] = ?, [address] = ?, "
+                + "[post_date] = ?, [discount] = ?, [host_id] = ?, [loca_id] = ?, [menu_id] = ? "
+                + "WHERE [house_id] = ?";
+
+        try {
+            PreparedStatement updateHouseStmt = con.prepareStatement(updateHouseSql);
+            updateHouseStmt.setString(1, name);
+            updateHouseStmt.setDouble(2, price);
+            updateHouseStmt.setString(3, description);
+            updateHouseStmt.setString(4, address);
+            updateHouseStmt.setString(5, date);
+            updateHouseStmt.setDouble(6, discount);
+            updateHouseStmt.setInt(7, hostId);
+            updateHouseStmt.setInt(8, locationId);
+            updateHouseStmt.setInt(9, menuId);
+            updateHouseStmt.setInt(10, houseId);
+            updateHouseStmt.executeUpdate();
+
+            System.out.println("House updated successfully.");
+
+        } catch (SQLException e) {
+            System.out.println("Error updating house: " + e.getMessage());
+        }
+    }
+
+    public int countHousesByHost(int hostId) {
+        String sql = "SELECT COUNT(*) FROM House WHERE host_id = ?";
+        int count = 0;
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, hostId);
+            ResultSet resultSet = pre.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
             }
         } catch (SQLException e) {
             System.out.println("error: " + e);
         }
-        return list;
+        return count;
     }
 
     public List<House> searchHouse(String whereTo, String arrivals) {
@@ -137,9 +437,9 @@ public class HouseDAO {
                 + "and post_date like '%" + arrivals + "%' ";
         List<House> list = new ArrayList<>();
         try {
-            //tạo khay chứa câu lệnh
+
             PreparedStatement pre = con.prepareStatement(sql);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+
             ResultSet resultSet = pre.executeQuery();
             while (resultSet.next()) {
                 int houseid = resultSet.getInt(1);
@@ -153,7 +453,6 @@ public class HouseDAO {
                 int locationid = resultSet.getInt(9);
                 int menuid = resultSet.getInt(10);
 
-                //tạo model hứng giữ liệu
                 Menu menu = new Menu(menuid, null);
                 Location location = new Location(locationid, null);
                 House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
@@ -164,62 +463,6 @@ public class HouseDAO {
         }
 
         return list;
-    }
-
-       public List<House> searchfindHouse(String whereTo, Date arrivals, String guests, Date leaving, int locationId, int menuId) {
-        String sql = "select * from House as H1 where 1 = 1";
-        if (locationId >= 0) {
-            sql += " and H1.loca_id=? ";
-        }
-        if (menuId >= 0) {
-            sql += " and H1.menu_id =?";
-        }
-        sql += " and H1.house_name like ? and H1.house_id Not in "
-                + "(select H.house_id from Bill as B "
-                + "join Bill_detail as BD on BD.bill_id = B.bill_id "
-                + "join House as H on H.house_id = BD.house_id "
-                + "where BD.start_date >= ? and BD.end_date <= ?"
-                + ")";
-        List<House> list = new ArrayList<>();
-        try {
-            PreparedStatement pr = con.prepareStatement(sql);
-            int i = 1;
-            if (locationId >= 0) {
-                pr.setInt(i++, locationId);
-            }
-            if (menuId >= 0) {
-                pr.setInt(i++, menuId);
-            }
-            pr.setString(i++, "%" + whereTo + "%");
-            pr.setDate(i++, arrivals);
-            pr.setDate(i++, leaving);
-            ResultSet resultSet = pr.executeQuery();
-            while (resultSet.next()) {
-                int houseid = resultSet.getInt(1);
-                Date postdate = resultSet.getDate(2);
-                String housename = resultSet.getString(3);
-                String review = resultSet.getString(4);
-                float price = resultSet.getFloat(5);
-                int status = resultSet.getInt(6);
-                String address = resultSet.getString(7);
-                String description = resultSet.getString(8);
-                int locationid = resultSet.getInt(9);
-                int menuid = resultSet.getInt(10);
-                MenuDAO menuDao = new MenuDAO();
-                Menu m = menuDao.getMenuById(menuid);
-                Menu menu = m;
-                LocationDAO lDao = new LocationDAO();
-                Location location = lDao.getLocationById(locationid);
-                House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
-                list.add(h);
-            }
-
-        } catch (Exception e) {
-            System.out.println("List err");
-            System.out.println(e);
-        }
-        return list;
-
     }
 
     public House getHousebyId(int id) {
@@ -243,11 +486,10 @@ public class HouseDAO {
                 String description = resultSet.getString(8);
                 int locationid = resultSet.getInt(9);
                 int menuid = resultSet.getInt(10);
-                MenuDAO menuDao = new MenuDAO();
-                Menu m = menuDao.getMenuById(menuid);
-                Menu menu = m;
-                LocationDAO lDao = new LocationDAO();
-                Location location = lDao.getLocationById(locationid);
+
+                //tạo model hứng giữ liệu
+                Menu menu = new Menu(menuid, null);
+                Location location = new Location(locationid, null);
                 h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
             }
         } catch (Exception e) {
@@ -256,41 +498,6 @@ public class HouseDAO {
 
         return h;
     }
-
-
-//    public House getHousebyId(int id) {
-//        String sql = "select * from dbo.House where house_id = ?";
-//        House h = new House();
-//
-//        try {
-//            //tạo khay chứa câu lệnh
-//            PreparedStatement pre = con.prepareStatement(sql);
-//            pre.setInt(1, id);
-//            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
-//            ResultSet resultSet = pre.executeQuery();
-//            while (resultSet.next()) {
-//                int houseid = resultSet.getInt(1);
-//                Date postdate = resultSet.getDate(2);
-//                String housename = resultSet.getString(3);
-//                String review = resultSet.getString(4);
-//                float price = resultSet.getFloat(5);
-//                int status = resultSet.getInt(6);
-//                String address = resultSet.getString(7);
-//                String description = resultSet.getString(8);
-//                int locationid = resultSet.getInt(9);
-//                int menuid = resultSet.getInt(10);
-//
-//                //tạo model hứng giữ liệu
-//                Menu menu = new Menu(menuid, null);
-//                Location location = new Location(locationid, null);
-//                h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
-//            }
-//        } catch (Exception e) {
-//            System.out.println("error: " + e);
-//        }
-//
-//        return h;
-//    }
 
     public void editHouse(House house) {
         String sql = "UPDATE [dbo].[House]\n"
@@ -339,7 +546,7 @@ public class HouseDAO {
                 + "    loca_id = ?, "
                 + "    menu_id = ? "
                 + "WHERE house_id = ? "
-                + "    AND host_id = ?";  // Ensure only the host can update their house
+                + "    AND host_id = ?";
 
         try {
 
@@ -356,7 +563,7 @@ public class HouseDAO {
             pre.setInt(8, house.getLocation().getId());
             pre.setInt(9, house.getMenu().getId());
             pre.setInt(10, house.getHouseid());
-            pre.setInt(11, hostId);  // Bind host ID
+            pre.setInt(11, hostId);
 
             int rowsUpdated = pre.executeUpdate();
             if (rowsUpdated > 0) {
@@ -593,39 +800,25 @@ public class HouseDAO {
             return false;
         }
     }
-    public List<House> getHouse1() {
-        String sql = "SELECT  distinct  house_id,post_date,house_name,review,house_price,status,address,description,Location.loca_id,Location.name,Menu.menu_id,\n"
-                + "               Menu.name\n"
-                + "                FROM[dbo].[House]\n"
-                + "                \n"
-                + "                join [Location] on House.loca_id = [Location].loca_id join Menu on House.menu_id = Menu.menu_id";
-        List<House> list = new ArrayList<>();
-        try {
-            //tạo khay chứa câu lệnh
-            PreparedStatement pre = con.prepareStatement(sql);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
-            ResultSet resultSet = pre.executeQuery();
-            while (resultSet.next()) {
-                int houseid = resultSet.getInt(1);
-                java.util.Date postdate = resultSet.getDate(2);
-                String housename = resultSet.getString(3);
-                String review = resultSet.getString(4);
-                float price = resultSet.getFloat(5);
-                int status = resultSet.getInt(6);
-                String address = resultSet.getString(7);
-                String description = resultSet.getString(8);
 
-                //tạo model hứng giữ liệu
-                Menu menu = new Menu(resultSet.getInt(11), resultSet.getString(12));
-                Location location = new Location(resultSet.getInt(9), resultSet.getString(10));
-                House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
-                list.add(h);
+    public int countHousesWithPendingBookings(int hostId) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) "
+                + "FROM House h "
+                + "WHERE h.status = 1 AND h.host_id = ?";
+
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, hostId);
+            ResultSet resultSet = pre.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
             }
         } catch (Exception e) {
-            System.out.println("error: " + e);
+            System.out.println("Error " + e);
         }
 
-        return list;
+        return count;
     }
     
     public int countHouse() {

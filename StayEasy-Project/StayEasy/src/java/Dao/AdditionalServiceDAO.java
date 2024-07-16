@@ -30,10 +30,12 @@ public class AdditionalServiceDAO {
         }
     }
 
+
     public List<AdditionalService> getAdditionalService(int page, String s) {
         String sql = "with p as (\n"
                 + "	select ROW_NUMBER() over (order by add_service_id asc) as num, *  from Additional_service where add_serviceName like ?)\n"
                 + "select * from p where num between ? * 5 - (5-1) and ? * 5";
+
         List<AdditionalService> list = new ArrayList<>();
         try {
             //tạo khay chứa câu lệnh

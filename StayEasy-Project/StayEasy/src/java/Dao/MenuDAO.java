@@ -33,12 +33,12 @@ public class MenuDAO {
         String sql = "select * from dbo.Menu";
         List<Menu> list = new ArrayList<>();
         try {
-            //tạo khay chứa câu lệnh
+
             PreparedStatement pre = con.prepareStatement(sql);
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
             while(resultSet.next()){
-                // lấy value theo từng cột
+
                 int menuid = resultSet.getInt(1);
                 String menuname = resultSet.getString(2);
                 Menu m = new Menu(menuid, menuname);
