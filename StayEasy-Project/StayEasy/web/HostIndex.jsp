@@ -24,7 +24,19 @@
         <link rel="stylesheet" data-href="c5.css" href="css/c5.css"> 
         <link rel="stylesheet" data-href="c6.css" href="css/c6.css"> 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
-
+        <link href="stylesheet" rel="stylesheet">
+        <link rel="stylesheet" href="list.css">
+        <link rel="stylesheet" href="housepage.css">
+        <link rel="stylesheet" href="css/list_house_main.css">
+        <link rel="stylesheet" href="assets/css/style.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user.jsp">
+        <link rel="stylesheet" href="list_house_main.css">
+        <link rel="stylesheet" href="StyleSheet.css">
+        <link rel="stylesheet" href="css/housepage.css">
+        <link rel="stylesheet" href="css/style.css">
         <style>
             header {
                 display: flex;
@@ -366,6 +378,7 @@
                 <div class="extranet-common-header">
                     <header class="ext-header ext-header--animated">
                         <div class="ext-header__container">
+
                             <section class="ext-header__logo-container">
                                 <div>                                     
                                 </div>
@@ -373,7 +386,9 @@
                                     <!---->
                                 </div>
                             </section>
+
                             <div class="ext-header__side-items">
+
                                 <div class="ext-search__bar" data-v-ed37d1ee>
                                     <button class="ext-search-trigger ext-search-trigger--md-hidden" data-v-ed37d1ee>
                                         <span aria-hidden="true" role="presentation" class="bui-icon bui-icon--medium" data-v-ed37d1ee data-v-ed37d1ee>
@@ -417,6 +432,8 @@
                                         </a>
                                     </c:if>
                                 </div>
+
+
                             </div>
                         </div>
 
@@ -440,11 +457,9 @@
                                             </div>
                                         </div>
                                         <ul class="ext-navigation-top-item__list">
-                                            <li data-nav-tag="group_overview" class="ext-navigation-top-item ext-navigation-top-item--active">
+                                            <li class="ext-navigation-top-item">
                                                 <a href="DashboardHostServlet" data-test-id="item-link" class="ext-navigation-top-item__link">
-                                                    <span class="ext-navigation-top-item__icon">
-                                                        <!---->
-                                                    </span>
+
                                                     <span class="ext-navigation-top-item__title">
                                                         <span class="ext-navigation-top-item__title-text">Group homepage</span>
 
@@ -455,10 +470,28 @@
 
                                                 </div>
                                             </li>
-                                            <li data-nav-tag="group_reviews" class="ext-navigation-top-item">
+
+                                            <li  class="ext-navigation-top-item">
+                                                <a href="#" data-test-id="item-link" class="ext-navigation-top-item__link">
+                                                    <span class="ext-navigation-top-item__icon">
+
+                                                    </span>
+                                                    <span class="ext-navigation-top-item__title">
+                                                        <span class="ext-navigation-top-item__title-text">Add new house</span>
+
+                                                    </span>
+
+                                                </a>
+                                                <div class="ext-navigation-top-item__submenu">
+
+                                                </div>
+                                            </li>
+
+
+                                            <li  class="ext-navigation-top-item">
                                                 <a href="HostComment" data-test-id="item-link" class="ext-navigation-top-item__link">
                                                     <span class="ext-navigation-top-item__icon">
-                                                        <!---->
+
                                                     </span>
                                                     <span class="ext-navigation-top-item__title">
                                                         <span class="ext-navigation-top-item__title-text">Reviews</span>
@@ -467,24 +500,23 @@
 
                                                 </a>
                                                 <div class="ext-navigation-top-item__submenu">
-                                                    <!---->
+
                                                 </div>
                                             </li>
-                                            <li data-nav-tag="group_bill" class="ext-navigation-top-item">
+
+                                            <li class="ext-navigation-top-item">
                                                 <a href="BillHostServlet" data-test-id="item-link" class="ext-navigation-top-item__link">
                                                     <span class="ext-navigation-top-item__icon">
-                                                        <!---->
+
                                                     </span>
                                                     <span class="ext-navigation-top-item__title">
                                                         <span class="ext-navigation-top-item__title-text">Bill</span>
-                                                        <!---->
-                                                        <!---->
+
                                                     </span>
-                                                    <!---->
-                                                    <!---->
+
                                                 </a>
                                                 <div class="ext-navigation-top-item__submenu">
-                                                    <!---->
+
                                                 </div>
                                             </li>                                            
                                         </ul>
@@ -507,11 +539,11 @@
                                     <h1 class="ext-page-header__title bui-text bui-text--variant-headline_2 title">
                                         <span>List Housepage</span>
                                     </h1>
-                                    <div class="housepage-buttons">
-                                        <button class="create-house-btn" onclick="location.href = 'AddHouseServlet'"
-                                                onmouseover="buttonHoverEffect(this)" onmouseout="buttonHoverEffect(this)">Create New
-                                            House</button>
-                                    </div>
+                                    <!--                                    <div class="housepage-buttons">
+                                                                            <button class="create-house-btn" onclick="location.href = 'AddHouseServlet'"
+                                                                                    onmouseover="buttonHoverEffect(this)" onmouseout="buttonHoverEffect(this)">Create New
+                                                                                House</button>
+                                                                        </div>-->
                                 </div>
 
                                 <div class="search-form">
@@ -555,11 +587,11 @@
                                                             <button class="read-more-btn">Read more</button>
                                                         </td>
                                                         <td class="button-container">
-                                                            <form action="RemoveHouseServlet" method="POST" onsubmit="return false;">
-                                                                <input type="hidden" name="houseId" value="${house.houseid}">
-                                                                <button type="button" class="remove-btn"
-                                                                        onclick="confirmRemove('${house.housename}', this.form)">Booked</button>
-                                                            </form>
+                                                            <!--                                                            <form action="RemoveHouseServlet" method="POST" onsubmit="return false;">
+                                                                                                                            <input type="hidden" name="houseId" value="${house.houseid}">
+                                                                                                                            <button type="button" class="remove-btn"
+                                                                                                                                    onclick="confirmRemove('${house.housename}', this.form)">Booked</button>
+                                                                                                                        </form>-->
                                                             <form action="NextEditHouseServlet" method="GET">
                                                                 <input type="hidden" name="houseId" value="${house.houseid}">
                                                                 <c:if test="${house.status != 0}">
@@ -593,7 +625,7 @@
                             <div class="bui-container bui-container--center">
                                 <div class="ext-page-header peg-page-header bui-u-hidden-print">
                                     <!-- Page title -->
-                                    <h1 class="ext-page-header__title bui-text bui-text--variant-headline_2">
+                                    <h1 class="ext-page-header__title bui-text bui-text--variant-headline_2 title">
                                         <span>Additional Service</span>
                                     </h1>
                                 </div>
@@ -782,19 +814,6 @@
                 setTimeout(() => {
                     button.style.animation = '';
                 }, 500);
-            }
-
-
-            function searchByHouseName() {
-                alert('Implementing search functionality...');
-
-            }
-            function confirmRemove(houseName, form) {
-                if (confirm(`Click here to set House have Book ${houseName}?`)) {
-                    form.submit();
-                } else {
-
-                }
             }
         </script>
 

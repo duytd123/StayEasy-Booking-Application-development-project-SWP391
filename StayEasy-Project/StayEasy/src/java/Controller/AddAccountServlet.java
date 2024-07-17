@@ -91,7 +91,7 @@ public class AddAccountServlet extends HttpServlet {
         Account a = new Account(-1, fullname, userimg, username, password, email, phone, status, role);
         AccountDAO dao = new AccountDAO();
         dao.signupAccount(a);
-        response.sendRedirect("ListAccountServlet");
+        response.sendRedirect("ListAccountServlet?page=1&search=");
     }
 
     /**

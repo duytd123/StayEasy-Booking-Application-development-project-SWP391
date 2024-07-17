@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -102,7 +103,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         // Pass House object and hostId to HouseDAO method
         houseDAO.addHouse(house, hostId);
 
-        // Redirect to dashboard or another page
+        // Redirect to dashboardhosthosthost or another page
         response.sendRedirect("DashboardHostServlet");
     } catch (IllegalArgumentException e) {
         response.getWriter().print("Error: " + e.getMessage());

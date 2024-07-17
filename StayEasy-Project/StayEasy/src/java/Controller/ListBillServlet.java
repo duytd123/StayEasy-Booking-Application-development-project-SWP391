@@ -37,7 +37,7 @@ public class ListBillServlet extends HttpServlet {
             BillDAO dao = new BillDAO();
             List<Bill> list = dao.getBill();
             request.setAttribute("BillList", list);
-            request.getRequestDispatcher("ListBill.jsp").forward(request, response);
+            request.getRequestDispatcher("admin1/invoice.jsp").forward(request, response);
         }
     }
 

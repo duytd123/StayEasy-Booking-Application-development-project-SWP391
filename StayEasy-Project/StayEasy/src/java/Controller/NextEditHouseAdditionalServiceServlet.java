@@ -40,7 +40,7 @@ public class NextEditHouseAdditionalServiceServlet extends HttpServlet {
             HouseAdditionalServiceDAO dao = new HouseAdditionalServiceDAO();
             HouseAdditionalService a = dao.getHouseAdditionalServicebyIDs(id);
             AdditionalServiceDAO adao = new AdditionalServiceDAO();
-            List<AdditionalService> list = adao.getAdditionalService();
+            List<AdditionalService> list = adao.getAdditionalServicee();
             request.setAttribute("list", list);
             request.setAttribute("houseadditionalservice", a);
         request.getRequestDispatcher("UpdateHouseAdditionalService.jsp").forward(request, response);

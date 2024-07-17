@@ -71,7 +71,7 @@ public class UpdateStatusAccountServlet extends HttpServlet {
             else{
                     dao.updateAccountStatus(1, username);
                     }
-            response.sendRedirect("ListAccountServlet");
+            response.sendRedirect("ListAccountServlet?page=1&search=");
     }
 
     /**

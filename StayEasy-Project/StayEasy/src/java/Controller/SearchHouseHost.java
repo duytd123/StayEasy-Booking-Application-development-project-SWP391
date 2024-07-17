@@ -33,17 +33,17 @@ public class SearchHouseHost extends HttpServlet {
             throws ServletException, IOException {
         String searchName = request.getParameter("search");
 
-        // Retrieve logged-in user (host) from session
+     
         Account loggedInUser = (Account) request.getSession().getAttribute("acc");
 
         if (loggedInUser != null) {
             int hostId = loggedInUser.getUserid();
 
-            // Call DAO to fetch houses based on search name and host_id
+       
             HouseDAO houseDAO = new HouseDAO();
             List<House> houseList = houseDAO.getHousebyNameAndHost(searchName, hostId);
 
-            // Set the retrieved list as a request attribute
+
             request.setAttribute("HouseList", houseList);
         }
 

@@ -220,6 +220,10 @@
         <servlet-name>SearchHouseHost</servlet-name>
         <servlet-class>Controller.SearchHouseHost</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddHouseHost</servlet-name>
+        <servlet-class>Controller.AddHouseHost</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ListAccountServlet</servlet-name>
         <url-pattern>/ListAccountServlet</url-pattern>
@@ -443,6 +447,10 @@
     <servlet-mapping>
         <servlet-name>SearchHouseHost</servlet-name>
         <url-pattern>/SearchHouseHost</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddHouseHost</servlet-name>
+        <url-pattern>/AddHouseHost</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

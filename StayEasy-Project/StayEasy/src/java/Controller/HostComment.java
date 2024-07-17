@@ -9,6 +9,7 @@ import Dao.AccountDAO;
 import Dao.CommentDAO;
 import Model.Account;
 import Model.Comment;
+import Model.CommentWithInfo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -40,9 +41,9 @@ public class HostComment extends HttpServlet {
                 int hostId = loggedInUser.getUserid();
 
                 CommentDAO dao = new CommentDAO();
-                List<Comment> list = dao.getCommentsByHouseId(hostId);
+            //    List<CommentWithInfo> list = dao.getCommentsByHouseId(hostId);
 
-                request.setAttribute("commentList", list);
+             //   request.setAttribute("commentList", list);
 
                 request.getRequestDispatcher("DashBoardHostComment.jsp").forward(request, response);
             } else {

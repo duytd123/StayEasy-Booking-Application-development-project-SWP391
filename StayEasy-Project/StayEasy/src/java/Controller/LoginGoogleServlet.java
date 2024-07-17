@@ -37,7 +37,7 @@ public class LoginGoogleServlet extends HttpServlet {
         String code = request.getParameter("code");
         Account a = null;
         if (code == null || code.isEmpty()) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("LoginServlet");
         } else {
             String accessToken = getToken(code);
             Model.UserGoogle user = getUserInfo(accessToken);
@@ -54,7 +54,7 @@ public class LoginGoogleServlet extends HttpServlet {
             session.setAttribute("acc", a);
             session.setAttribute("rememberme", true);
             request.setAttribute("fullname", user.getName());
-            request.getRequestDispatcher("Index.jsp").forward(request, response);
+            request.getRequestDispatcher("home").forward(request, response);
 
         }
     }
