@@ -32,6 +32,8 @@ public class BillDAO {
         }
     }
 
+
+
       public float TotalBill() {
         String sql = "  select sum (Bill.total) from Bill ";
         float count = 0;
@@ -256,6 +258,7 @@ public class BillDAO {
                 Bill b = new Bill(billid, date, total, status, userid);
 
                 list.add(b);
+
             }
         } catch (Exception e) {
             System.out.println("error: " + e);
@@ -263,6 +266,87 @@ public class BillDAO {
 
         return list;
     }
+
+    public List<Bill> getHistoryBill(int userId) {
+        String sql = "SELECT * FROM Bill WHERE user_id = ?";
+        List<Bill> list = new ArrayList<>();
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, userId);
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                Bill b = new Bill();
+                b.setBillid(resultSet.getInt("bill_id"));
+                b.setDate(resultSet.getDate("date"));
+                b.setTotal(resultSet.getFloat("total"));
+                b.setStatus(resultSet.getInt("status"));
+                b.setUserid(resultSet.getInt("user_id"));
+                b.setUserName("");
+                b.setFullname(resultSet.getString("fullname"));
+                b.setPhone(resultSet.getString("phone"));
+                b.setEmail(resultSet.getString("email"));
+                b.setReason(resultSet.getString("reason"));
+                b.setPayment(resultSet.getString("payment_type"));
+                list.add(b);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+
+      
+        }
+
+        return list;
+    }
+
+
+    public Bill getBillByIdUser(int billId, int userId) {
+        Bill bill = null;
+        String sql = "SELECT * FROM Bill WHERE bill_id = ? and user_id=?";
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, billId);
+            pre.setInt(2, userId);
+            ResultSet resultSet = pre.executeQuery();
+            if (resultSet.next()) {
+                bill = new Bill();
+                bill.setBillid(resultSet.getInt("bill_id"));
+                bill.setDate(resultSet.getDate("date"));
+                bill.setTotal(resultSet.getFloat("total"));
+                bill.setStatus(resultSet.getInt("status"));
+                bill.setUserid(resultSet.getInt("user_id"));
+                bill.setUserName("");
+                bill.setFullname(resultSet.getString("fullname"));
+                bill.setPhone(resultSet.getString("phone"));
+                bill.setEmail(resultSet.getString("email"));
+                bill.setReason(resultSet.getString("reason"));
+                bill.setPayment(resultSet.getString("payment_type"));
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return bill;
+    }
+
+    public int cancelBill(int billid, String reason) {
+        String sql = "UPDATE [dbo].[Bill]\n"
+                + "   SET [status] = ?, reason=?"
+                + " WHERE bill_id = ?";
+        try {
+            //tạo khay chứa câu lệnh
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, 2);
+            pre.setString(2, reason);
+            pre.setInt(3, billid);
+            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            return pre.executeUpdate();
+
+        } catch (Exception e) {
+            System.out.println("error :  " + e);
+        }
+        return 0;
+    }
+
+
 
     public void updatebillStatus(int billid) {
         String sql = "UPDATE [dbo].[Bill]\n"
@@ -298,13 +382,42 @@ public class BillDAO {
                 float total = resultSet.getFloat("total");
                 int status = resultSet.getInt("status");
                 int userId = resultSet.getInt("user_id");
+                String paymentType = resultSet.getString("payment_type");
                 Bill bill = new Bill(billId, date, total, status, userId);
+                bill.setPayment(paymentType);
                 bills.add(bill);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return bills;
+    }
+
+    public int bookingBill(Bill bill) {
+        String sql = "INSERT INTO Bill (date, total, status, user_id, fullname, phone, email, payment_type) VALUES (?,?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = con.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            int i = 1;
+            statement.setDate(i++, new java.sql.Date(bill.getDate().getTime()));
+            statement.setFloat(i++, bill.getTotal());
+            statement.setInt(i++, bill.getStatus());
+            statement.setInt(i++, bill.getUserid());
+            statement.setString(i++, bill.getFullname());
+            statement.setString(i++, bill.getPhone());
+            statement.setString(i++, bill.getEmail());
+            statement.setString(i++, bill.getPayment());
+
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return generatedKeys.getInt(1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Booking dao: " + e);
+        }
+        return -1;
     }
 
 

@@ -11,6 +11,7 @@ import Dao.AccountDAO;
 import Dao.BillDAO;
 import Dao.BillDetailDAO;
 import Dao.CommentDAO;
+import Dao.FeedbackDAO;
 import Dao.HouseAdditionalServiceDAO;
 import Dao.HouseDAO;
 import Dao.HouseImgDAO;
@@ -19,6 +20,7 @@ import Model.Account;
 import Model.Bill;
 import Model.BillDetail;
 import Model.Comment;
+import Model.Feedback;
 import Model.House;
 import Model.HouseAdditionalService;
 import Model.HouseImg;
@@ -86,7 +88,10 @@ public class HousePageServlet extends HttpServlet {
         List<Comment> list = cdao.getComment();
         AccountDAO dao = new AccountDAO();
         LocationDAO locationDao = new LocationDAO();
+        FeedbackDAO feedbackDao = new FeedbackDAO();
+        List<Feedback> feedbacks = feedbackDao.getAllFeedbacks(houseId);
         Account a = dao.getAccounts();
+        request.setAttribute("feedbacks", feedbacks);
         request.setAttribute("Comment", list);
         request.setAttribute("account", a);
         request.setAttribute("house", house);
@@ -173,7 +178,6 @@ public class HousePageServlet extends HttpServlet {
                 request.getRequestDispatcher("Housepage.jsp").forward(request, response);
                 return;
             }
-
         }
 
         BillDetail billDetail = new BillDetail(-1, idBill, houseId, startdate, enddate, note);
@@ -220,3 +224,6 @@ public class HousePageServlet extends HttpServlet {
     }// </editor-fold>
 
 }
+
+//copy hết mấy file xanh và xanh duong thì trong file có doạn này màu xanh lá thì copy hết nha
+//cop xanh la kieu j a

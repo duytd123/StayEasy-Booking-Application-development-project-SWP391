@@ -24,6 +24,7 @@ public class House {
     private Location location;
     private Menu menu;
     private int numberBill;
+    private boolean rentHouse;
     public House() {
     }
 
@@ -129,6 +130,14 @@ public class House {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public boolean isRentHouse() {
+        return rentHouse;
+    }
+
+    public void setRentHouse(boolean rentHouse) {
+        this.rentHouse = rentHouse;
     }
 
     

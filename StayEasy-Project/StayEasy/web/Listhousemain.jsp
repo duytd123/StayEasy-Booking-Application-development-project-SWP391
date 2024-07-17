@@ -2,6 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="getHouse" class="Dao.HouseImgDAO" />
+<jsp:useBean id="getHouseIs" class="Dao.HouseDAO" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -29,6 +30,183 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <style>
+            .searchItem {
+                display: flex;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                margin-bottom: 20px;
+                overflow: hidden;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .siImg {
+                width: 250px;
+                height: 150px;
+                object-fit: cover;
+            }
+
+            .siDesc {
+                padding: 15px;
+                flex: 1;
+            }
+
+            .siTitle {
+                font-size: 1.5em;
+                margin: 0 0 10px 0;
+            }
+
+            .siDistance, .siTaxi0p, .siCancel0p, .siCancel0pSubtitle {
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            .siDetailTexts {
+                padding: 15px;
+                text-align: center;
+            }
+
+            .siPrice {
+                font-size: 1.25em;
+                font-weight: bold;
+            }
+
+            .siRating {
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+
+            .siRating button {
+                background-color: #ffd700;
+                border: none;
+                padding: 5px 10px;
+                color: #fff;
+                font-size: 1em;
+                border-radius: 5px;
+            }
+
+            .siCheckButton {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 1em;
+                cursor: pointer;
+                display: inline-block;
+            }
+
+            .siCheckButton:hover {
+                background-color: #0056b3;
+            }
+
+            .outOfStock {
+                background-color: #ffdddd;
+                border: 1px solid #ff6666;
+                color: #d8000c;
+                padding: 5px;
+                border-radius: 5px;
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .col-2 {
+                background-color: #f9f9f9;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .filter-group {
+                margin-bottom: 20px;
+            }
+
+            .filter-group h3 {
+                font-size: 1.2em;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .location-filters, ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .location-filters li, ul li {
+                margin-bottom: 10px;
+            }
+
+            .location-filters label, ul label {
+                margin-left: 5px;
+            }
+
+            .location-filters input[type="radio"], ul input[type="radio"] {
+                display: none;
+            }
+
+            .location-filters label, ul label {
+                cursor: pointer;
+                padding: 8px 12px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            }
+
+            .location-filters label:hover, ul label:hover {
+                background-color: #007bff;
+                color: #fff;
+                border-color: #007bff;
+            }
+
+            .location-filters input[type="radio"]:checked + label, ul input[type="radio"]:checked + label {
+                background-color: #007bff;
+                color: #fff;
+                border-color: #007bff;
+            }
+
+            .type-filters {
+                margin-top: 20px;
+            }
+
+            .type-filters div {
+                font-size: 1.2em;
+                color: #333;
+                margin-bottom: 10px;
+            }
+
+            .type-filters ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            .type-filters li {
+                margin-bottom: 10px;
+            }
+
+            .type-filters label {
+                cursor: pointer;
+                padding: 8px 12px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+            }
+
+            .type-filters label:hover {
+                background-color: #007bff;
+                color: #fff;
+                border-color: #007bff;
+            }
+
+            .type-filters input[type="radio"]:checked + label {
+                background-color: #007bff;
+                color: #fff;
+                border-color: #007bff;
+            }
+        </style>
     </head>
     <header>
         <%@ include file="header.jsp" %>
@@ -42,9 +220,9 @@
                         <h3>Location</h3>
                         <ul class="location-filters">
                             <li>
-                                    <input ${currentLocation == null || currentLocation == -1 ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectedLocations" value="-1" id="location-1">
-                                    <label for="location-1">All</label>
-                                </li>
+                                <input ${currentLocation == null || currentLocation == -1 ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectedLocations" value="-1" id="location-1">
+                                <label for="location-1">All</label>
+                            </li>
                             <c:forEach items="${locations}" var="loca">
                                 <li>
                                     <input ${currentLocation == loca.id ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectedLocations" value="${loca.id}" id="location-${loca.id}">
@@ -91,6 +269,9 @@
                                 <span class="siCancel0pSubtitle">
                                     ${house.description}
                                 </span>
+                                <c:if test="${house.rentHouse  == true}">
+                                    <div class="outOfStock">Out of Stock</div>
+                                </c:if>
                             </div>
                             <div class="siDetails">
                                 <div class="siRating">

@@ -4,6 +4,7 @@
 <%@page import="Model.House"%>
 <%@page import="java.util.List"%>
 <%@page import="Model.Account"%>
+<jsp:useBean id="calculateStar" class="configs.CalculateFeedback"></jsp:useBean>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -62,35 +63,56 @@
                 </div>
                 <div class="col-md-4 mt-5">
                     <div class="hotel-services mt-4 p-3 border rounded">
-                        <h2>Services</h2>
-                        <form action="housepage" method="post">
-                            <input type="hidden" name="houseid" value="${house.houseid}" />
-                            <div class="form-group">
-                                <label for="beefsteak">Beefsteak:</label>
-                                <input min="1" type="number" id="beefsteak" name="beefsteak" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label for="drink">Drink:</label>
-                                <input  min="1" type="number" id="drink" name="drink" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label for="startdate">Start Date:</label>
-                                <input type="date" id="startDate" name="startdate" class="form-control mb-2" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="enddate">End Date:</label>
-                                <input type="date" id="endDate" name="enddate" class="form-control mb-2" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="note">Note:</label>
-                                <input type="text" id="note" name="note" class="form-control mb-2" />
-                            </div>
+                        <h2>Book house</h2>
+                        <form action="booking" method="get">
+                            <input type="hidden" value="${house.houseid}" name="houseId"/>
                             <button type="submit" class="btn btn-success btn-block">Reserve or Book Now</button>
                         </form>
                     </div>
+                    <div class="hotel-services mt-4 p-3 border rounded">
+                        <c:set var="totalStar" value="${calculateStar.totalStar(feedbacks)}" />
+                        <div class="product-rating" style="font-size: 20px;">
+                            <h4>Feedback avarage</h4>
+                            <c:choose>
+                                <c:when test="${totalStar > 0}">
+                                    <c:forEach var="i" begin="1" end="${calculateStar.floor(totalStar)}">
+                                        <span class="star" style="color: gold">★</span>
+                                    </c:forEach>
+
+                                    <c:if test="${totalStar - calculateStar.floor(totalStar) >= 0.5}">
+                                        <i class="fa fa-star-half-o" style="color: gold"></i>
+                                    </c:if>
+                                    <c:forEach var="i" begin="${calculateStar.floor(totalStar) + (totalStar - calculateStar.floor(totalStar) >= 0.5 ? 1 : 0)}" end="4">
+                                        <span class="star">☆</span>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:forEach var="i" begin="0" end="4">
+                                        <span class="star">☆</span>
+                                    </c:forEach>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        <a class="review-link" href="#"
+                           >(${feedbacks.size()} Reviews)</i></a
+                        >
+                        <hr>
+                        <h4>Feedbacks</h4>
+                        <c:forEach var="feedback" items="${feedbacks}">
+                            <div class="feedback-item">
+                                <p><strong>${feedback.fullname}</strong> (${feedback.date})</p>
+                                <div class="feedback-rating" style="font-size: 20px;">
+                                    <c:forEach var="i" begin="1" end="5">
+                                        <span class="star" style="color: ${i <= feedback.star ? 'gold' : 'gray'}">★</span>
+                                    </c:forEach>
+                                </div>
+                                <p>${feedback.content}</p>
+                            </div>
+                            <hr>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
-
             <% 
             Account a = (Account) request.getAttribute("account");
             String username = (String)session.getAttribute("username");
