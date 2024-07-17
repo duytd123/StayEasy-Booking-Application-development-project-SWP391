@@ -63,7 +63,7 @@
             <h1 class="title">Add Additional Service</h1>
 
             <form action="AddAdditionalServiceServlet" method="post" >
-                <h2>Additional_Service_Name</h2>
+                <h2>Service Name</h2>
                 <input
                     type="text"
                     name="addservicename"
@@ -71,7 +71,7 @@
                     placeholder="Enter Service Name"
                     required=""
                     />
-                <h2>Additional_Service_Desc</h2>
+                <h2>Service Desc</h2>
                 <input
                     type="text"
                     name="addservicedesc"

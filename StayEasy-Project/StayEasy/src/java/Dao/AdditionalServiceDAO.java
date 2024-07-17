@@ -29,13 +29,32 @@ public class AdditionalServiceDAO {
             System.out.println("error: " + e);
         }
     }
+     public List<AdditionalService> getAdditionalServicee() {
+        String sql = "select * from Additional_service";
+        List<AdditionalService> list = new ArrayList<>();
+        try {
+            //tạo khay chứa câu lệnh
+            PreparedStatement pre = con.prepareStatement(sql);
+            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                int serviceid = resultSet.getInt(1);
+                String servicename = resultSet.getString(2);
+                String servicedesc = resultSet.getString(3);
+                AdditionalService as = new AdditionalService(serviceid, servicename, servicedesc);
+                list.add(as);
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
 
+        return list;
+    }
 
     public List<AdditionalService> getAdditionalService(int page, String s) {
         String sql = "with p as (\n"
                 + "	select ROW_NUMBER() over (order by add_service_id asc) as num, *  from Additional_service where add_serviceName like ?)\n"
                 + "select * from p where num between ? * 5 - (5-1) and ? * 5";
-
         List<AdditionalService> list = new ArrayList<>();
         try {
             //tạo khay chứa câu lệnh
@@ -83,7 +102,7 @@ public class AdditionalServiceDAO {
                 + "           ([add_serviceName]\n"
                 + "           ,[add_serviceDesc])\n"
                 + "     VALUES\n"
-                + "           (?\n"
++ "           (?\n"
                 + "           ,?)";
         try {
             //tạo khay chứa câu lệnh
@@ -159,7 +178,7 @@ public class AdditionalServiceDAO {
         String sql = "select count(*) from Additional_service where add_serviceName like ? ";
         try {
              PreparedStatement pre = con.prepareStatement(sql);
-            pre.setString(1, "%"+ s +"%");
+pre.setString(1, "%"+ s +"%");
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
             if(resultSet.next()){

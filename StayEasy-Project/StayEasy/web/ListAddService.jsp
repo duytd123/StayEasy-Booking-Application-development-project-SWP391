@@ -80,9 +80,9 @@
                 </form>
                 <thead>
                     <tr>
-                        <th>Additional_Service_ID</th>
-                        <th>Additional_Service_Name</th>
-                        <th>Additional_Service_Desc</th>
+                        <th>ID</th>
+                        <th>Service Name</th>
+                        <th>Service Desc</th>
                         <th>Action</th>
                     </tr>
                 </thead>

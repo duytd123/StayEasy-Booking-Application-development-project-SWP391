@@ -9,6 +9,7 @@ import Connect.DBContext;
 import Model.Account;
 
 import Model.Bill;
+import Model.Bill1;
 
 import Model.Role;
 import java.sql.Connection;
@@ -168,35 +169,35 @@ public class AccountDAO {
     }
 
 
-    public List<Account> getThreeUserMaxBill() {
-        String sql = "select top 3 Users.user_id,username, MAX(Bill.total)\n"
-                + "from Bill ,Users\n"
-                + "where Bill.user_id = Users.user_id\n"
-                + "group by Users.user_id ,username";
-        List<Account> list = new ArrayList<>();
-        try {
-            //tạo khay chứa câu lệnh
-            PreparedStatement pre = con.prepareStatement(sql);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
-            ResultSet resultSet = pre.executeQuery();
-            while (resultSet.next()) {
-                int userid = resultSet.getInt(1);
-                String username = resultSet.getString(2);
-                float total = resultSet.getFloat(3);
-
-                //tạo model hứng giữ liệu
-                Account account = new Account();
-                account.setUserid(userid);
-                account.setUsername(username);
-                account.setTotal(total);
-                list.add(account);
-            }
-        } catch (Exception e) {
-            System.out.println("error: " + e);
-        }
-
-        return list;
-    }
+//    public List<Account> getThreeUserMaxBill() {
+//        String sql = "select top 3 Users.user_id,username, MAX(Bill.total)\n"
+//                + "from Bill ,Users\n"
+//                + "where Bill.user_id = Users.user_id\n"
+//                + "group by Users.user_id ,username";
+//        List<Account> list = new ArrayList<>();
+//        try {
+//            //tạo khay chứa câu lệnh
+//            PreparedStatement pre = con.prepareStatement(sql);
+//            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+//            ResultSet resultSet = pre.executeQuery();
+//            while (resultSet.next()) {
+//                int userid = resultSet.getInt(1);
+//                String username = resultSet.getString(2);
+//                float total = resultSet.getFloat(3);
+//
+//                //tạo model hứng giữ liệu
+//                Account account = new Account();
+//                account.setUserid(userid);
+//                account.setUsername(username);
+//                account.setTotal(total);
+//                list.add(account);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("error: " + e);
+//        }
+//
+//        return list;
+//    }
 
 
     public int countAccountByRole(int role) {
@@ -736,11 +737,11 @@ public class AccountDAO {
         return list;
     }
 
-    public static void main(String[] args) {
-        AccountDAO a = new AccountDAO();
-        List<Bill1> b = a.getThreeUserMaxBill();
-        for (int i = 0; i < b.size(); i++) {
-            System.out.println(b.get(i));
-        }
-    }
+//    public static void main(String[] args) {
+//        AccountDAO a = new AccountDAO();
+//        List<Bill1> b = a.getThreeUserMaxBill();
+//        for (int i = 0; i < b.size(); i++) {
+//            System.out.println(b.get(i));
+//        }
+//    }
 }

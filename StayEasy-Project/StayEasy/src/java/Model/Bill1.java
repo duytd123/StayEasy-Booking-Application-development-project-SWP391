@@ -25,7 +25,6 @@ public class Bill1 {
 
     public Bill1(int billid, float total, int status, int userid, String fullname, String phone, String username) {
         this.billid = billid;
-       
         this.total = total;
         this.status = status;
         this.userid = userid;

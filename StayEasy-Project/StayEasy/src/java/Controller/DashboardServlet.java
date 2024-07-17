@@ -84,15 +84,15 @@ public class DashboardServlet extends HttpServlet {
         //get 3 Account best
 
         AccountDAO accountDAO = new AccountDAO();
-        List<Account> listAcount = accountDAO.getThreeUserMaxBill();
-
-        request.setAttribute("countUser", countUser);
-        request.setAttribute("listHouse", listHouse);
-        request.setAttribute("listAcount", listAcount);
-        request.setAttribute("listHouse", listHouse);
-
-        AccountDAO bill = new AccountDAO();
-        List<Bill1> listbill = bill.getThreeUserMaxBill();
+//        List<Account> listAcount = accountDAO.getThreeUserMaxBill();
+//
+//        request.setAttribute("countUser", countUser);
+//        request.setAttribute("listHouse", listHouse);
+//        request.setAttribute("listAcount", listAcount);
+//        request.setAttribute("listHouse", listHouse);
+//
+//        AccountDAO bill = new AccountDAO();
+//        List<Bill1> listbill = bill.getThreeUserMaxBill();
 
         request.setAttribute("countUser", countUser);
         request.setAttribute("counthouse", Counthouse);

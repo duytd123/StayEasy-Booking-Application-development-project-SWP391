@@ -49,7 +49,7 @@ public class ManagerHouseServlet extends HttpServlet {
             List<HouseHost> list = daoH.getHousesByHost(hostId);
             List<Location> listL = daoL.getLocation();
             List<Menu> listM = daoM.getMenu();
-            List<AdditionalService> listA = daoA.getAdditionalService();
+            List<AdditionalService> listA = daoA.getAdditionalServicee();
             
             int page = 1, numPerPage = 5;
             int size = list.size();

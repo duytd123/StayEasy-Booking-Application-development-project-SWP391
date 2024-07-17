@@ -35,7 +35,7 @@ public class DeleteAdditionalServiceServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             AdditionalServiceDAO dao = new AdditionalServiceDAO();
             dao.deleteHouseAdditionalService(id);
-            response.sendRedirect("ListAddService");
+            response.sendRedirect("ListAddService?page=1&search=");
         }
     }
 
