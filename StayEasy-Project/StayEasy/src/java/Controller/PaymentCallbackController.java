@@ -4,20 +4,23 @@
  */
 package Controller;
 
+import Dao.BillDAO;
+import Dao.BillDetailDAO;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  *
- * @author Admin
+ * @author HP
  */
-public class LogoutServlet extends HttpServlet {
+@WebServlet(name = "PaymentCallbackController", urlPatterns = {"/payment-callback"})
+public class PaymentCallbackController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,27 +34,18 @@ public class LogoutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        session.removeAttribute("mess");
-//            Account agmail = (Account)session.getAttribute("acc");
-//            AccountDAO dao = new AccountDAO();
-//            Account acc = dao.checkAccountByEmail(agmail.getEmail());
-//            if(acc != null){
-        boolean a = (boolean) session.getAttribute("rememberme");
-        if (!a) {
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (int i = 0; i < cookies.length; i++) {
-                    cookies[i].setMaxAge(0);
-                    response.addCookie(cookies[i]);
-                }
-            }
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet PaymentCallbackController</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet PaymentCallbackController at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-//            }
-        session.removeAttribute("acc");
-        session.removeAttribute("rememberme");
-        response.sendRedirect("home");
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -66,7 +60,23 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        BillDAO billDao = new BillDAO();
+        BillDetailDAO billDetailDao = new BillDetailDAO();
+        int bookingId = 0;
+        try {
+            bookingId = Integer.parseInt(session.getAttribute("bookingId") + "");
+            String transactionStatus = request.getParameter("vnp_TransactionStatus");
+            if ("00".equals(transactionStatus)) {
+                response.sendRedirect("bookingConfirmation.jsp?message=success");
+                return;
+            }
+        } catch (Exception e) {
+            System.out.println("Error; " + e);
+        }
+        billDetailDao.deleteBillDetailByBillId(bookingId);
+        billDao.deleteBill(bookingId);
+        response.sendRedirect("bookingConfirmation.jsp?message=fail");
     }
 
     /**

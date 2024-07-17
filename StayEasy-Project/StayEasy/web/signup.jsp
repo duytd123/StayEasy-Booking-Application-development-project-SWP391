@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <form action="SignUpServlet" method="post" name="registration">
-                            <p class="text-danger">${mess}</p>
+                            <p name="mess" class="text-danger">${mess}</p>
 
                             <div class="form-group">
                                 <label for="username">Username*</label>
@@ -62,7 +62,7 @@
 
                             <div class="form-group">
                                 <label for="fullname">Full Name</label>
-                                <input type="text" name="fullname" value="${fullname}" class="form-control" id="fullname" placeholder="Enter full name">
+                                    <input type="text" name="fullname" value="${fullname}" class="form-control" id="fullname" placeholder="Enter full name">
                             </div>
 
                             <div class="form-group">
@@ -76,7 +76,7 @@
                             </div>
 
                             <div class="col-md-12 text-center mb-3">
-                                <button type="submit" class="btn btn-block mybtn btn-primary tx-tfm">SIGN UP</button>
+                                <button type="submit" name="submit" class="btn btn-block mybtn btn-primary tx-tfm">SIGN UP</button>
                             </div>
 
                             <div class="col-md-12 text-center">
