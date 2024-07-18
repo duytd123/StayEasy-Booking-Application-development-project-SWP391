@@ -7,16 +7,10 @@ package Dao;
 
 import Connect.DBContext;
 import Model.BillDetail;
-import Model.House;
 import Model.HouseHost;
-import Model.HouseImg;
-import Model.Location;
-import Model.Menu;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import java.sql.*;
@@ -26,6 +20,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import Connect.DBContext;
+import Model.House;
+import Model.HouseImg;
+import Model.Location;
+import Model.Menu;
+import java.time.LocalDate;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -34,6 +35,7 @@ import java.util.Map;
 public class HouseDAO {
 
     Connection con;
+
     public LocationDAO ld = new LocationDAO();
     public MenuDAO md = new MenuDAO();
     public DecimalFormat df = new DecimalFormat("###.##");
@@ -467,7 +469,6 @@ public class HouseDAO {
         return list;
     }
 
-
     public List<House> searchfindHouse(String whereTo, Date arrivals, String guests, Date leaving, int locationId, int menuId) {
         String sql = "select * from House as H1 where 1 = 1";
         if (locationId >= 0) {
@@ -542,7 +543,6 @@ public class HouseDAO {
         }
         return false;
     }
-
 
     public House getHousebyId(int id) {
         String sql = "select * from dbo.House where house_id = ?";
@@ -879,7 +879,6 @@ public class HouseDAO {
         }
     }
 
-
     public List<House> searchHouse1(String whereTo, Date arrivals, String guests, Date leaving, int locationId, int menuId) {
 
         String sql = "select * from House as H1 where 1 = 1";
@@ -936,4 +935,24 @@ public class HouseDAO {
         return list;
 
     }
+    
+     public int countHousesWithPendingBookings(int hostId) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) "
+                + "FROM House h "
+                + "WHERE h.status = 1 AND h.host_id = ?";
 
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, hostId);
+            ResultSet resultSet = pre.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return count;
+    }
+}

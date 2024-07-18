@@ -169,6 +169,11 @@
             });
         </script>
         <script>
+            window.addEventListener('pageshow', function (event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            });
             window.onload = function () {
                 var today = new Date().toISOString().split('T')[0];
                 var start = document.querySelector('#startDate');
@@ -202,3 +207,6 @@
         <script src="Housepage.js" type="text/javascript"></script>
     </body>
 </html>
+
+
+

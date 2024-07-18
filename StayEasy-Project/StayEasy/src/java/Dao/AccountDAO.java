@@ -698,44 +698,44 @@ public class AccountDAO {
         }
     }
 
-    public List<Bill1> getThreeUserMaxBill() {
-        String sql =" SELECT TOP 5\n" +
-"               	Max(Bill.bill_id) AS bill_id,\n" +
-"                  Bill.user_id,\n" +
-"               	Bill.status,\n" +
-"               Users.fullname,\n" +
-"			  Users.phone,\n" +
-"			  Users.username,\n" +
-"                 SUM(Bill.total) AS total_amount\n" +
-"              FROM \n" +
-"                  [dbo].[Bill]\n" +
-"           	join Users on Bill.user_id = Users.user_id\n" +
-"          GROUP BY \n" +
-"             Bill.user_id, Bill.status,Users.fullname ,  Users.phone,Users.username order by total_amount desc";
-        List<Bill1> list = new ArrayList<>();
-        try {
-            //tạo khay chứa câu lệnh
-            PreparedStatement pre = con.prepareStatement(sql);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
-            ResultSet resultSet = pre.executeQuery();
-            while (resultSet.next()) {
-                int billId = resultSet.getInt(1);
-                int userid = resultSet.getInt(2);
-                int status = resultSet.getInt(3);
-                String fullname = resultSet.getString(4);
-                String phone = resultSet.getString(5);
-                String username = resultSet.getString(6);
-                float totalmoney = resultSet.getFloat(7);
-
-                Bill1 bill = new Bill1(billId,totalmoney, status, userid, fullname, phone, username);
-                list.add(bill);
-            }
-        } catch (Exception e) {
-            System.out.println("error: " + e);
-        }
-
-        return list;
-    }
+//    public List<Bill> getThreeUserMaxBill() {
+//        String sql =" SELECT TOP 5\n" +
+//"               	Max(Bill.bill_id) AS bill_id,\n" +
+//"                  Bill.user_id,\n" +
+//"               	Bill.status,\n" +
+//"               Users.fullname,\n" +
+//"			  Users.phone,\n" +
+//"			  Users.username,\n" +
+//"                 SUM(Bill.total) AS total_amount\n" +
+//"              FROM \n" +
+//"                  [dbo].[Bill]\n" +
+//"           	join Users on Bill.user_id = Users.user_id\n" +
+//"          GROUP BY \n" +
+//"             Bill.user_id, Bill.status,Users.fullname ,  Users.phone,Users.username order by total_amount desc";
+//        List<Bill1> list = new ArrayList<>();
+//        try {
+//            //tạo khay chứa câu lệnh
+//            PreparedStatement pre = con.prepareStatement(sql);
+//            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+//            ResultSet resultSet = pre.executeQuery();
+//            while (resultSet.next()) {
+//                int billId = resultSet.getInt(1);
+//                int userid = resultSet.getInt(2);
+//                int status = resultSet.getInt(3);
+//                String fullname = resultSet.getString(4);
+//                String phone = resultSet.getString(5);
+//                String username = resultSet.getString(6);
+//                float totalmoney = resultSet.getFloat(7);
+//
+//                Bill1 bill = new Bill1(billId,totalmoney, status, userid, fullname, phone, username);
+//                list.add(bill);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("error: " + e);
+//        }
+//
+//        return list;
+//    }
 
 //    public static void main(String[] args) {
 //        AccountDAO a = new AccountDAO();
