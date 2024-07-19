@@ -76,6 +76,13 @@ public class BookingUserController extends HttpServlet {
         HttpSession session = request.getSession();
         Account accountLogin = (Account) session.getAttribute("acc");
         if (accountLogin != null) {
+            if (session.getAttribute("bookingId") != null && !(session.getAttribute("bookingId") + "").equals("")) {
+                BillDAO billDao = new BillDAO();
+                BillDetailDAO billDetailDao = new BillDetailDAO();
+                int bookingId = Integer.parseInt(session.getAttribute("bookingId") + "");
+                billDetailDao.deleteBillDetailByBillId(bookingId);
+                billDao.deleteBill(bookingId);
+            }
             String houseIdStr = request.getParameter("houseId");
             int houseId = Integer.parseInt(houseIdStr);
             HouseDAO houseDao = new HouseDAO();
@@ -189,9 +196,9 @@ public class BookingUserController extends HttpServlet {
                 if (idBill > 0) {
                     billDetail.setBillid(idBill);
                     int id = billDetailDao.addBillDetail(billDetail);
-                    if(payment.equals("1")) {
+                    if (payment.equals("1")) {
                         session.setAttribute("bookingId", idBill);
-                        response.sendRedirect("vnpay?amount=" + (int)total);
+                        response.sendRedirect("vnpay?amount=" + (int) total);
                         return;
                     }
                     if (id > 0) {

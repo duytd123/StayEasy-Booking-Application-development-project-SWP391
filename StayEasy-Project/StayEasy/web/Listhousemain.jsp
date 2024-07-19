@@ -253,7 +253,7 @@
                     <c:forEach items="${list}" var="house" >
                         <c:set value="${getHouse.getHouseImgbyID(house.houseid)}" var="houseImg"/>
                         <div class="searchItem">
-                            <img src="${houseImg != null ? houseImg.get(0).imglink  : ""}" alt="" class="siImg" />
+                            <img src="${houseImg != null && houseImg.size() > 0 ? houseImg.get(0).imglink  : ""}" alt="" class="siImg" />
                             <div class="siDesc">
                                 <h1 class="siTitle">${house.housename}</h1>
                                 <span class="siDistance"> </span>

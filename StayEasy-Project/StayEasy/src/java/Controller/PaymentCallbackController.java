@@ -74,6 +74,7 @@ public class PaymentCallbackController extends HttpServlet {
         } catch (Exception e) {
             System.out.println("Error; " + e);
         }
+        session.removeAttribute("bookingId");
         billDetailDao.deleteBillDetailByBillId(bookingId);
         billDao.deleteBill(bookingId);
         response.sendRedirect("bookingConfirmation.jsp?message=fail");

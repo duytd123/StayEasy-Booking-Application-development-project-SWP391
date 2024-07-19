@@ -174,6 +174,13 @@
         .icon-link:hover {
             color: #007bff;
         }
+        
+        
+    .resized-image {
+        width: 150px;
+        height: 150px;
+        object-fit: cover; /* Ensure the image scales proportionally */
+    }
 
     </style>
 
@@ -226,6 +233,7 @@
                         </div>
                     </div>
 
+                    
                     <div class="subscribe_form">
                         <form action="SignUpServlet" method="get">
                             <input id="emailDiscount" type="email" autocomplete="off" placeholder="Go to sigup">
