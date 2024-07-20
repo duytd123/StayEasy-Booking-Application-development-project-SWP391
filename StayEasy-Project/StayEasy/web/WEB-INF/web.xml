@@ -18,7 +18,7 @@
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>Controller.User.LoginServlet</servlet-class>
+        <servlet-class>Controller.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditAccountServlet</servlet-name>
@@ -50,7 +50,7 @@
     </servlet>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>Controller.User.LogoutServlet</servlet-class>
+        <servlet-class>Controller.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddHouseServlet</servlet-name>
@@ -70,7 +70,7 @@
     </servlet>
     <servlet>
         <servlet-name>SearchHouseServlet</servlet-name>
-        <servlet-class>Controller.User.SearchHouseServlet</servlet-class>
+        <servlet-class>Controller.SearchHouseServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListBillServlet</servlet-name>
@@ -106,7 +106,7 @@
     </servlet>
     <servlet>
         <servlet-name>NextAddCommentServlet</servlet-name>
-        <servlet-class>Controller.User.NextAddCommentServlet</servlet-class>
+        <servlet-class>Controller.NextAddCommentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NextEditHouseImgServlet</servlet-name>
@@ -174,15 +174,15 @@
     </servlet>
     <servlet>
         <servlet-name>SearchHouseMain</servlet-name>
-        <servlet-class>Controller.User.SearchHouseMain</servlet-class>
+        <servlet-class>Controller.SearchHouseMain</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HousePageServlet</servlet-name>
-        <servlet-class>Controller.User.HousePageServlet</servlet-class>
+        <servlet-class>Controller.HousePageServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Home</servlet-name>
-        <servlet-class>Controller.User.Home</servlet-class>
+        <servlet-class>Controller.Home</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SecurityServlet</servlet-name>
@@ -190,7 +190,7 @@
     </servlet>
     <servlet>
         <servlet-name>UserServlet</servlet-name>
-        <servlet-class>Controller.User.UserServlet</servlet-class>
+        <servlet-class>Controller.UserServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Hostpage</servlet-name>
@@ -334,7 +334,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>GetLocationServlet</servlet-name>
-        <servlet-class>Controller.User.GetLocationServlet</servlet-class>
+        <servlet-class>Controller.GetLocationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>NextEditHouseImgServlet</servlet-name>
