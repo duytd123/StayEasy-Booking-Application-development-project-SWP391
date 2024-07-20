@@ -207,6 +207,3 @@
         <script src="Housepage.js" type="text/javascript"></script>
     </body>
 </html>
-
-
-

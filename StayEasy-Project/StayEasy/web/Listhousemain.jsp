@@ -235,12 +235,12 @@
                         <div>Type</div>
                         <ul>
                             <li>
-                                <input ${currentMenu == null || currentMenu == -1 ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectType" value="-1" id="type-1">
-                                <label for="type-${type.id}">All</label>
+                                <input ${currentMenu == null || currentMenu == -1 ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectType" value="-1" id="type--1">
+                                <label for="type--1">All</label>
                             <li>
                                 <c:forEach var="type" items="${menus}">
                                 <li>
-                                    <input ${currentMenu == type.id ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectType" value="${type.id}" id="${type.id}">
+                                    <input ${currentMenu == type.id ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectType" value="${type.id}" id="type-${type.id}">
                                     <label for="type-${type.id}">${type.name}</label>
                                 <li>
                             </c:forEach></ul>
@@ -369,6 +369,4 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </body>
 </html>
-
-
 
