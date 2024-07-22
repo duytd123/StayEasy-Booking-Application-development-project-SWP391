@@ -79,7 +79,7 @@ public class DashboardServlet extends HttpServlet {
 
         //get 3 house best 
         HouseDAO hdao = new HouseDAO();
-       int Counthouse = hdao.countHouse();
+     //  int Counthouse = hdao.countHouse();
         
         //get 3 Account best
 
@@ -95,7 +95,7 @@ public class DashboardServlet extends HttpServlet {
 //        List<Bill1> listbill = bill.getThreeUserMaxBill();
 
         request.setAttribute("countUser", countUser);
-        request.setAttribute("counthouse", Counthouse);
+       // request.setAttribute("counthouse", Counthouse);
         request.setAttribute("totalsale", totalsale);
 
         request.setAttribute("countAdmin", countAdmin);

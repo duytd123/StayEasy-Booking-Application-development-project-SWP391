@@ -75,7 +75,7 @@
                                     ${requestScope.success}
                                 </p>
                                 <div class="col-md-12 text-center">
-                                    <button class="btn btn-block mybtn btn-primary tx-tfm" id="submit">Login</button>
+                                    <button class="btn btn-block mybtn btn-primary tx-tfm" name="login" id="submit">Login</button>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="login-or">

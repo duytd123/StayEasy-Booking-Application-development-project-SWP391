@@ -58,12 +58,12 @@ public class DashBoardServletHost extends HttpServlet {
         HouseDAO houseDAO = new HouseDAO();
         BillDAO billDAO = new BillDAO();
         int houses = houseDAO.countHousesByHost(hostId);        
-        int status = houseDAO.countHousesWithPendingBookings(hostId);
+        //int status = houseDAO.countHousesWithPendingBookings(hostId);
         double bills = billDAO.calculateTotalMoneyForHost(hostId);
         int bilsa = billDAO.countPendingBillsForHost(hostId);
         
         request.setAttribute("houses", houses);
-        request.setAttribute("status", status);
+       // request.setAttribute("status", status);
         request.setAttribute("bills", bills);
         request.setAttribute("bilsa", bilsa);
         
