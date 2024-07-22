@@ -361,7 +361,7 @@
                                                 <button type="button" title="Cancel" aria-label="Cancel" data-test-id="search-cancel-btn" class="ext-search-input__icon-wrap" style="display:none;">
 
                                                 </button>
-                                                <button type="button" data-test-id="search-icon" title="Search pages and reservations" aria-label="Search pages and reservations" class="ext-search-input__icon-wrap" style="display:;">
+                                                <button type="button" data-test-id="search-icon" title="Search pages and reservations" aria-label="Search pages and reservations" class="ext-search-input__icon-wrap" style="display: ">
                                                     <span aria-hidden="true" role="presentation" class="bui-icon bui-icon--small bui-icon--color-action">
 
                                                     </span>
@@ -405,8 +405,8 @@
                                 </div>
                                 <div class="ext-navigation__inner">
                                     <div class="ext-navigation__inner-container">
-                                        <div data-test-id="partner-details" class="ext-navigation__partner-details-container bui-u-hidden@medium">
-                                            <div data-test-id="property-details" class="ext-header__property-details bui-u-hidden bui-u-show@small">
+                                        <div data-test-id="partner-details" class="ext-navigation__partner-details-container bui-u-hidden @medium">
+                                            <div data-test-id="property-details" class="ext-header__property-details bui-u-hidden bui-u-show @small">
                                                 <div class="ext-header__property-details-spinner bui-spinner bui-spinner--light bui-spinner--size-small">
                                                     <div class="bui-spinner__inner"></div>
                                                 </div>
