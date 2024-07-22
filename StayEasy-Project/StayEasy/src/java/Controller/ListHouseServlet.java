@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.Admin;
 
 import Dao.HouseDAO;
+import Dao.LocationDAO;
+import Dao.MenuDAO;
 import Model.House;
+import Model.Location;
+import Model.Menu;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +24,7 @@ import java.util.List;
  * @author Admin
  */
 public class ListHouseServlet extends HttpServlet {
- 
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,11 +38,17 @@ public class ListHouseServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             HouseDAO dao = new HouseDAO();
+            LocationDAO locationDAO = new LocationDAO();
+            MenuDAO menuDAO = new MenuDAO();
             List<House> list = dao.getHouse();
+            List<Location> locationList = locationDAO.getLocation();
+            List<Menu> menuList = menuDAO.getMenu();
+            request.setAttribute("Location", locationList);
             request.setAttribute("HouseList", list);
-            request.getRequestDispatcher("admin1/mnproduct.jsp").forward(request, response);
+            request.setAttribute("MenuList", menuList);
+            request.getRequestDispatcher("ListHouse.jsp").forward(request, response);
+
         }
     }
 
@@ -54,7 +64,17 @@ public class ListHouseServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HouseDAO dao = new HouseDAO();
+        LocationDAO locationDAO = new LocationDAO();
+        MenuDAO menuDAO = new MenuDAO();
+        List<House> list = dao.getHouse();
+        request.setAttribute("HouseList", list);
+        List<Location> locationList = locationDAO.getLocation();
+        List<Menu> menuList = menuDAO.getMenu();
+        request.setAttribute("LocationList", locationList);
+        request.setAttribute("MenuList", menuList);
+        request.getRequestDispatcher("ListHouse.jsp").forward(request, response);
+
     }
 
     /**

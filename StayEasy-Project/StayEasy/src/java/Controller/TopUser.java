@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package Controller;
+package Controller.Admin;
 
 import Dao.AccountDAO;
 import Dao.HouseDAO;
@@ -76,11 +76,11 @@ public class TopUser extends HttpServlet {
 
         //get 3 Account best
          AccountDAO bill = new AccountDAO();
-        List<Bill1> listbill = bill.getThreeUserMaxBill();
+        //List<Bill1> listbill = bill.getThreeUserMaxBill();
 
         request.setAttribute("countUser", countUser);
         request.setAttribute("listHouse", listHouse);
-        request.setAttribute("listBill", listbill);
+       // request.setAttribute("listBill", listbill);
         request.setAttribute("listHouse", listHouse);
         request.setAttribute("countAdmin", countAdmin);
         request.setAttribute("countAll", countAll);

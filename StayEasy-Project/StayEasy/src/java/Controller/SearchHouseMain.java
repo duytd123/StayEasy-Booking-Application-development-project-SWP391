@@ -105,10 +105,10 @@ public class SearchHouseMain extends HttpServlet {
         Date sqlStartDate = Date.valueOf(start);
         Date sqlEndDate = Date.valueOf(end);
         HouseDAO dao = new HouseDAO();
-//        List<House> listHouse = dao.searchfindHouse(whereTo, sqlStartDate, guests, sqlEndDate, locationId, menuId);
+        List<House> listHouse = dao.searchfindHouse(whereTo, sqlStartDate, guests, sqlEndDate, locationId, menuId);
         HouseImgDAO dao2 = new HouseImgDAO();
 
-     //   request.setAttribute("list", listHouse);
+        request.setAttribute("list", listHouse);
         request.setAttribute("menus", menus);
         request.setAttribute("locations", locations);
         request.getRequestDispatcher("Listhousemain.jsp").forward(request, response);
@@ -147,3 +147,6 @@ public class SearchHouseMain extends HttpServlet {
     }
 
 }
+
+
+

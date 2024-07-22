@@ -73,13 +73,17 @@
 
 <header>
     <div id="menu-bar" class="fas fa-bars"></div>
-    <a href="home" class="logo">Stay<span>Easy</span>Booking</a>
+    <a href="home" class="logo"><span>Welcome</span>Stay<span>Ease</span>Booking</a>
     <nav class="navbar">
         <a href="home">Home</a>
-            <a href="#book">Book</a>
-                <a href="aboutus">About Us</a>
-                    <a href="#packages">Room</a>
-                        <a href="#contact">Contact</a>
+        <a href="#book">Book</a>
+        <a href="aboutus">About Us</a>
+        <a href="#packages">Room</a>
+        <a href="#contact">Contact</a>
+       
+         <c:if test="${sessionScope.acc != null}">
+             <a href="history-booking" >History booking</a>
+         </c:if>
         <c:if test="${sessionScope.acc != null}">
             <c:choose>
                 <c:when test="${acc.role.id == 0}">
@@ -89,7 +93,7 @@
                     <a href="DashboardHostServlet">Dashboard</a>
                 </c:when>
                 <c:otherwise>
-                    <a href="hostpage" >Ready a partner</a>
+                    <!-- Additional roles can be added here -->
                 </c:otherwise>
             </c:choose>
         </c:if>
@@ -109,6 +113,7 @@
             <a href="user.jsp" class="icon-link">
                 <i class="fas fa-user-circle" id="profile-btn"></i>
             </a>
+            
         </c:if>
     </div>
 </header>

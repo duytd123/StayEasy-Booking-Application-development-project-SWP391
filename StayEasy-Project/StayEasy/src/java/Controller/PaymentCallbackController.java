@@ -1,8 +1,9 @@
+package Controller;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller;
+
 
 import Dao.BillDAO;
 import Dao.BillDetailDAO;
@@ -74,6 +75,7 @@ public class PaymentCallbackController extends HttpServlet {
         } catch (Exception e) {
             System.out.println("Error; " + e);
         }
+        session.removeAttribute("bookingId");
         billDetailDao.deleteBillDetailByBillId(bookingId);
         billDao.deleteBill(bookingId);
         response.sendRedirect("bookingConfirmation.jsp?message=fail");

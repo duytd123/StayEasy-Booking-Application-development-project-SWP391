@@ -235,12 +235,12 @@
                         <div>Type</div>
                         <ul>
                             <li>
-                                <input ${currentMenu == null || currentMenu == -1 ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectType" value="-1" id="type-1">
-                                <label for="type-${type.id}">All</label>
+                                <input ${currentMenu == null || currentMenu == -1 ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectType" value="-1" id="type--1">
+                                <label for="type--1">All</label>
                             <li>
                                 <c:forEach var="type" items="${menus}">
                                 <li>
-                                    <input ${currentMenu == type.id ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectType" value="${type.id}" id="${type.id}">
+                                    <input ${currentMenu == type.id ? "checked" : "" } onchange="submitForm(event)" type="radio" name="selectType" value="${type.id}" id="type-${type.id}">
                                     <label for="type-${type.id}">${type.name}</label>
                                 <li>
                             </c:forEach></ul>
@@ -253,7 +253,7 @@
                     <c:forEach items="${list}" var="house" >
                         <c:set value="${getHouse.getHouseImgbyID(house.houseid)}" var="houseImg"/>
                         <div class="searchItem">
-                            <img src="${houseImg != null ? houseImg.get(0).imglink  : ""}" alt="" class="siImg" />
+                            <img src="${houseImg != null && houseImg.size() > 0 ? houseImg.get(0).imglink  : ""}" alt="" class="siImg" />
                             <div class="siDesc">
                                 <h1 class="siTitle">${house.housename}</h1>
                                 <span class="siDistance"> </span>

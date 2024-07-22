@@ -1,8 +1,3 @@
-<%-- 
-    Document   : header_right
-    Created on : Dec 23, 2023, 5:17:02 PM
-    Author     : Admin
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>

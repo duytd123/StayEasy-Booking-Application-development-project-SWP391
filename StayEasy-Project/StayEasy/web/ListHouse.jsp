@@ -1,4 +1,4 @@
-2   
+
 <%@page import="Model.House"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -38,7 +38,7 @@
                     <a href="DashboardServlet" class="logo">Admin<span>Panel</span></a>
                     <nav class="navbar">
                         <a href="DashboardServlet"><span>Home</span></a>
-                        <a href="ListHouseServlet">House</a>
+                        <a href="ListHouseServlet">Room</a>
                         <a href="ListBillServlet">Orders</a>
                         <a href="ListAccountServlet">Users</a>
                         <a href="ListAddService">Service</a>
@@ -57,13 +57,10 @@
 
             <section class="dashboard">
                 <div class="container-fluid">
-                    <form action="SearchHouseServlet"  method="post">
-                        <input type="text" name="search"  placeholder="Search here...">
-                        <button  value="search" type="submit"></button>
+                    <form action="SearchHouseServlet" class="search-bar-container" method="post">
+                        <input type="text" name="search" id="search-bar" placeholder="Search here...">
+                        <button class="fas fa-search" value="search" type="submit"></button>
                     </form>
-                    <div >
-                        <a href="NextAddHouseServlet">Add</a>
-                    </div>
                     <div class="table-responsive table-container">
                         <table class="table table-striped table-bordered">
                             <thead>
@@ -100,7 +97,7 @@
                                         <span class="action_btn">
                                             <a href="NextEditHouseServlet?id=<%= h.getHouseid() %>">Update</a>
                                             <a href="DeleteHouseServlet?id=<%= h.getHouseid() %>">Delete</a>
-                                            
+                                            <a href="NextAddHouseServlet">Add</a>
                                             <a href="ListServiceServlet?id=<%= h.getHouseid() %>">View Service</a>
                                             <a href="NextAddServiceServlet?id=<%= h.getHouseid() %>">Add Service</a>
                                         </span>
@@ -120,3 +117,6 @@
     </body>
     <script src="admin_script.js"></script>
 </html>
+
+
+

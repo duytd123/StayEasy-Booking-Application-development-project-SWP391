@@ -7,16 +7,10 @@ package Dao;
 
 import Connect.DBContext;
 import Model.BillDetail;
-import Model.House;
 import Model.HouseHost;
-import Model.HouseImg;
-import Model.Location;
-import Model.Menu;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import java.sql.*;
@@ -26,6 +20,14 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import Connect.DBContext;
+import Model.Booking;
+import Model.House;
+import Model.HouseImg;
+import Model.Location;
+import Model.Menu;
+import java.time.LocalDate;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -34,6 +36,7 @@ import java.util.Map;
 public class HouseDAO {
 
     Connection con;
+
     public LocationDAO ld = new LocationDAO();
     public MenuDAO md = new MenuDAO();
     public DecimalFormat df = new DecimalFormat("###.##");
@@ -151,6 +154,75 @@ public class HouseDAO {
         }
 
         return bookings;
+    }
+    
+     public List<Booking> getBookingDetailll(int hostId) {
+        List<Booking> bookings = new ArrayList<>();
+        String sql = "SELECT b.bill_id, b.date AS bill_date, b.total, b.status AS bill_status, "
+                + "b.user_id, b.fullname, b.phone, bd.start_date, bd.end_date, "
+                + "h.house_name, h.status AS house_status "
+                + "FROM Bill b "
+                + "JOIN Users u ON b.user_id = u.user_id "
+                + "JOIN Bill_detail bd ON b.bill_id = bd.bill_id "
+                + "JOIN House h ON bd.house_id = h.house_id "
+                + "WHERE h.host_id = ? "
+                + "ORDER BY bd.start_date";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, hostId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Booking booking = new Booking();
+                    booking.setBillId(rs.getInt("bill_id"));
+                    booking.setDate(rs.getDate("bill_date"));
+                    booking.setTotal(rs.getDouble("total"));
+                    booking.setStatus(rs.getInt("bill_status"));
+                    booking.setUserId(rs.getInt("user_id"));
+                    booking.setFullname(rs.getString("fullname"));
+                    booking.setPhone(rs.getString("phone"));
+                    booking.setStartDate(rs.getDate("start_date"));
+                    booking.setEndDate(rs.getDate("end_date"));
+                    booking.setHouseName(rs.getString("house_name"));
+                    booking.setHouseStatus(rs.getInt("house_status"));
+                    bookings.add(booking);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Consider logging this exception
+        }
+        return bookings;
+    }
+     
+      public void blockDate(int hostId, int houseId, String date) {
+        String insertBlockedDateSql = "INSERT INTO BlockedDates (host_id, house_id, date) VALUES (?, ?, ?)";
+
+        try (PreparedStatement ps = con.prepareStatement(insertBlockedDateSql)) {
+            ps.setInt(1, hostId);
+            ps.setInt(2, houseId);
+            ps.setString(3, date);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+      
+      public List<House> getBlockedHouses(int hostId) {
+        List<House> blockedHouses = new ArrayList<>();
+        String sql = "SELECT house_id, house_name FROM House WHERE host_id = ? AND status = 2";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, hostId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                House house = new House();
+                house.setHouseid(rs.getInt("house_id"));
+                house.setHousename(rs.getString("house_name"));
+                blockedHouses.add(house);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return blockedHouses;
     }
 
     public List<HouseHost> getHousesByHost(int hostId) {
@@ -468,6 +540,7 @@ public class HouseDAO {
     }
 
 
+
 //    public List<House> searchfindHouse(String whereTo, Date arrivals, String guests, Date leaving, int locationId, int menuId) {
 //        String sql = "select * from House as H1 where 1 = 1";
 //        if (locationId >= 0) {
@@ -543,6 +616,82 @@ public class HouseDAO {
 //        return false;
 //    }
 //
+
+    public List<House> searchfindHouse(String whereTo, Date arrivals, String guests, Date leaving, int locationId, int menuId) {
+        String sql = "select * from House as H1 where 1 = 1";
+        if (locationId >= 0) {
+            sql += " and H1.loca_id=? ";
+        }
+        if (menuId >= 0) {
+            sql += " and H1.menu_id =?";
+        }
+        sql += " and H1.house_name like ?";
+
+        List<House> list = new ArrayList<>();
+        try {
+            PreparedStatement pr = con.prepareStatement(sql);
+            int i = 1;
+            if (locationId >= 0) {
+                pr.setInt(i++, locationId);
+            }
+            if (menuId >= 0) {
+                pr.setInt(i++, menuId);
+            }
+            pr.setString(i++, "%" + whereTo + "%");
+            ResultSet resultSet = pr.executeQuery();
+            while (resultSet.next()) {
+                int houseid = resultSet.getInt(1);
+                Date postdate = resultSet.getDate(2);
+                String housename = resultSet.getString(3);
+                String review = resultSet.getString(4);
+                float price = resultSet.getFloat(5);
+                int status = resultSet.getInt(6);
+                String address = resultSet.getString(7);
+                String description = resultSet.getString(8);
+                int locationid = resultSet.getInt(9);
+                int menuid = resultSet.getInt(10);
+                MenuDAO menuDao = new MenuDAO();
+                Menu m = menuDao.getMenuById(menuid);
+                Menu menu = m;
+                LocationDAO lDao = new LocationDAO();
+                Location location = lDao.getLocationById(locationid);
+                House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
+                h.setRentHouse(this.isHouseRented(houseid, postdate, postdate));
+                list.add(h);
+            }
+
+        } catch (Exception e) {
+            System.out.println("List err");
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public boolean isHouseRented(int houseId, Date startDate, Date endDate) {
+        String sql = "SELECT COUNT(*) FROM Bill_detail AS BD "
+                + "JOIN Bill AS B ON BD.bill_id = B.bill_id "
+                + "WHERE BD.house_id = ? "
+                + "AND ((BD.start_date >= ? AND BD.start_date <= ?) "
+                + "OR (BD.end_date >= ? AND BD.end_date <= ?))";
+
+        try (PreparedStatement pr = con.prepareStatement(sql)) {
+            pr.setInt(1, houseId);
+            pr.setDate(2, startDate);
+            pr.setDate(3, endDate);
+            pr.setDate(4, startDate);
+            pr.setDate(5, endDate);
+
+            ResultSet resultSet = pr.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking rental status for house: " + e.getMessage());
+        }
+        return false;
+    }
+
 
     public House getHousebyId(int id) {
         String sql = "select * from dbo.House where house_id = ?";
@@ -881,6 +1030,7 @@ public class HouseDAO {
 }
 
 
+
 //    public List<House> searchHouse1(String whereTo, Date arrivals, String guests, Date leaving, int locationId, int menuId) {
 //
 //        String sql = "select * from House as H1 where 1 = 1";
@@ -938,3 +1088,81 @@ public class HouseDAO {
 //
 //    }
 
+    public List<House> searchHouse1(String whereTo, Date arrivals, String guests, Date leaving, int locationId, int menuId) {
+
+        String sql = "select * from House as H1 where 1 = 1";
+        if (locationId >= 0) {
+            sql += " and H1.loca_id=? ";
+        }
+        if (menuId >= 0) {
+            sql += " and H1.menu_id =?";
+        }
+        sql += " and H1.house_name like ? and H1.house_id Not in "
+                + "(select H.house_id from Bill as B "
+                + "join Bill_detail as BD on BD.bill_id = B.bill_id "
+                + "join House as H on H.house_id = BD.house_id "
+                + "where BD.start_date >= ? and BD.end_date <= ?"
+                + ")";
+        List<House> list = new ArrayList<>();
+        try {
+            PreparedStatement pr = con.prepareStatement(sql);
+            int i = 1;
+            if (locationId >= 0) {
+                pr.setInt(i++, locationId);
+            }
+            if (menuId >= 0) {
+                pr.setInt(i++, menuId);
+            }
+            pr.setString(i++, "%" + whereTo + "%");
+            pr.setDate(i++, arrivals);
+            pr.setDate(i++, leaving);
+            ResultSet resultSet = pr.executeQuery();
+            while (resultSet.next()) {
+                int houseid = resultSet.getInt(1);
+                Date postdate = resultSet.getDate(2);
+                String housename = resultSet.getString(3);
+                String review = resultSet.getString(4);
+                float price = resultSet.getFloat(5);
+                int status = resultSet.getInt(6);
+                String address = resultSet.getString(7);
+                String description = resultSet.getString(8);
+                int locationid = resultSet.getInt(9);
+                int menuid = resultSet.getInt(10);
+                MenuDAO menuDao = new MenuDAO();
+                Menu m = menuDao.getMenuById(menuid);
+                Menu menu = m;
+                LocationDAO lDao = new LocationDAO();
+                Location location = lDao.getLocationById(locationid);
+                House h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
+                list.add(h);
+            }
+
+        } catch (Exception e) {
+            System.out.println("List err");
+            System.out.println(e);
+        }
+        return list;
+
+    }
+    
+     public int countHousesWithPendingBookings(int hostId) {
+        int count = 0;
+        String sql = "SELECT COUNT(*) "
+                + "FROM House h "
+                + "WHERE h.status = 1 AND h.host_id = ?";
+
+
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, hostId);
+            ResultSet resultSet = pre.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println("Error " + e);
+        }
+
+        return count;
+    }
+}

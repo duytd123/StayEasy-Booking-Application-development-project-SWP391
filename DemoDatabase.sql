@@ -316,4 +316,28 @@ ALTER TABLE [dbo].[Bill_detail] CHECK CONSTRAINT [FK_Bill_detail_House_additiona
 GO
 
 
+ALTER TABLE [dbo].[Bill_detail]
+ADD [house_add_service_id] [int] NULL,
+    [price] [float] NULL,
+    [quantity] [int] NULL
+GO
 
+-- Add foreign key constraint to Bill_detail for house_add_service_id
+ALTER TABLE [dbo].[Bill_detail]  WITH CHECK ADD  CONSTRAINT [FK_Bill_detail_House_additional_service] FOREIGN KEY([house_add_service_id])
+REFERENCES [dbo].[House_additional_service] ([house_add_service_id])
+GO
+ALTER TABLE [dbo].[Bill_detail] CHECK CONSTRAINT [FK_Bill_detail_House_additional_service]
+GO
+
+-- Add the host_id column to the House table
+ALTER TABLE [HouseBooking2].[dbo].[House]
+ADD [host_id] INT;
+
+-- Add the foreign key constraint to reference user_id from the Users table
+ALTER TABLE [HouseBooking2].[dbo].[House]
+ADD CONSTRAINT FK_House_Host
+FOREIGN KEY ([host_id]) REFERENCES [HouseBooking2].[dbo].[Users]([user_id]);
+
+-- Add the discount column to the House table
+ALTER TABLE [HouseBooking2].[dbo].[House]
+ADD [discount] DECIMAL(5, 2);
