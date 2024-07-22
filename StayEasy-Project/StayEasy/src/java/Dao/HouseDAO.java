@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Connect.DBContext;
+import Model.Booking;
 import Model.House;
 import Model.HouseImg;
 import Model.Location;
@@ -153,6 +154,75 @@ public class HouseDAO {
         }
 
         return bookings;
+    }
+    
+     public List<Booking> getBookingDetailll(int hostId) {
+        List<Booking> bookings = new ArrayList<>();
+        String sql = "SELECT b.bill_id, b.date AS bill_date, b.total, b.status AS bill_status, "
+                + "b.user_id, b.fullname, b.phone, bd.start_date, bd.end_date, "
+                + "h.house_name, h.status AS house_status "
+                + "FROM Bill b "
+                + "JOIN Users u ON b.user_id = u.user_id "
+                + "JOIN Bill_detail bd ON b.bill_id = bd.bill_id "
+                + "JOIN House h ON bd.house_id = h.house_id "
+                + "WHERE h.host_id = ? "
+                + "ORDER BY bd.start_date";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, hostId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Booking booking = new Booking();
+                    booking.setBillId(rs.getInt("bill_id"));
+                    booking.setDate(rs.getDate("bill_date"));
+                    booking.setTotal(rs.getDouble("total"));
+                    booking.setStatus(rs.getInt("bill_status"));
+                    booking.setUserId(rs.getInt("user_id"));
+                    booking.setFullname(rs.getString("fullname"));
+                    booking.setPhone(rs.getString("phone"));
+                    booking.setStartDate(rs.getDate("start_date"));
+                    booking.setEndDate(rs.getDate("end_date"));
+                    booking.setHouseName(rs.getString("house_name"));
+                    booking.setHouseStatus(rs.getInt("house_status"));
+                    bookings.add(booking);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Consider logging this exception
+        }
+        return bookings;
+    }
+     
+      public void blockDate(int hostId, int houseId, String date) {
+        String insertBlockedDateSql = "INSERT INTO BlockedDates (host_id, house_id, date) VALUES (?, ?, ?)";
+
+        try (PreparedStatement ps = con.prepareStatement(insertBlockedDateSql)) {
+            ps.setInt(1, hostId);
+            ps.setInt(2, houseId);
+            ps.setString(3, date);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+      
+      public List<House> getBlockedHouses(int hostId) {
+        List<House> blockedHouses = new ArrayList<>();
+        String sql = "SELECT house_id, house_name FROM House WHERE host_id = ? AND status = 2";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, hostId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                House house = new House();
+                house.setHouseid(rs.getInt("house_id"));
+                house.setHousename(rs.getString("house_name"));
+                blockedHouses.add(house);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return blockedHouses;
     }
 
     public List<HouseHost> getHousesByHost(int hostId) {

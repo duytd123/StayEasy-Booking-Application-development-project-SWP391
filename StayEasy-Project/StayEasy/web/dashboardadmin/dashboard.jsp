@@ -73,7 +73,7 @@
                 height: calc(100vh - 48px);
                 padding-top: 0.5rem;
                 overflow-x: hidden;
-                overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+                overflow-y: auto; 
             }</style>
     </head>
     <body>
@@ -186,37 +186,7 @@
         <script type="text/javascript" src="../js/clickevents.js"></script>
         <script src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Free_3.8.1/js/mdb.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-        <script>// Graph
-            //pie
-            var ctxP = document.getElementById("pieChart").getContext('2d');
-
-            var myPieChart = new Chart(ctxP, {
-                type: 'pie',
-                data: {
-                    labels: ["Sunday", "Saturday", "Friday", "Thursday", "Wednesday", "Tuesday", "Monday"],
-                    datasets: [{
-                            data: [${totalMoney1}, ${totalMoney7}, ${totalMoney6}, ${totalMoney5}, ${totalMoney4}, ${totalMoney3}, ${totalMoney2}],
-                            backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360", "#1874CD", "#CDB5CD"],
-                            hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774", "#1E90FF", "#FFE1FF"]
-                        }]
-                },
-                options: {
-                    responsive: true
-                }
-            });
-            function loadAmountCart() {
-                $.ajax({
-                    url: "/WebsiteBanGiay/loadAllAmountCart",
-                    type: "get", //send it through get method
-                    data: {
-
-                    },
-                    success: function (responseData) {
-                        document.getElementById("amountCart").innerHTML = responseData;
-                    }
-                });
-            }
-        </script>
+        
         <script>// Graph
             //Horizontal Bar Chart
             new Chart(document.getElementById("horizontalBar"), {
