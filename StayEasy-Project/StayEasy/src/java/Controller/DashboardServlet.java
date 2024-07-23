@@ -71,16 +71,27 @@ public class DashboardServlet extends HttpServlet {
 
         //get 3 house best 
         HouseDAO hdao = new HouseDAO();
+
+     //  int Counthouse = hdao.countHouse();
+        
+        //get 3 Account best
+
         List<House> listHouse = hdao.getNameThreeHouseBest();
+
 
         //get 3 Account best
         AccountDAO accountDAO = new AccountDAO();
       //  List<Account> listAcount = accountDAO.getThreeUserMaxBill();
 
         request.setAttribute("countUser", countUser);
+
+       // request.setAttribute("counthouse", Counthouse);
+        request.setAttribute("totalsale", totalsale);
+
         request.setAttribute("listHouse", listHouse);
        // request.setAttribute("listAcount", listAcount);
         request.setAttribute("listHouse", listHouse);
+
         request.setAttribute("countAdmin", countAdmin);
         request.setAttribute("countAll", countAll);
         request.getRequestDispatcher("AdminIndex.jsp").forward(request, response);

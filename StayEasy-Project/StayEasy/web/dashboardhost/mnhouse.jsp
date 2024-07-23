@@ -140,7 +140,7 @@
                                     </form>
                                 </div>
                                 <div class="col-lg-2">
-                                    <a href="#addHouseModal" style="height: 40px" class="buttonadd btn btn-success" data-toggle="modal"><i class="fa-solid fa-plus"></i></a>
+                                    <a href="#addHouseModal" name="add" style="height: 40px" class="buttonadd btn btn-success" data-toggle="modal"><i class="fa-solid fa-plus"></i></a>
 
                                 </div>
 
@@ -218,14 +218,14 @@
         <div id="addHouseModal" class="modal fade">
             <div class="modal-dialog" style="margin: 28px 500px">
                 <div class="modal-content" style="width: 1000px; max-height: 900px; overflow: scroll">
-                    <form action="addhouse" method="post" enctype="multipart/form-data">
+                    <form action="addhouse" name="addhouse" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
                             <h4 class="modal-title">Add House</h4>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>House Name</label>
-                                <input name="name" type="text" class="form-control" required>
+                                <input name="name" type="text" maxlength="35" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Image</label>
@@ -237,11 +237,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea name="description" class="form-control" required></textarea>
+                                <textarea name="description" class="form-control" maxlength="255" required></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Address</label>
-                                <input name="address" type="text" class="form-control">
+                                <input name="address" type="text" maxlength="255" class="form-control">
                             </div>
                             <div class="form-group">
                                 <input type="hidden" id="stringdateolb" value="${detail.postdate}">
@@ -253,7 +253,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Discount</label>
-                                <input name="discount" type="number" step="0.01" min="0" class="form-control">
+                                <input name="discount" type="number" step="0.01" min="0" max="100" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Location</label>
