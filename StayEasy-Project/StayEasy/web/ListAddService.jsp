@@ -1,10 +1,11 @@
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@page import="Model.Account"%>
 <%@page import="Model.AdditionalService"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -44,7 +45,6 @@
         %>
         <div class="header_fixed">
             <header class="header">
-
                 <div class="flex">
 
                     <a href="DashboardServlet" class="logo">Admin<span>Panel</span></a>
@@ -54,7 +54,7 @@
                         <a href="ListHouseServlet">Room</a>
                         <a href="ListBillServlet">Orders</a>
                         <a href="ListAccountServlet?page=1&search=">Users</a>
-                        <a href="ListAddService">Service</a>
+                        <a href="ListAddService?page=1&search=">Service</a>
                         <a href="ListCommentServlet"></a>
                     </nav>
 
@@ -74,7 +74,7 @@
                         
 
             <table style="width: 100px; margin: auto">
-                <form action="ListAddService?page=1" class="search-bar-container  ml-3 my-53 "  method="get"  >
+                <form action="ListAddService?page=1" class="search-bar-container  ml-3 my-53 "  method="GET"  >
                     <input style="height: 60px;font-size: 40px;" type="text" name="search" id="search-bar" placeholder="Search here..."">
                     <button class="fas fa-search" style="height: 60px; font-size: 40px; background-color: #fff" value="search" type="submit"></button>
                 </form>
@@ -97,7 +97,7 @@
                         <span class="action_btn">
                             <a href="NextEditAdditionalServiceServlet?id=<%=a.getServiceid() %>">Update</a>
                             <a href="DeleteAdditionalServiceServlet?id=<%=a.getServiceid() %>">Delete</a>
-                            <a href="AddAddService.jsp">Add</a>
+                            <a href="AddService.jsp">Add</a>
                         </span>
                     </td>
                 </tr>
@@ -117,5 +117,4 @@
             </nav>
         </div>
     </body>
-    <script src="admin_script.js"></script>
 </html>

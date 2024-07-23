@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package Controller.Admin;
+package Controller;
 
 import Dao.AdditionalServiceDAO;
 import Model.AdditionalService;
@@ -33,8 +33,36 @@ public class ListAddService extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            String pageS = request.getParameter("page");
+            String s = request.getParameter("search");
+            AdditionalServiceDAO dao = new AdditionalServiceDAO();
 
+            double count = dao.getNumber(s) / 5.0;
+            int count_page = (int) Math.ceil(count);
+
+            if (s == "") {
+                s = "";
+            }
+            int page = 0;
+            try {
+                page = Integer.parseInt(pageS);
+                if (page < 1 && page > count) {
+                    page = 1;
+                }
+
+            } catch (Exception e) {
+                page = 1;
+            }
+            System.out.println(page);
+
+            List<AdditionalService> list = dao.getAdditionalService(page, s);
+
+            request.setAttribute("list", list);
+            request.setAttribute("search", s);
+            request.setAttribute("page", page);
+            request.setAttribute("count", count_page);
+
+            request.getRequestDispatcher("ListAddService.jsp").forward(request, response);
         }
     }
 
@@ -50,38 +78,7 @@ public class ListAddService extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        String pageS = request.getParameter("page");
-        String s = request.getParameter("search");
-        AdditionalServiceDAO dao = new AdditionalServiceDAO();
-        
-        
-        double count = dao.getNumber(s) / 5.0 ;
-        int count_page = (int) Math.ceil(count);
-       
-        if(s == ""){
-            s="";
-        }
-        int page = 0;
-        try {
-            page = Integer.parseInt(pageS);
-            if(page < 1 && page > count){
-                page = 1;
-            }
-            
-        } catch (Exception e) {
-            page= 1;
-        }
-        System.out.println(page);
-        
-        
-       List<AdditionalService> list = dao.getAdditionalService(page, s);
-        
-        request.setAttribute("list", list);
-        request.setAttribute("search", s);
-        request.setAttribute("page", page);
-        request.setAttribute("count", count_page);
-        request.getRequestDispatcher("ListAddService.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

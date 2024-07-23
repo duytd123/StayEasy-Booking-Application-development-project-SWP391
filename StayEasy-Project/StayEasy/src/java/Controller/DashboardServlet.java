@@ -5,8 +5,12 @@
 package Controller;
 
 import Dao.AccountDAO;
+import Dao.BillDAO;
 import Dao.HouseDAO;
 import Model.Account;
+import Model.Bill;
+
+
 import Model.House;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -65,22 +69,35 @@ public class DashboardServlet extends HttpServlet {
 
         //count list user 
         AccountDAO adao = new AccountDAO();
-        int countUser = adao.countAccountByRole(2);
+        int countUser = adao.countAccount();
         int countAdmin = adao.countAccountByRole(0);
         int countAll = adao.countAccount();
 
+        // get total sale
+        BillDAO totalbill = new BillDAO();
+        float totalsale = totalbill.TotalBill();
+
         //get 3 house best 
         HouseDAO hdao = new HouseDAO();
-        List<House> listHouse = hdao.getNameThreeHouseBest();
-
+     //  int Counthouse = hdao.countHouse();
+        
         //get 3 Account best
+
         AccountDAO accountDAO = new AccountDAO();
-        //List<Account> listAcount = accountDAO.getThreeUserMaxBill();
+//        List<Account> listAcount = accountDAO.getThreeUserMaxBill();
+//
+//        request.setAttribute("countUser", countUser);
+//        request.setAttribute("listHouse", listHouse);
+//        request.setAttribute("listAcount", listAcount);
+//        request.setAttribute("listHouse", listHouse);
+//
+//        AccountDAO bill = new AccountDAO();
+//        List<Bill1> listbill = bill.getThreeUserMaxBill();
 
         request.setAttribute("countUser", countUser);
-        request.setAttribute("listHouse", listHouse);
-        //request.setAttribute("listAcount", listAcount);
-        request.setAttribute("listHouse", listHouse);
+       // request.setAttribute("counthouse", Counthouse);
+        request.setAttribute("totalsale", totalsale);
+
         request.setAttribute("countAdmin", countAdmin);
         request.setAttribute("countAll", countAll);
         request.getRequestDispatcher("AdminIndex.jsp").forward(request, response);

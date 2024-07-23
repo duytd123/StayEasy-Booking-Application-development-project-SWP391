@@ -125,13 +125,14 @@
                         <div class="card-header">
                             <h2>Manage Additional Services</h2>
                         </div>
+                        
                         <div class="card-body">
                             <form action="additional1" method="get">
                                 <div class="form-group">
                                     <label for="houseId">Select House:</label>
                                     <select id="houseId" name="houseId" class="form-control" onchange="this.form.submit()">
                                         <c:forEach var="house" items="${houses}">
-                                            <option value="${house.houseid}" <c:if test="${house.houseid == houseId}">selected</c:if>>
+                                            <option value="${house.houseid}" <c:if test="${house.houseid == houseId}">selected</c:if> >
                                                 ${house.houseName}
                                             </option>
                                         </c:forEach>

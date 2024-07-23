@@ -42,8 +42,8 @@
             <a href="AdminIndex.jsp"><span>Home</span></a>
             <a href="ListHouseServlet">Room</a>
             <a href="ListBillServlet">Orders</a>
-            <a href="ListAccountServlet">Users</a>
-            <a href="ListAddService">Service</a>
+            <a href="ListAccountServlet?page=1&search=">Users</a>
+            <a href="ListAddService?page=1&search=">Service</a>
             <a href="ListCommentServlet">Messages</a>
          </nav>
    

@@ -2,19 +2,19 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>ListAccountServlet</servlet-name>
-        <servlet-class>Controller.User.ListAccountServlet</servlet-class>
+        <servlet-class>Controller.ListAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>mainContronller</servlet-name>
-        <servlet-class>Controller.User.mainContronller</servlet-class>
+        <servlet-class>Controller.mainContronller</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NextEditAccountServlet</servlet-name>
-        <servlet-class>Controller.User.NextEditAccountServlet</servlet-class>
+        <servlet-class>Controller.NextEditAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DashboardHostServlet</servlet-name>
-        <servlet-class>Controller.User.DashboardHostServlet</servlet-class>
+        <servlet-class>Controller.DashboardHostServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -22,31 +22,31 @@
     </servlet>
     <servlet>
         <servlet-name>EditAccountServlet</servlet-name>
-        <servlet-class>Controller.User.EditAccountServlet</servlet-class>
+        <servlet-class>Controller.EditAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteAccountServlet</servlet-name>
-        <servlet-class>Controller.User.DeleteAccountServlet</servlet-class>
+        <servlet-class>Controller.DeleteAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddAccountServlet</servlet-name>
-        <servlet-class>Controller.User.AddAccountServlet</servlet-class>
+        <servlet-class>Controller.AddAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListHouseServlet</servlet-name>
-        <servlet-class>Controller.User.ListHouseServlet</servlet-class>
+        <servlet-class>Controller.ListHouseServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NextEditHouseServlet</servlet-name>
-        <servlet-class>Controller.User.NextEditHouseServlet</servlet-class>
+        <servlet-class>Controller.NextEditHouseServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditHouseServlet</servlet-name>
-        <servlet-class>Controller.User.EditHouseServlet</servlet-class>
+        <servlet-class>Controller.EditHouseServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteHouseServlet</servlet-name>
-        <servlet-class>Controller.User.DeleteHouseServlet</servlet-class>
+        <servlet-class>Controller.DeleteHouseServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
@@ -54,19 +54,19 @@
     </servlet>
     <servlet>
         <servlet-name>AddHouseServlet</servlet-name>
-        <servlet-class>Controller.User.AddHouseServlet</servlet-class>
+        <servlet-class>Controller.AddHouseServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NextAddHouseServlet</servlet-name>
-        <servlet-class>Controller.User.NextAddHouseServlet</servlet-class>
+        <servlet-class>Controller.NextAddHouseServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchAccountServlet</servlet-name>
-        <servlet-class>Controller.User.SearchAccountServlet</servlet-class>
+        <servlet-class>Controller.SearchAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateStatusAccountServlet</servlet-name>
-        <servlet-class>Controller.User.UpdateStatusAccountServlet</servlet-class>
+        <servlet-class>Controller.UpdateStatusAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchHouseServlet</servlet-name>
@@ -74,23 +74,23 @@
     </servlet>
     <servlet>
         <servlet-name>ListBillServlet</servlet-name>
-        <servlet-class>Controller.User.ListBillServlet</servlet-class>
+        <servlet-class>Controller.ListBillServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NextEditBillServlet</servlet-name>
-        <servlet-class>Controller.User.NextEditBillServlet</servlet-class>
+        <servlet-class>Controller.NextEditBillServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditBillServlet</servlet-name>
-        <servlet-class>Controller.User.EditBillServlet</servlet-class>
+        <servlet-class>Controller.EditBillServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteBillServlet</servlet-name>
-        <servlet-class>Controller.User.DeleteBillServlet</servlet-class>
+        <servlet-class>Controller.DeleteBillServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddBillServlet</servlet-name>
-        <servlet-class>Controller.User.AddBillServlet</servlet-class>
+        <servlet-class>Controller.AddBillServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>getBillServlet</servlet-name>
@@ -98,11 +98,11 @@
     </servlet>
     <servlet>
         <servlet-name>getHouseImgServlet</servlet-name>
-        <servlet-class>Controller.User.getHouseImgServlet</servlet-class>
+        <servlet-class>Controller.getHouseImgServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NextAddBillServlet</servlet-name>
-        <servlet-class>Controller.User.NextAddBillServlet</servlet-class>
+        <servlet-class>Controller.NextAddBillServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NextAddCommentServlet</servlet-name>
@@ -110,63 +110,63 @@
     </servlet>
     <servlet>
         <servlet-name>NextEditHouseImgServlet</servlet-name>
-        <servlet-class>Controller.User.NextEditHouseImgServlet</servlet-class>
+        <servlet-class>Controller.NextEditHouseImgServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditHouseImgServlet</servlet-name>
-        <servlet-class>Controller.User.EditHouseImgServlet</servlet-class>
+        <servlet-class>Controller.EditHouseImgServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListServiceServlet</servlet-name>
-        <servlet-class>Controller.User.ListServiceServlet</servlet-class>
+        <servlet-class>Controller.ListServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>getAdditionalServiceServlet</servlet-name>
-        <servlet-class>Controller.User.getAdditionalServiceServlet</servlet-class>
+        <servlet-class>Controller.getAdditionalServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NextAddServiceServlet</servlet-name>
-        <servlet-class>Controller.User.NextAddServiceServlet</servlet-class>
+        <servlet-class>Controller.NextAddServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddHouseAdditionalServiceServlet</servlet-name>
-        <servlet-class>Controller.User.AddHouseAdditionalServiceServlet</servlet-class>
+        <servlet-class>Controller.AddHouseAdditionalServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NextEditHouseAdditionalServiceServlet</servlet-name>
-        <servlet-class>Controller.User.NextEditHouseAdditionalServiceServlet</servlet-class>
+        <servlet-class>Controller.NextEditHouseAdditionalServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditHouseAdditionalServiceServlet</servlet-name>
-        <servlet-class>Controller.User.EditHouseAdditionalServiceServlet</servlet-class>
+        <servlet-class>Controller.EditHouseAdditionalServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteHouseAdditionalServiceServlet</servlet-name>
-        <servlet-class>Controller.User.DeleteHouseAdditionalServiceServlet</servlet-class>
+        <servlet-class>Controller.DeleteHouseAdditionalServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListAddService</servlet-name>
-        <servlet-class>Controller.User.ListAddService</servlet-class>
+        <servlet-class>Controller.ListAddService</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>NextEditAdditionalServiceServlet</servlet-name>
-        <servlet-class>Controller.User.NextEditAdditionalServiceServlet</servlet-class>
+        <servlet-class>Controller.NextEditAdditionalServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditAdditionalServiceServlet</servlet-name>
-        <servlet-class>Controller.User.EditAdditionalServiceServlet</servlet-class>
+        <servlet-class>Controller.EditAdditionalServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteAdditionalServiceServlet</servlet-name>
-        <servlet-class>Controller.User.DeleteAdditionalServiceServlet</servlet-class>
+        <servlet-class>Controller.DeleteAdditionalServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddAdditionalServiceServlet</servlet-name>
-        <servlet-class>Controller.User.AddAdditionalServiceServlet</servlet-class>
+        <servlet-class>Controller.AddAdditionalServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchAddServiceServlet</servlet-name>
-        <servlet-class>Controller.User.SearchAddServiceServlet</servlet-class>
+        <servlet-class>Controller.SearchAddServiceServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchBillServlet</servlet-name>
@@ -186,7 +186,7 @@
     </servlet>
     <servlet>
         <servlet-name>SecurityServlet</servlet-name>
-        <servlet-class>Controller.User.SecurityServlet</servlet-class>
+        <servlet-class>Controller.SecurityServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UserServlet</servlet-name>
@@ -198,7 +198,7 @@
     </servlet>
     <servlet>
         <servlet-name>FAQ</servlet-name>
-        <servlet-class>Controller.User.FAQ</servlet-class>
+        <servlet-class>Controller.FAQ</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HouseHost</servlet-name>
@@ -206,7 +206,7 @@
     </servlet>
     <servlet>
         <servlet-name>RemoveHouseServlet</servlet-name>
-        <servlet-class>Controller.User.RemoveHouseServlet</servlet-class>
+        <servlet-class>Controller.RemoveHouseServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>HostComment</servlet-name>
@@ -214,7 +214,7 @@
     </servlet>
     <servlet>
         <servlet-name>BillHostServlet</servlet-name>
-        <servlet-class>Controller.User.BillHostServlet</servlet-class>
+        <servlet-class>Controller.BillHostServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchHouseHost</servlet-name>

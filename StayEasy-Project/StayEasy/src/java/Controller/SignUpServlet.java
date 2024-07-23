@@ -1,4 +1,4 @@
-package Controller.Admin;
+package Controller;
 
 import Dao.AccountDAO;
 import Model.Account;
