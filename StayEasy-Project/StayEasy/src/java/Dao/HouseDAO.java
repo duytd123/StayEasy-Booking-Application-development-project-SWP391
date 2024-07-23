@@ -881,7 +881,49 @@ public class HouseDAO {
         return list;
     }
 //////////////////
+ public List<House> getHousesByHostId(int hostId) {
+        String sql = "SELECT * FROM House WHERE host_id = ?";
+        List<House> list = new ArrayList<>();
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, hostId);
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                int houseId = resultSet.getInt("house_id");
+                Date postDate = resultSet.getDate("post_date");
+                String houseName = resultSet.getString("house_name");
+                String review = resultSet.getString("review");
+                float housePrice = resultSet.getFloat("house_price");
+                int status = resultSet.getInt("status");
+                String address = resultSet.getString("address");
+                String description = resultSet.getString("description");
+                int locaId = resultSet.getInt("loca_id");
+                int menuId = resultSet.getInt("menu_id");
 
+                // Assuming Location and Menu constructors that take IDs and other parameters.
+                Location location = new Location(locaId, null);
+                Menu menu = new Menu(menuId, null);
+
+                House house = new House(
+                        houseId,
+                        postDate,
+                        houseName,
+                        review,
+                        housePrice,
+                        status,
+                        address,
+                        description,
+                        location,
+                        menu
+                );
+                list.add(house);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+        return list;
+    }
+ ///////////////////////////////
     public House getHouses() {
         String sql = "select * from dbo.House";
         House h = new House();

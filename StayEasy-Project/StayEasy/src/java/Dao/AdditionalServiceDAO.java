@@ -9,6 +9,7 @@ import Model.AdditionalService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class AdditionalServiceDAO {
             System.out.println("error: " + e);
         }
     }
-     public List<AdditionalService> getAdditionalServicee() {
+
+    public List<AdditionalService> getAdditionalServicee() {
         String sql = "select * from Additional_service";
         List<AdditionalService> list = new ArrayList<>();
         try {
@@ -59,10 +61,10 @@ public class AdditionalServiceDAO {
         try {
             //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
-            pre.setString(1, "%"+ s +"%");
+            pre.setString(1, "%" + s + "%");
             pre.setInt(2, page);
             pre.setInt(3, page);
-            
+
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
             while (resultSet.next()) {
@@ -102,7 +104,7 @@ public class AdditionalServiceDAO {
                 + "           ([add_serviceName]\n"
                 + "           ,[add_serviceDesc])\n"
                 + "     VALUES\n"
-+ "           (?\n"
+                + "           (?\n"
                 + "           ,?)";
         try {
             //tạo khay chứa câu lệnh
@@ -173,15 +175,15 @@ public class AdditionalServiceDAO {
 
         return list;
     }
-    
+
     public int getNumber(String s) {
         String sql = "select count(*) from Additional_service where add_serviceName like ? ";
         try {
-             PreparedStatement pre = con.prepareStatement(sql);
-pre.setString(1, "%"+ s +"%");
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setString(1, "%" + s + "%");
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return resultSet.getInt(1);
             }
         } catch (Exception e) {
@@ -189,4 +191,42 @@ pre.setString(1, "%"+ s +"%");
         }
         return -1;
     }
+
+    public List<AdditionalService> getAdditionalServicee1() {
+        String sql = "SELECT * FROM Additional_service";
+        List<AdditionalService> list = new ArrayList<>();
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                int serviceId = resultSet.getInt("add_service_id");
+                String serviceName = resultSet.getString("add_serviceName");
+                String serviceDesc = resultSet.getString("add_serviceDesc");
+                AdditionalService as = new AdditionalService(serviceId, serviceName, serviceDesc);
+                list.add(as);
+            }
+        } catch (SQLException e) {
+            System.out.println("error: " + e);
+        }
+        return list;
+    }
+
+    public int createService(String serviceName, String serviceDesc) {
+        String sql = "INSERT INTO Additional_service (add_serviceName, add_serviceDesc) VALUES (?, ?)";
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setString(1, serviceName);
+            pre.setString(2, serviceDesc);
+            pre.executeUpdate();
+
+            ResultSet generatedKeys = pre.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("error: " + e);
+        }
+        return -1; // Return -1 if insertion fails
+    }
+
 }

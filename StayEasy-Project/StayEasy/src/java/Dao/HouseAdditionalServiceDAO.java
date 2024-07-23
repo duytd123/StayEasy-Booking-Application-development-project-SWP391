@@ -145,10 +145,10 @@ public class HouseAdditionalServiceDAO {
         String sql = "select * from House_additional_service where house_add_service_id = ?";
         HouseAdditionalService h = new HouseAdditionalService();
         try {
-            //tạo khay chứa câu lệnh
+
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setInt(1, id);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+
             ResultSet resultSet = pre.executeQuery();
             while(resultSet.next()){
                 int houseaddserviceid = resultSet.getInt(1);
@@ -166,5 +166,39 @@ public class HouseAdditionalServiceDAO {
     }
     
     
+    
+     public void addServiceToHouse(int houseId, int serviceId) {
+        String sql = "INSERT INTO House_additional_service (add_service_id, house_id, add_service_status, add_service_price) VALUES (?, ?, 1, 0)";
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, serviceId);
+            pre.setInt(2, houseId);
+            pre.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+    }
+
+    public List<HouseAdditionalService> getHouseAdditionalServiceForHouse(int houseId) {
+        String sql = "SELECT * FROM House_additional_service WHERE house_id = ?";
+        List<HouseAdditionalService> list = new ArrayList<>();
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, houseId);
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                int houseAddServiceId = resultSet.getInt("house_add_service_id");
+                int serviceId = resultSet.getInt("add_service_id");
+                int houseIdResult = resultSet.getInt("house_id");
+                int serviceStatus = resultSet.getInt("add_service_status");
+                float servicePrice = resultSet.getFloat("add_service_price");
+                HouseAdditionalService has = new HouseAdditionalService(houseAddServiceId, serviceId, houseIdResult, serviceStatus, servicePrice);
+                list.add(has);
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+        return list;
+    }
     
 }

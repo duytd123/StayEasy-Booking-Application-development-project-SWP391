@@ -37,11 +37,11 @@
                 <span style="font-size: 16px; font-weight: 600">House</span>
             </a>
 
-            <a href="BillHostServlet" class="list-group-item list-group-item-action" style="margin-top: 10px">
+            <a href="billhost" class="list-group-item list-group-item-action" style="margin-top: 10px">
                 <i style="margin-right: 10px; font-size: 18px" class="fas fa-parachute-box fa-fw me-3"></i>
                 <span style="font-size: 16px; font-weight: 600">Bill</span>
             </a>
-            <a href="#" class="list-group-item list-group-item-action" style="margin-top: 10px">
+            <a href="additional1" class="list-group-item list-group-item-action" style="margin-top: 10px">
                 <i style="margin-right: 10px; font-size: 18px" class="fas fa-thin fa-bars me-3"></i>
                 <span style="font-size: 16px; font-weight: 600">Room Service</span>
             </a>

@@ -5,7 +5,7 @@
     <head>
         <meta charset="ISO-8859-1">
         <title>Statistic</title>
-        <link rel="icon" href="images/logo1.png"/>
+        <link rel="icon" href="Images/logo1.png"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -140,7 +140,7 @@
                                         <div style="text-align: end">
                                             <h4 style="color: #E94644;">Total Sales</h4>
                                             <p class="mb-0"></p>
-                                            <h2 class="h1 mb-0">${requestScope.bills}$</h2>
+                                            <h2 class="h1 mb-0">${requestScope.bills} VND</h2>
                                         </div>
                                     </div>
                                 </div>

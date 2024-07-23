@@ -6,6 +6,7 @@ package Dao;
 
 import Connect.DBContext;
 import Model.Bill;
+import Model.Bill1;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,9 +33,7 @@ public class BillDAO {
         }
     }
 
-
-
-      public float TotalBill() {
+    public float TotalBill() {
         String sql = "  select sum (Bill.total) from Bill ";
         float count = 0;
 
@@ -53,8 +52,6 @@ public class BillDAO {
 
         return count;
     }
-
-
 
     public List<Bill> getBill() {
         String sql = "select * from Bill";
@@ -184,7 +181,7 @@ public class BillDAO {
         }
         return id;
     }
-  
+
     public Bill getBillbyId(int id) {
         String sql = "select * from Bill where bill_id = ?";
         Bill b = new Bill();
@@ -292,12 +289,10 @@ public class BillDAO {
         } catch (Exception e) {
             System.out.println("Error: " + e);
 
-      
         }
 
         return list;
     }
-
 
     public Bill getBillByIdUser(int billId, int userId) {
         Bill bill = null;
@@ -346,8 +341,6 @@ public class BillDAO {
         return 0;
     }
 
-
-
     public void updatebillStatus(int billid) {
         String sql = "UPDATE [dbo].[Bill]\n"
                 + "   SET [status] = ?"
@@ -365,9 +358,9 @@ public class BillDAO {
         }
     }
 
-    public List<Bill> getBillsByHostId(int hostId) {
-        List<Bill> bills = new ArrayList<>();
-        String sql = "SELECT b.bill_id, b.date, b.total, b.status, b.user_id "
+    public List<Bill1> getBillsByHostId(int hostId) {
+        List<Bill1> bills = new ArrayList<>();
+        String sql = "SELECT b.bill_id, b.date, b.total, b.status, b.user_id, b.payment_type, b.reason, b.fullname, b.phone, b.email "
                 + "FROM Bill b "
                 + "INNER JOIN Bill_detail bd ON b.bill_id = bd.bill_id "
                 + "INNER JOIN House h ON bd.house_id = h.house_id "
@@ -383,8 +376,12 @@ public class BillDAO {
                 int status = resultSet.getInt("status");
                 int userId = resultSet.getInt("user_id");
                 String paymentType = resultSet.getString("payment_type");
-                Bill bill = new Bill(billId, date, total, status, userId);
-                bill.setPayment(paymentType);
+                String reason = resultSet.getString("reason");
+                String fullname = resultSet.getString("fullname");
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+
+                Bill1 bill = new Bill1(billId, date, total, status, userId, null, fullname, phone, email, reason, paymentType, null);
                 bills.add(bill);
             }
         } catch (Exception e) {
@@ -420,14 +417,13 @@ public class BillDAO {
         return -1;
     }
 
-
     public double calculateTotalMoneyForHost(int hostId) {
         double totalMoney = 0.0;
-        String sql = "SELECT SUM(bd.price) AS total_money "
-                + "FROM Bill_detail bd "
-                + "INNER JOIN Bill b ON bd.bill_id = b.bill_id "
-                + "WHERE b.status = 1 AND bd.house_id IN "
-                + "(SELECT h.house_id FROM House h WHERE h.host_id = ?)";
+        String sql = "SELECT SUM(b.total) AS total_money "
+                + "FROM Bill b "
+                + "INNER JOIN Bill_detail bd ON b.bill_id = bd.bill_id "
+                + "INNER JOIN House h ON bd.house_id = h.house_id "
+                + "WHERE b.status = 1 AND h.host_id = ?";
         try (PreparedStatement pre = con.prepareStatement(sql)) {
             pre.setInt(1, hostId);
             try (ResultSet rs = pre.executeQuery()) {

@@ -38,6 +38,29 @@
             body {
                 margin: 0;
                 padding: 0;
+            }
+
+            select option {
+                font-size: 16px;
+                padding: 5px;
+            }
+
+            select {
+                width: 32.3%;
+                margin: 0;
+                font-size: 16px;
+                padding: 7px 10px;
+                font-family: Segoe UI, Helvetica, sans-serif;
+                border: 1px solid #D0D0D0;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                border-radius: 10px;
+                outline: none;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb5/3.8.1/compiled.min.css"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css"><style>
+            body {
                 background-color: #fbfbfb;
             }
             @media (min-width: 991.98px) {
@@ -45,6 +68,15 @@
                     padding-left: 240px;
                 }
             }
+            .text_page_head{
+                font-size: 18px;
+                font-weight: 600;
+            }
+            .text_page {
+                font-size: 14px;
+                font-weight: 600;
+            }
+
             .sidebar {
                 position: fixed;
                 top: 0;
@@ -55,6 +87,7 @@
                 width: 240px;
                 z-index: 600;
             }
+
             @media (max-width: 991.98px) {
                 .sidebar {
                     width: 100%;
@@ -64,6 +97,7 @@
                 border-radius: 5px;
                 box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
             }
+
             .sidebar-sticky {
                 position: relative;
                 top: 0;
@@ -72,13 +106,6 @@
                 overflow-x: hidden;
                 overflow-y: auto;
             }
-            body {
-                margin: 0;
-                padding: 0;
-                background-color: #f8f9fa; /* Light grey background for better contrast */
-                font-family: Arial, sans-serif;
-            }
-
             .container {
                 max-width: 1200px;
                 margin: auto;
@@ -209,9 +236,9 @@
                 background: #fff;
                 border: 1px solid #ddd;
                 padding: 10px;
-                max-width: 300px; /* Adjust for better fit */
-                white-space: nowrap; /* Keep text on a single line */
-                overflow-x: auto; /* Horizontal scrolling if necessary */
+                max-width: 300px; 
+                white-space: nowrap; 
+                overflow-x: auto; 
                 text-overflow: ellipsis; /* Ellipsis for overflowed text */
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for better visibility */
                 z-index: 1000; /* Ensure it is above other elements */
@@ -220,9 +247,10 @@
             .event-tooltip p {
                 margin: 0;
                 padding: 0;
-                color: #333; /* Dark text color */
+                color: #333; 
             }
 
+            
         </style>
     </head>
 
@@ -232,9 +260,9 @@
             </header>
         <jsp:include page="header_right.jsp"></jsp:include>
             <main>
-                <div class="container pt-4">
+                <div class="container pt-4" style="max-width: 1200px">
                     <section class="mb-4">
-                        <div class="card-body">
+                        <div class="card">
 
                             <h1>Calendar Booking</h1>
                             <div id="reminder-section">                                  

@@ -90,10 +90,10 @@
                     <a href="DashboardServlet">Dashboard</a>
                 </c:when>
                 <c:when test="${acc.role.id == 1}">
-                    <a href="DashboardHostServlet">Dashboard</a>
+                    <a href="host">Dashboard</a>
                 </c:when>
                 <c:otherwise>
-                    <!-- Additional roles can be added here -->
+                    
                 </c:otherwise>
             </c:choose>
         </c:if>

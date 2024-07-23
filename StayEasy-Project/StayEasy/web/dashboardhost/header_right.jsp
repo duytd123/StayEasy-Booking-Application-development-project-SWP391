@@ -74,8 +74,7 @@
                             z-index: 1;
                             border-radius: 5px;
                             box-shadow: 0 1px 3.125rem 0 rgba(0, 0, 0, 0.2);">
-                            <li class="option_avt"><a href="#">Checkout</a>
-                            <li class="option_avt"><a href="UserServlet">My Account</a></li>                                     
+                            <li class="option_avt"><a href="hostservlet">My Account</a></li>                                     
                             <li class="option_avt"> <a href="LogoutServlet"> Logout</a></li>
                         </ul>
                     </li>

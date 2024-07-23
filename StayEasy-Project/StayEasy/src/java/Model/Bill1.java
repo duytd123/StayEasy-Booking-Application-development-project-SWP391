@@ -1,36 +1,38 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
 import java.util.Date;
+import java.util.List;
 
-/**
- *
- * @author khanh vi duy
- */
 public class Bill1 {
-      private int billid;
+    private int billid;
     private Date date;
     private float total;
     private int status;
     private int userid;
+    private String userName;
     private String fullname;
-    private String phone ;
-    private String username;
+    private String phone;
+    private String email;
+    private String reason;
+    private String payment;
+    private List<BillDetail> billDetail;
 
     public Bill1() {
     }
 
-    public Bill1(int billid, float total, int status, int userid, String fullname, String phone, String username) {
+    public Bill1(int billid, Date date, float total, int status, int userid, String userName, String fullname, String phone, String email, String reason, String payment, List<BillDetail> billDetail) {
         this.billid = billid;
+        this.date = date;
         this.total = total;
         this.status = status;
         this.userid = userid;
+        this.userName = userName;
         this.fullname = fullname;
         this.phone = phone;
-        this.username = username;
+        this.email = email;
+        this.reason = reason;
+        this.payment = payment;
+        this.billDetail = billDetail;
     }
 
     public int getBillid() {
@@ -73,6 +75,14 @@ public class Bill1 {
         this.userid = userid;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public String getFullname() {
         return fullname;
     }
@@ -81,7 +91,6 @@ public class Bill1 {
         this.fullname = fullname;
     }
 
-   
     public String getPhone() {
         return phone;
     }
@@ -90,13 +99,39 @@ public class Bill1 {
         this.phone = phone;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
-    
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
+    public List<BillDetail> getBillDetail() {
+        return billDetail;
+    }
+
+    public void setBillDetail(List<BillDetail> billDetail) {
+        this.billDetail = billDetail;
+    }
+
+   
+
     
 }

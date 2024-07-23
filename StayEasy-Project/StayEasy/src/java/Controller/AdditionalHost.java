@@ -4,25 +4,30 @@
  */
 package Controller;
 
-import Dao.BillDAO;
+import Dao.AdditionalServiceDAO;
+import Dao.HouseAdditionalServiceDAO;
+import Dao.HouseDAO;
 import Model.Account;
-import Model.Bill;
+import Model.AdditionalService;
+import Model.House;
+import Model.HouseAdditionalService;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author badao
  */
-public class BillHostServlet extends HttpServlet {
+@WebServlet(name = "AdditionalHost", urlPatterns = {"/additional1"})
+public class AdditionalHost extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,33 +41,50 @@ public class BillHostServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         HttpSession session = request.getSession();
-        session.removeAttribute("mess");
         Account loggedInUser = (Account) session.getAttribute("acc");
 
+        if (loggedInUser == null) {
+            response.sendRedirect("LoginServlet");
+            return;
+        }
         int hostId = loggedInUser.getUserid();
-        BillDAO bdao = new BillDAO();
 
-        List<Bill> list = bdao.getBillsByHostId(hostId);
+        HouseDAO houseDAO = new HouseDAO();
+        List<House> houses = houseDAO.getHousesByHostId(hostId);
+        System.out.println("Houses: " + houses);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM");
-        float rs = 0;
-        Date currentDate = new Date();
-        String nowDate = sdf.format(currentDate);
+        AdditionalServiceDAO asDAO = new AdditionalServiceDAO();
+        List<AdditionalService> services = asDAO.getAdditionalServicee();
+        System.out.println("Services: " + services);
 
-        for (Bill bill : list) {
-            if (bill.getStatus() == 1 && sdf.format(bill.getDate()).equals(nowDate)) {
-                rs += bill.getTotal();
+        int houseId = 0;
+        String houseIdParam = request.getParameter("houseId");
+        if (houseIdParam != null && !houseIdParam.isEmpty()) {
+            try {
+                houseId = Integer.parseInt(houseIdParam);
+            } catch (NumberFormatException e) {
+                houseId = 0;
             }
         }
+        if (houseId == 0 && !houses.isEmpty()) {
+            houseId = houses.get(0).getHouseid();
+        }
+        System.out.println("Selected House ID: " + houseId);
 
-        request.setAttribute("rs", rs);
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("/billhost.jsp").forward(request, response);
+        HouseAdditionalServiceDAO hasDAO = new HouseAdditionalServiceDAO();
+        List<HouseAdditionalService> houseServices = hasDAO.getHouseAdditionalServiceForHouse(houseId);
+        System.out.println("House Services: " + houseServices);
+
+        request.setAttribute("houses", houses);
+        request.setAttribute("services", services);
+        request.setAttribute("houseId", houseId);
+        request.setAttribute("houseServices", houseServices);
+
+        request.getRequestDispatcher("dashboardhost/additional.jsp").forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
