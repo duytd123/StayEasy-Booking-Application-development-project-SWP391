@@ -27,7 +27,7 @@
                     <nav class="navbar">
                         <a style="font-size: large"  href="DashboardServlet" class="text-white mx-5">Home</a>
                         <a  style="font-size: large" href="ListHouseServlet" class="text-white mx-5">Room</a>
-                        <a  style="font-size: large" href="ListBillServlet" class="text-white mx-5">Orders</a>
+                        <!--<a  style="font-size: large" href="ListBillServlet" class="text-white mx-5">Orders</a>-->
                         <a  style="font-size: large" href="ListAccountServlet?page=1&search=" class="text-white mx-5">Users</a>
                         <a  style="font-size: large" href="ListAddService?page=1&search=" class="text-white mx-5">Service</a>
 <!--                        <a  style="font-size: large" href="ListCommentServlet" class="text-white mx-5">Messages</a>-->

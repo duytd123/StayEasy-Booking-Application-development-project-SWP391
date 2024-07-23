@@ -46,6 +46,8 @@ public class EditHouseControl extends HttpServlet {
         processRequest(request, response);
     }
 
+    
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -57,10 +59,7 @@ public class EditHouseControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-
-        // Check if user is logged in
+         // Check if user is logged in
         Account loggedInUser = (Account) request.getSession().getAttribute("acc");
         if (loggedInUser == null) {
             response.sendRedirect("LoginServlet");

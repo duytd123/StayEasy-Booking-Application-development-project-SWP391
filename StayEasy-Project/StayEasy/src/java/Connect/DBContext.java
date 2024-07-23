@@ -15,11 +15,11 @@ public class DBContext {
             
             String username = "sa";
  
-            String password = "12345";
+            String password = "1234";
 
 
           
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=HouseBooking2";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=HouseBooking3";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException | SQLException ex) {
