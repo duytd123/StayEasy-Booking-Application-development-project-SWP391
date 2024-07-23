@@ -39,10 +39,10 @@
                     <nav class="navbar">
                         <a href="DashboardServlet"><span>Home</span></a>
                         <a href="ListHouseServlet">Room</a>
-                        <a href="ListBillServlet">Orders</a>
-                        <a href="ListAccountServlet">Users</a>
-                        <a href="ListAddService">Service</a>
-                        <a href="ListCommentServlet">Messages</a>
+                        <!--<a href="ListBillServlet">Orders</a>-->
+                        <a href="ListAccountServlet?page=1&search=">Users</a>
+                        <a href="ListAddService?page=1&search=">Service</a>
+                        <!--<a href="ListCommentServlet">Messages</a>-->
                     </nav>
                     <div class="icons">
                         <div id="menu-btn" class="fas fa-bars"></div>

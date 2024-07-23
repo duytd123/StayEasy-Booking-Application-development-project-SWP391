@@ -100,7 +100,47 @@ public class EditHouseControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         // Check if user is logged in
+        Account loggedInUser = (Account) request.getSession().getAttribute("acc");
+        if (loggedInUser == null) {
+            response.sendRedirect("LoginServlet");
+            return;
+        }
+
+        int hostId = loggedInUser.getUserid();
+
+        String pid_raw = request.getParameter("id");
+        String pname = request.getParameter("name");
+        String pprice_raw = request.getParameter("price");
+        String pdescribe = request.getParameter("description");
+        String paddress = request.getParameter("address");
+        String pdate = request.getParameter("date");
+        String pdiscount_raw = request.getParameter("discount");
+        String plocation_raw = request.getParameter("location");
+        String pmenu_raw = request.getParameter("menu");
+
+        double pprice = 0.0;
+        double pdiscount = 0.0;
+        int plocation = 0;
+        int pmenu = 0;
+        int pid = 0;
+
+        try {
+            pid = Integer.parseInt(pid_raw);
+            pprice = Double.parseDouble(pprice_raw);
+            pdiscount = Double.parseDouble(pdiscount_raw);
+            plocation = Integer.parseInt(plocation_raw);
+            pmenu = Integer.parseInt(pmenu_raw);
         
+        HouseDAO dao = new HouseDAO();
+        dao.editHouse(pid, pname, pprice, pdescribe, paddress, pdate, pdiscount, hostId, plocation, pmenu);
+
+        request.setAttribute("mess", "Edit successfully!");
+        
+        request.getRequestDispatcher("manager").forward(request, response);
+        } catch (NumberFormatException e) {
+            System.out.println(e);
+        }
     }
 
     /**
