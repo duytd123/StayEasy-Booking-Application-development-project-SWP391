@@ -31,10 +31,9 @@ public class HouseImgDAO {
     public List<HouseImg> getHouseImg(){
         String sql = "select * from House_img";
         List<HouseImg> list = new ArrayList<>();
-        try {
-            //tạo khay chứa câu lệnh
-            PreparedStatement pre = con.prepareStatement(sql);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+        try {      
+            
+            PreparedStatement pre = con.prepareStatement(sql);   
             ResultSet resultSet = pre.executeQuery();
             while(resultSet.next()){
                 int imgid = resultSet.getInt(1);

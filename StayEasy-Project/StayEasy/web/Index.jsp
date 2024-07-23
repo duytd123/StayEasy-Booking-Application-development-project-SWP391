@@ -207,7 +207,7 @@
 
             <div class="box-container">
                 <div class="box">
-                    <img src="Images/HALONG.jpg" alt="">
+                    <img src="Images/p-2.jpg" alt="">
                     <div class="content">
                         <h3>Ha Long</h3>
                         <p>...</p>
@@ -215,7 +215,7 @@
                     </div>
                 </div>
                 <div class="box">
-                    <img src="Images/da-nang.jpg" alt="">
+                    <img src="Images/danang.jpg" alt="">
                     <div class="content">
                         <h3>Da Nang</h3>
                         <p>...</p>
@@ -224,7 +224,7 @@
                 </div>
                 <!-- Add more gallery boxes as needed -->
                 <div class="box">
-                    <img src="Images/con-dao.jpg" alt="">
+                    <img src="Images/condao.png" alt="">
                     <div class="content">
                         <h3>Con Dao</h3>
                         <p>...</p>
@@ -238,7 +238,7 @@
         <section class="gallery" id="gallery">
             <div class="box-container">
                 <div class="box">
-                    <img src="Images/Da-Lat.jpg" alt="">
+                    <img src="Images/dalat.png" alt="">
                     <div class="content">
                         <h3>Da Lat</h3>
                         <p>...</p>
@@ -256,7 +256,7 @@
                 </div>
                 <!-- Add more gallery boxes as needed -->
                 <div class="box">
-                    <img src="Images/Sa-pa.jpg" alt="">
+                    <img src="Images/sapa.png" alt="">
                     <div class="content">
                         <h3>Sa Pa</h3>
                         <p>...</p>
