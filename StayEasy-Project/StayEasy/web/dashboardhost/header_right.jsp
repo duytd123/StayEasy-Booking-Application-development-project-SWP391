@@ -4,7 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="icon" href="Images/logo1.png"/>
+        <link rel="icon" href="Images/logo.png"/>
         <style>
             .option_avt {
                 font-size: 16px;

@@ -11,16 +11,11 @@
         <link rel="icon" href="Images/logo1.png"/>
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
         <link rel="stylesheet" href="css/list_house_main.css">
         <link rel="stylesheet" href="assets/css/style.min.css">
         <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
         <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
         <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
         <link rel="stylesheet" href="StyleSheet.css">
         <link rel="stylesheet" href="css/housepage.css">
         <link rel="stylesheet" href="css/style.css">
@@ -35,6 +30,10 @@
         .sales {
             animation: slideInUp 1s ease forwards;
         }
+        element.style {
+            padding-bottom: 4px;
+            padding-top: 4px;
+        }
 
         .row_1 {
             display: flex;
@@ -42,14 +41,10 @@
         }
 
         .product {
-            width: 48%; /* Adjust as needed */
+            width: 48%;
             margin-bottom: 20px;
         }
 
-        .image_1 img {
-            width: 100%;
-            height: auto;
-        }
         .newsletter_content{
             margin-bottom: 20px;
         }
@@ -100,8 +95,8 @@
 
         .image_wrapper img {
             display: inline-block;
-            width: 50%;
-            height: 50%;
+            width: 500px;
+            height: 500px;
             margin-right: 10px;
             cursor: pointer;
         }
@@ -128,11 +123,7 @@
     </style>
 
     <body>
-
-        <!-- Include header -->
         <%@ include file="header.jsp" %>
-
-        <!-- home section starts  -->
 
         <section class="home" id="home">
             <div class="content">
@@ -162,7 +153,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="section_title">
-                                <h2 class="text-shadow" style="font-size: 70px;"><span class="ani-fire">SUPPER SALES</span></h2>
+                                <h2 class="text-shadow" style="font-size: 70px;"><span class="ani-fire">BEAUTIFUL HOUSE</span></h2>
                                 <div class="image_container">
                                     <div class="image_wrapper">
                                         <c:forEach items="${houseImages}" var="houseImg">
@@ -293,10 +284,7 @@
                         <% String email = (String)session.getAttribute("email"); %>
                         <input type="email" name="Email" placeholder="Email" value="<%= email != null ? email : "" %>">
                     </div>
-                    <!--                    <div class="inputBox">
-                                            <input type="number" name="Number" placeholder="Number">
-                                            <input type="text" name="Subject" placeholder="Subject">
-                                        </div>-->
+
                     <textarea name="Message" placeholder="Message" cols="30" rows="10"></textarea>
                     <input type="submit" class="btn" value="Send message">
                 </form>
@@ -305,19 +293,7 @@
 
         <!-- contact section ends -->
 
-        <!-- brand section starts  -->
-
-        <section class="brand-container">
-            <div class="swiper-container brand-slider">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img src="Images/brand.png" alt=""></div>
-                    <div class="swiper-slide"><img src="Images/2.jpg" alt=""></div>
-                    <div class="swiper-slide"><img src="Images/3.jpg" alt=""></div>
-                    <!-- Add more swiper slides as needed -->
-                </div>
-            </div>
-        </section>
-
+       
         <!-- brand section ends -->
 
         <!-- Include footer -->

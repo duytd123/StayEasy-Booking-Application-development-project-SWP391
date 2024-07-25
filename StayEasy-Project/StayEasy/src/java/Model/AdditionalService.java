@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Model;
 
 /**
@@ -9,17 +5,20 @@ package Model;
  * @author Admin
  */
 public class AdditionalService {
+
     private int serviceid;
     private String servicename;
     private String servicedesc;
+    private String imageUrl;
 
     public AdditionalService() {
     }
 
-    public AdditionalService(int serviceid, String servicename, String servicedesc) {
+    public AdditionalService(int serviceid, String servicename, String servicedesc, String imageUrl) {
         this.serviceid = serviceid;
         this.servicename = servicename;
         this.servicedesc = servicedesc;
+        this.imageUrl = imageUrl;
     }
 
     public int getServiceid() {
@@ -45,7 +44,12 @@ public class AdditionalService {
     public void setServicedesc(String servicedesc) {
         this.servicedesc = servicedesc;
     }
-    
-    
-    
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }

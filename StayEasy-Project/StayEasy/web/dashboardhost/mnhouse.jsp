@@ -63,7 +63,7 @@
                 top: 0;
                 bottom: 0;
                 left: 0;
-                padding: 58px 0 0; /* Height of navbar */
+                padding: 58px 0 0;
                 box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
                 width: 240px;
                 z-index: 600;
@@ -97,7 +97,7 @@
                 height: calc(100vh - 48px);
                 padding-top: 0.5rem;
                 overflow-x: hidden;
-                overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+                overflow-y: auto; 
             }
             select {
                 width: 32.3%;
@@ -130,7 +130,7 @@
                             <div class="row" style="">
                                 <div class="col-sm-4" style="text-align: center; margin-top: 20px; padding-top: 20px">
                                     <h3 class="mb-0" id="">
-                                        <strong>Manage Products</strong>
+                                        <strong>Manage Houses</strong>
                                     </h3>
                                 </div>
                                 <div class="col-lg-6" style="text-align: center; margin-top: 20px; margin-bottom: 20px; padding-top: 20px;">

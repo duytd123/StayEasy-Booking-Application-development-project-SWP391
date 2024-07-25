@@ -74,7 +74,8 @@ public class AddAdditionalServiceServlet extends HttpServlet {
         //processRequest(request, response);
         String addservicename = request.getParameter("addservicename");
         String addservicedesc = request.getParameter("addservicedesc");
-        AdditionalService a = new AdditionalService(-1, addservicename, addservicedesc);
+        String imageUrl = null; 
+        AdditionalService a = new AdditionalService(-1, addservicename, addservicedesc,imageUrl);
         AdditionalServiceDAO dao = new AdditionalServiceDAO();
         dao.addAdditionalService(a);
         response.sendRedirect("ListAddService?page=1&search=");

@@ -75,7 +75,8 @@ public class EditAdditionalServiceServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("addserviceid"));
         String addservicename = request.getParameter("addservicename");
         String addservicedesc = request.getParameter("addservicedesc");
-        AdditionalService a = new AdditionalService(id, addservicename, addservicedesc);
+        String imageUrl = null;
+        AdditionalService a = new AdditionalService(id, addservicename, addservicedesc,imageUrl);
         AdditionalServiceDAO dao = new AdditionalServiceDAO();
         dao.editAdditionalService(a);
         response.sendRedirect("ListAddService?page=1&search=");

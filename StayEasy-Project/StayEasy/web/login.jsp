@@ -109,7 +109,7 @@
         <script src="assets/js/app.js"></script>
         <script >
             <script>
-    $(docu  ment).ready(function() {
+    $(document ment).ready(function() {
                                         $(".toggle-password").click(function() {
                                 $(this).toggleClass("fa-eye fa-eye-slash");
                                         var input = $($(this).parent().prev("input"));

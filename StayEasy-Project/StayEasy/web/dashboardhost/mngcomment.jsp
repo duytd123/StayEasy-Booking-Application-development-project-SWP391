@@ -5,8 +5,8 @@
     <head>
         <meta charset="ISO-8859-1">
         <title>Quản Lý Bình Luận</title>
-        <link rel="icon" href="images/logo1.png"/>
-
+         <link rel="icon" href="Images/logo1.png"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -121,7 +121,7 @@
                                 <div class="col-lg-2"></div>
                                 <div class="col-lg-6" style="text-align: center; margin-top: 20px; margin-bottom: 20px; padding-top: 20px;">
                                     <form action="commentmanager" method="POST" style="display: flex; justify-content: center;">
-                                        <input type="text" name="valueSearch" placeholder="Search house by name" style="width: 60%; padding: 4px 10px; border-radius: 15px;">
+                                        <input type="text" name="valueSearch" placeholder="Search by house name" style="width: 60%; padding: 4px 10px; border-radius: 15px;">
                                         <button type="submit" style="border-radius: 50%; width: 40px; font-size: 18px; margin-left: 10px;"><i class="fa fa-search"></i></button>
                                     </form>
                                 </div>

@@ -45,13 +45,12 @@
                 }
             }
 
-            /* Sidebar */
             .sidebar {
                 position: fixed;
                 top: 0;
                 bottom: 0;
                 left: 0;
-                padding: 58px 0 0; /* Height of navbar */
+                padding: 58px 0 0;
                 box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
                 width: 240px;
                 z-index: 600;
@@ -73,7 +72,7 @@
                 height: calc(100vh - 48px);
                 padding-top: 0.5rem;
                 overflow-x: hidden;
-                overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+                overflow-y: auto;
             }</style>
     </head>
     <body>
@@ -140,7 +139,7 @@
                                         <div style="text-align: end">
                                             <h4 style="color: #E94644;">Total Sales</h4>
                                             <p class="mb-0"></p>
-                                            <h2 class="h1 mb-0">${requestScope.bills} VND</h2>
+                                            <h2 class="h1 mb-0">${requestScope.bills} $</h2>
                                         </div>
                                     </div>
                                 </div>
@@ -165,6 +164,45 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-xl-6 col-md-12 mb-4">
+                            <div class="card">
+                                <div style="padding: 10px 15px">
+                                    <div class="d-flex justify-content-between p-md-1">
+                                        <div class="d-flex flex-row">
+                                            <div class="align-self-center">
+                                                <i style="color: #00ac69; font-size: 50px" class="fa-solid fa-house-chimney-user"></i>
+                                            </div>
+                                        </div>
+                                        <div style="text-align: end">
+                                            <h4 style="color: #E94644;">Total Money In Week</h4>
+                                            <p class="mb-0"></p>
+                                            <h2 class="h1 mb-0">${totalMoneyWeek}$</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-12 mb-4">
+                            <div class="card">
+                                <div style="padding: 10px 15px">
+                                    <div class="d-flex justify-content-between p-md-1">
+                                        <div class="d-flex flex-row">
+                                            <div class="align-self-center">
+                                                <i style="color: #00ac69; font-size: 50px" class="fas fa-solid fa-house-flag me-3"></i>
+                                            </div>
+                                        </div>
+                                        <div style="text-align: end">
+                                            <h4 style="color: #06439F;">Total Money In Month</h4>
+                                            <p class="mb-0"></p>
+                                            <h2 class="h1 mb-0">${totalMoneyMonth}$</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>        
                 </section>
                 <!--Section: Statistics with subtitles-->
             </div>

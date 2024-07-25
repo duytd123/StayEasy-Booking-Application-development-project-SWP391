@@ -35,9 +35,20 @@
 
         <link rel="stylesheet" href="dashboardhost/newcss.css">
         <style>
+            td img {
+                width: 200px;
+                height: 120px;
+            }
             body {
                 margin: 0;
                 padding: 0;
+            }
+
+            .alert.alert-success {
+                margin: 20px 10px;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb5/3.8.1/compiled.min.css"><link rel="stylesheet" type="text/css" href="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/css/mdb-plugins-gathered.min.css"><style>body {
                 background-color: #fbfbfb;
             }
             @media (min-width: 991.98px) {
@@ -45,16 +56,19 @@
                     padding-left: 240px;
                 }
             }
+
+            /* Sidebar */
             .sidebar {
                 position: fixed;
                 top: 0;
                 bottom: 0;
                 left: 0;
-                padding: 58px 0 0;
+                padding: 58px 0 0; /* Height of navbar */
                 box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
                 width: 240px;
                 z-index: 600;
             }
+
             @media (max-width: 991.98px) {
                 .sidebar {
                     width: 100%;
@@ -64,6 +78,19 @@
                 border-radius: 5px;
                 box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
             }
+            .text_page_head{
+                font-size: 18px;
+                font-weight: 600;
+            }
+            .text_page {
+                font-size: 14px;
+                font-weight: 600;
+            }
+            .buttonadd{
+                position: absolute;
+                right: 100px;
+                top: 30px;
+            }
             .sidebar-sticky {
                 position: relative;
                 top: 0;
@@ -72,11 +99,25 @@
                 overflow-x: hidden;
                 overflow-y: auto;
             }
-
-            .img-account-profile {
-                height: 10rem;
+            select {
+                width: 32.3%;
+                margin: 0;
+                font-size: 100%;
+                padding: 5px 10px 5px 10px;
+                font-family: Segoe UI, Helvetica, sans-serif;
+                border: 1px solid #D0D0D0;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+                border-radius: 20px;
+                outline: none;
             }
-            .rounded-circle {
+            .service-img {
+                width: 100px;
+                height: 100px;
+                object-fit: cover;
+            }
+                        .rounded-circle {
                 border-radius: 50% !important;
             }
             .card {
@@ -161,7 +202,6 @@
                 height: 100% !important;
                 font-family: Arial;
             }
-
         </style>
     </head>
 

@@ -17,7 +17,7 @@ import java.util.List;
  * @author Admin
  */
 public class HouseAdditionalServiceDAO {
-    
+
     Connection con;
 
     public HouseAdditionalServiceDAO() {
@@ -29,7 +29,7 @@ public class HouseAdditionalServiceDAO {
             System.out.println("error: " + e);
         }
     }
-    
+
     public List<HouseAdditionalService> getHouseAdditionalService() {
         String sql = "select * from House_additional_service";
         List<HouseAdditionalService> list = new ArrayList<>();
@@ -53,14 +53,14 @@ public class HouseAdditionalServiceDAO {
 
         return list;
     }
-    
+
     public void editHouseAdditionalService(HouseAdditionalService hs) {
-        String sql = "UPDATE [dbo].[House_additional_service]\n" +
-                        "   SET [add_service_id] = ?\n" +
-                        "      ,[house_id] = ?\n" +
-                        "      ,[add_service_status] = ?\n" +
-                        "      ,[add_service_price] = ?\n" +
-                        " WHERE house_add_service_id = ?";
+        String sql = "UPDATE [dbo].[House_additional_service]\n"
+                + "   SET [add_service_id] = ?\n"
+                + "      ,[house_id] = ?\n"
+                + "      ,[add_service_status] = ?\n"
+                + "      ,[add_service_price] = ?\n"
+                + " WHERE house_add_service_id = ?";
         try {
             //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
@@ -76,36 +76,39 @@ public class HouseAdditionalServiceDAO {
             System.out.println("error :  " + e);
         }
     }
-    
+
     public void addHouseAdditionalService(HouseAdditionalService hs) {
-        String sql = "INSERT INTO [dbo].[House_additional_service]\n" +
-                    "           ([add_service_id]\n" +
-                    "           ,[house_id]\n" +
-                    "           ,[add_service_status]\n" +
-                    "           ,[add_service_price])\n" +
-                    "     VALUES\n" +
-                    "           (?\n" +
-                    "           ,?\n" +
-                    "           ,?\n" +
-                    "           ,?)";
+        String sql = "INSERT INTO [dbo].[House_additional_service] "
+                + "([add_service_id], [house_id], [add_service_status], [add_service_price]) "
+                + "VALUES (?, ?, ?, ?)";
         try {
-            //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
-            //set gia tri cho dau ? 
             pre.setInt(1, hs.getServiceid());
             pre.setInt(2, hs.getHouseid());
             pre.setInt(3, hs.getServicestatus());
             pre.setFloat(4, hs.getServiceprice());
             pre.executeUpdate();
-
         } catch (Exception e) {
             System.out.println("error :  " + e);
         }
     }
     
+    public void updateServicePrice(int houseAddServiceId, float price) {
+        String sql = "UPDATE [dbo].[House_additional_service] SET [add_service_price] = ? WHERE [house_add_service_id] = ?";
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setFloat(1, price);
+            pre.setInt(2, houseAddServiceId);
+            
+            pre.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("error :  " + e);
+        }
+    }
+
     public void deleteHouseAdditionalService(int id) {
-        String sql = "DELETE FROM [dbo].[House_additional_service]\n" +
-                    "      WHERE house_add_service_id = ?";
+        String sql = "DELETE FROM [dbo].[House_additional_service]\n"
+                + "      WHERE house_add_service_id = ?";
         try {
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setInt(1, id);
@@ -115,8 +118,8 @@ public class HouseAdditionalServiceDAO {
             System.out.println("error :  " + e);
         }
     }
-    
-    public List<HouseAdditionalService> getHouseAdditionalServicebyID(int id){
+
+    public List<HouseAdditionalService> getHouseAdditionalServicebyID(int id) {
         String sql = "select * from House_additional_service where house_id = ?";
         List<HouseAdditionalService> list = new ArrayList<>();
         try {
@@ -125,7 +128,7 @@ public class HouseAdditionalServiceDAO {
             pre.setInt(1, id);
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 int houseaddserviceid = resultSet.getInt(1);
                 int serviceid = resultSet.getInt(2);
                 int houseid = resultSet.getInt(3);
@@ -135,13 +138,13 @@ public class HouseAdditionalServiceDAO {
                 list.add(hs);
             }
         } catch (Exception e) {
-            System.out.println("error: "+e);
+            System.out.println("error: " + e);
         }
-        
+
         return list;
     }
-    
-    public HouseAdditionalService getHouseAdditionalServicebyIDs(int id){
+
+    public HouseAdditionalService getHouseAdditionalServicebyIDs(int id) {
         String sql = "select * from House_additional_service where house_add_service_id = ?";
         HouseAdditionalService h = new HouseAdditionalService();
         try {
@@ -150,7 +153,7 @@ public class HouseAdditionalServiceDAO {
             pre.setInt(1, id);
 
             ResultSet resultSet = pre.executeQuery();
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 int houseaddserviceid = resultSet.getInt(1);
                 int serviceid = resultSet.getInt(2);
                 int houseid = resultSet.getInt(3);
@@ -159,15 +162,13 @@ public class HouseAdditionalServiceDAO {
                 h = new HouseAdditionalService(houseaddserviceid, serviceid, houseid, servicestatus, serviceprice);
             }
         } catch (Exception e) {
-            System.out.println("error: "+e);
+            System.out.println("error: " + e);
         }
-        
+
         return h;
     }
-    
-    
-    
-     public void addServiceToHouse(int houseId, int serviceId) {
+
+    public void addServiceToHouse(int houseId, int serviceId) {
         String sql = "INSERT INTO House_additional_service (add_service_id, house_id, add_service_status, add_service_price) VALUES (?, ?, 1, 0)";
         try {
             PreparedStatement pre = con.prepareStatement(sql);
@@ -200,5 +201,5 @@ public class HouseAdditionalServiceDAO {
         }
         return list;
     }
-    
+
 }

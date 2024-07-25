@@ -32,18 +32,17 @@ public class AdditionalServiceDAO {
     }
 
     public List<AdditionalService> getAdditionalServicee() {
-        String sql = "select * from Additional_service";
+        String sql = "SELECT * FROM Additional_service";
         List<AdditionalService> list = new ArrayList<>();
         try {
-            //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
             while (resultSet.next()) {
-                int serviceid = resultSet.getInt(1);
-                String servicename = resultSet.getString(2);
-                String servicedesc = resultSet.getString(3);
-                AdditionalService as = new AdditionalService(serviceid, servicename, servicedesc);
+                int serviceid = resultSet.getInt("add_service_id");
+                String servicename = resultSet.getString("add_serviceName");
+                String servicedesc = resultSet.getString("add_serviceDesc");
+                String imageUrl = resultSet.getString("image_url"); // New field
+                AdditionalService as = new AdditionalService(serviceid, servicename, servicedesc, imageUrl);
                 list.add(as);
             }
         } catch (Exception e) {
@@ -54,24 +53,29 @@ public class AdditionalServiceDAO {
     }
 
     public List<AdditionalService> getAdditionalService(int page, String s) {
-        String sql = "with p as (\n"
-                + "	select ROW_NUMBER() over (order by add_service_id asc) as num, *  from Additional_service where add_serviceName like ?)\n"
-                + "select * from p where num between ? * 5 - (5-1) and ? * 5";
+        String sql = "WITH p AS ("
+                + "   SELECT ROW_NUMBER() OVER (ORDER BY add_service_id ASC) AS num, * "
+                + "   FROM Additional_service "
+                + "   WHERE add_serviceName LIKE ?"
+                + ") "
+                + "SELECT * FROM p "
+                + "WHERE num BETWEEN ? * 5 - (5 - 1) AND ? * 5";
+
         List<AdditionalService> list = new ArrayList<>();
         try {
-            //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setString(1, "%" + s + "%");
             pre.setInt(2, page);
             pre.setInt(3, page);
 
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
             while (resultSet.next()) {
-                int serviceid = resultSet.getInt(2);
-                String servicename = resultSet.getString(3);
-                String servicedesc = resultSet.getString(4);
-                AdditionalService as = new AdditionalService(serviceid, servicename, servicedesc);
+                int serviceid = resultSet.getInt("add_service_id");
+                String servicename = resultSet.getString("add_serviceName");
+                String servicedesc = resultSet.getString("add_serviceDesc");
+                String imageUrl = resultSet.getString("image_url"); // Retrieve imageUrl
+
+                AdditionalService as = new AdditionalService(serviceid, servicename, servicedesc, imageUrl);
                 list.add(as);
             }
         } catch (Exception e) {
@@ -133,40 +137,42 @@ public class AdditionalServiceDAO {
     }
 
     public AdditionalService getAdditionalServicebyID(int id) {
-        String sql = "select * from Additional_service where add_service_id = ?";
+        String sql = "SELECT * FROM Additional_service WHERE add_service_id = ?";
         AdditionalService as = new AdditionalService();
         try {
-            //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setInt(1, id);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
-            while (resultSet.next()) {
-                int serviceid = resultSet.getInt(1);
-                String servicename = resultSet.getString(2);
-                String servicedesc = resultSet.getString(3);
-                as = new AdditionalService(serviceid, servicename, servicedesc);
+            if (resultSet.next()) {
+                int serviceid = resultSet.getInt("add_service_id");
+                String servicename = resultSet.getString("add_serviceName");
+                String servicedesc = resultSet.getString("add_serviceDesc");
+                String imageUrl = resultSet.getString("image_url"); // New field
+                as = new AdditionalService(serviceid, servicename, servicedesc, imageUrl);
             }
         } catch (Exception e) {
             System.out.println("error: " + e);
         }
-
         return as;
     }
 
     public List<AdditionalService> getAdditionalServicebyName(String name) {
-        String sql = "select * from Additional_service where add_serviceName like '%" + name + "%'";
+        String sql = "SELECT * FROM Additional_service WHERE add_serviceName LIKE ?";
         List<AdditionalService> list = new ArrayList<>();
         try {
-            //tạo khay chứa câu lệnh
+            // Prepare SQL statement
             PreparedStatement pre = con.prepareStatement(sql);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
+            pre.setString(1, "%" + name + "%");
+
+            // Execute query and get results
             ResultSet resultSet = pre.executeQuery();
             while (resultSet.next()) {
-                int serviceid = resultSet.getInt(1);
-                String servicename = resultSet.getString(2);
-                String servicedesc = resultSet.getString(3);
-                AdditionalService as = new AdditionalService(serviceid, servicename, servicedesc);
+                int serviceid = resultSet.getInt("add_service_id");
+                String servicename = resultSet.getString("add_serviceName");
+                String servicedesc = resultSet.getString("add_serviceDesc");
+                String imageUrl = resultSet.getString("image_url"); // Retrieve image URL
+
+                AdditionalService as = new AdditionalService(serviceid, servicename, servicedesc, imageUrl);
                 list.add(as);
             }
         } catch (Exception e) {
@@ -202,7 +208,9 @@ public class AdditionalServiceDAO {
                 int serviceId = resultSet.getInt("add_service_id");
                 String serviceName = resultSet.getString("add_serviceName");
                 String serviceDesc = resultSet.getString("add_serviceDesc");
-                AdditionalService as = new AdditionalService(serviceId, serviceName, serviceDesc);
+                String imageUrl = resultSet.getString("image_url"); 
+
+                AdditionalService as = new AdditionalService(serviceId, serviceName, serviceDesc, imageUrl);
                 list.add(as);
             }
         } catch (SQLException e) {

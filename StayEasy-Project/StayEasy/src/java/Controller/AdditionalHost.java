@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import Dao.AdditionalServiceDAO;
@@ -13,34 +9,19 @@ import Model.House;
 import Model.HouseAdditionalService;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
 
-/**
- *
- * @author badao
- */
-@WebServlet(name = "AdditionalHost", urlPatterns = {"/additional1"})
+@WebServlet(name = "AdditionalHost", urlPatterns = {"/additional1", "/updatePrice"})
 public class AdditionalHost extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    private void handleRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         Account loggedInUser = (Account) session.getAttribute("acc");
 
@@ -48,18 +29,30 @@ public class AdditionalHost extends HttpServlet {
             response.sendRedirect("LoginServlet");
             return;
         }
-        int hostId = loggedInUser.getUserid();
 
+        int hostId = loggedInUser.getUserid();
         HouseDAO houseDAO = new HouseDAO();
         List<House> houses = houseDAO.getHousesByHostId(hostId);
-        System.out.println("Houses: " + houses);
 
         AdditionalServiceDAO asDAO = new AdditionalServiceDAO();
         List<AdditionalService> services = asDAO.getAdditionalServicee();
-        System.out.println("Services: " + services);
 
-        int houseId = 0;
+        int houseId = getHouseIdFromRequestOrDefault(request, houses);
+
+        HouseAdditionalServiceDAO hasDAO = new HouseAdditionalServiceDAO();
+        List<HouseAdditionalService> houseServices = hasDAO.getHouseAdditionalServiceForHouse(houseId);
+
+        request.setAttribute("houses", houses);
+        request.setAttribute("services", services);
+        request.setAttribute("houseId", houseId);
+        request.setAttribute("houseServices", houseServices);
+
+        request.getRequestDispatcher("dashboardhost/additional.jsp").forward(request, response);
+    }
+
+    private int getHouseIdFromRequestOrDefault(HttpServletRequest request, List<House> houses) {
         String houseIdParam = request.getParameter("houseId");
+        int houseId = 0;
         if (houseIdParam != null && !houseIdParam.isEmpty()) {
             try {
                 houseId = Integer.parseInt(houseIdParam);
@@ -70,57 +63,72 @@ public class AdditionalHost extends HttpServlet {
         if (houseId == 0 && !houses.isEmpty()) {
             houseId = houses.get(0).getHouseid();
         }
-        System.out.println("Selected House ID: " + houseId);
-
-        HouseAdditionalServiceDAO hasDAO = new HouseAdditionalServiceDAO();
-        List<HouseAdditionalService> houseServices = hasDAO.getHouseAdditionalServiceForHouse(houseId);
-        System.out.println("House Services: " + houseServices);
-
-        request.setAttribute("houses", houses);
-        request.setAttribute("services", services);
-        request.setAttribute("houseId", houseId);
-        request.setAttribute("houseServices", houseServices);
-
-        request.getRequestDispatcher("dashboardhost/additional.jsp").forward(request, response);
+        return houseId;
     }
 
-// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        handleRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getServletPath();
+
+        if ("/updatePrice".equals(action)) {
+            updatePrice(request, response);
+        } else {
+            handleAddService(request, response);
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    private void handleAddService(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account loggedInUser = (Account) session.getAttribute("acc");
+
+        if (loggedInUser == null) {
+            response.sendRedirect("LoginServlet");
+            return;
+        }
+
+        int houseId = Integer.parseInt(request.getParameter("houseId"));
+        int serviceId = Integer.parseInt(request.getParameter("serviceId"));
+
+        HouseAdditionalService newService = new HouseAdditionalService();
+        newService.setHouseid(houseId);
+        newService.setServiceid(serviceId);
+        newService.setServicestatus(1);
+        newService.setServiceprice(0);
+
+        HouseAdditionalServiceDAO hasDAO = new HouseAdditionalServiceDAO();
+        hasDAO.addHouseAdditionalService(newService);
+
+        response.sendRedirect("additional1?houseId=" + houseId);
+    }
+
+    private void updatePrice(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            int houseAddServiceId = Integer.parseInt(request.getParameter("houseAddServiceId"));
+            float price = Float.parseFloat(request.getParameter("price"));
+            System.out.println("Updating price for houseAddServiceId: " + houseAddServiceId + " with price: " + price);
+
+            HouseAdditionalServiceDAO hasDAO = new HouseAdditionalServiceDAO();
+            hasDAO.updateServicePrice(houseAddServiceId, price);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("Error: " + e.getMessage());
+            System.out.println("Error updating price: " + e.getMessage());
+        }
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

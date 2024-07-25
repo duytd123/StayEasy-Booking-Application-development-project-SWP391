@@ -19,11 +19,8 @@
             <h3>Quick Links</h3>
             <a href="home#home">Home</a>
             <a href="home#book">Book</a>
-            <a href="home#packages">Packages</a>
-            <a href="home#services">Services</a>
-            <a href="home#gallery">Gallery</a>
-            <a href="home#review">Review</a>
             <a href="home#contact">Contact</a>
+            <a href="aboutus">About us</a>
         </div>
         <div class="box">
             <h3>Follow Us</h3>

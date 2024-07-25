@@ -2,19 +2,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-    <link href="stylesheet" rel="stylesheet">
-    <link rel="stylesheet" href="list.css">
-    <link rel="stylesheet" href="housepage.css">
-    <link rel="stylesheet" href="css/list_house_main.css">
-    <link rel="stylesheet" href="assets/css/style.min.css">
-    <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="user.jsp">
-    <link rel="stylesheet" href="list_house_main.css">
-    <link rel="stylesheet" href="StyleSheet.css">
-    <link rel="stylesheet" href="css/housepage.css">
-    <link rel="stylesheet" href="css/style.css">
+
     <style>
         header {
             display: flex;
@@ -23,6 +11,12 @@
             padding: 10px 20px;
             background-color: #fff;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 50px;
+        }
+
+        element.style {
+            padding-bottom: 4px;
+            padding-top: 4px;
         }
 
         header .logo {
@@ -67,6 +61,7 @@
             color: #007bff;
         }
 
+
     </style>
 
 </html>
@@ -75,15 +70,14 @@
     <div id="menu-bar" class="fas fa-bars"></div>
     <a href="home" class="logo"><span>Welcome</span>Stay<span>Ease</span>Booking</a>
     <nav class="navbar">
-        <a href="home">Home</a>
         <a href="#book">Book</a>
         <a href="aboutus">About Us</a>
-        <a href="#packages">Room</a>
+         <a href="#gallery">Hot Place</a>
         <a href="#contact">Contact</a>
-       
-         <c:if test="${sessionScope.acc != null}">
-             <a href="history-booking" >History booking</a>
-         </c:if>
+
+        <c:if test="${sessionScope.acc != null}">
+            <a href="history-booking" >History booking</a>
+        </c:if>
         <c:if test="${sessionScope.acc != null}">
             <c:choose>
                 <c:when test="${acc.role.id == 0}">
@@ -93,13 +87,12 @@
                     <a href="host">Dashboard</a>
                 </c:when>
                 <c:otherwise>
-                    
+
                 </c:otherwise>
             </c:choose>
         </c:if>
     </nav>
     <div class="icons">
-        <i class="fas fa-search" id="search-btn"></i>
         <c:if test="${sessionScope.acc == null}">
             <a href="LoginServlet" class="icon-link">
                 <i class="fas fa-user" id="user-btn"></i>
@@ -113,7 +106,7 @@
             <a href="user.jsp" class="icon-link">
                 <i class="fas fa-user-circle" id="profile-btn"></i>
             </a>
-            
+
         </c:if>
     </div>
 </header>

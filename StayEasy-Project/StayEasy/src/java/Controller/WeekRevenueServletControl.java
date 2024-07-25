@@ -30,55 +30,58 @@ public class WeekRevenueServletControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
+        try {
+            request.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;charset=UTF-8");
 
-        Account loggedInUser = (Account) request.getSession().getAttribute("acc");
+            Account loggedInUser = (Account) request.getSession().getAttribute("acc");
 
-        if (loggedInUser != null) {
+            if (loggedInUser != null) {
 
-            int hostId = loggedInUser.getUserid();
-            String year_raw = request.getParameter("year");
-            String month_raw = request.getParameter("month");
-            String from_raw = request.getParameter("from");
-            String to_raw = request.getParameter("to");
+                int hostId = loggedInUser.getUserid();
+                String year_raw = request.getParameter("year");
+                String month_raw = request.getParameter("month");
+                String from_raw = request.getParameter("from");
+                String to_raw = request.getParameter("to");
 
-            LocalDate currentDate = LocalDate.now();
-            LocalDate startOfWeek = currentDate.with(DayOfWeek.MONDAY);
-            LocalDate endOfWeek = startOfWeek.plusDays(6);
-            int startDay = startOfWeek.getDayOfMonth();
-            int endDay = endOfWeek.getDayOfMonth();
-            int monthValue = startOfWeek.getMonthValue();
+                LocalDate currentDate = LocalDate.now();
+                LocalDate startOfWeek = currentDate.with(DayOfWeek.MONDAY);
+                LocalDate endOfWeek = startOfWeek.plusDays(6);
+                int startDay = startOfWeek.getDayOfMonth();
+                int endDay = endOfWeek.getDayOfMonth();
+                int monthValue = startOfWeek.getMonthValue();
 
-            int year = (year_raw == null ? 2024 : Integer.parseInt(year_raw));
-            int month = (month_raw == null ? monthValue : Integer.parseInt(month_raw));
-            int from = (from_raw == null ? startDay : Integer.parseInt(from_raw));
-            int to = (to_raw == null ? endDay : Integer.parseInt(to_raw));
+                int year = (year_raw == null ? 2024 : Integer.parseInt(year_raw));
+                int month = (month_raw == null ? monthValue : Integer.parseInt(month_raw));
+                int from = (from_raw == null ? startDay : Integer.parseInt(from_raw));
+                int to = (to_raw == null ? endDay : Integer.parseInt(to_raw));
 
-            BillDAO dao = new BillDAO();
+                BillDAO dao = new BillDAO();
 
-            double totalMoney1 = dao.totalMoneyWeek(1, from, to, year, month, hostId);
-            double totalMoney2 = dao.totalMoneyWeek(2, from, to, year, month, hostId);
-            double totalMoney3 = dao.totalMoneyWeek(3, from, to, year, month, hostId);
-            double totalMoney4 = dao.totalMoneyWeek(4, from, to, year, month, hostId);
-            double totalMoney5 = dao.totalMoneyWeek(5, from, to, year, month, hostId);
-            double totalMoney6 = dao.totalMoneyWeek(6, from, to, year, month, hostId);
-            double totalMoney7 = dao.totalMoneyWeek(7, from, to, year, month, hostId);
+                double totalMoney1 = dao.totalMoneyWeek(1, from, to, year, month, hostId);
+                double totalMoney2 = dao.totalMoneyWeek(2, from, to, year, month, hostId);
+                double totalMoney3 = dao.totalMoneyWeek(3, from, to, year, month, hostId);
+                double totalMoney4 = dao.totalMoneyWeek(4, from, to, year, month, hostId);
+                double totalMoney5 = dao.totalMoneyWeek(5, from, to, year, month, hostId);
+                double totalMoney6 = dao.totalMoneyWeek(6, from, to, year, month, hostId);
+                double totalMoney7 = dao.totalMoneyWeek(7, from, to, year, month, hostId);
 
-            request.setAttribute("totalMoney1", totalMoney1);
-            request.setAttribute("totalMoney2", totalMoney2);
-            request.setAttribute("totalMoney3", totalMoney3);
-            request.setAttribute("totalMoney4", totalMoney4);
-            request.setAttribute("totalMoney5", totalMoney5);
-            request.setAttribute("totalMoney6", totalMoney6);
-            request.setAttribute("totalMoney7", totalMoney7);
-            request.setAttribute("year", year);
+                request.setAttribute("totalMoney1", totalMoney1);
+                request.setAttribute("totalMoney2", totalMoney2);
+                request.setAttribute("totalMoney3", totalMoney3);
+                request.setAttribute("totalMoney4", totalMoney4);
+                request.setAttribute("totalMoney5", totalMoney5);
+                request.setAttribute("totalMoney6", totalMoney6);
+                request.setAttribute("totalMoney7", totalMoney7);
+                request.setAttribute("year", year);
 
-            request.getRequestDispatcher("dashboardhost/weekrevenue.jsp").forward(request, response);
+                request.getRequestDispatcher("dashboardhost/weekrevenue.jsp").forward(request, response);
 
-        } else {
-            
-            response.sendRedirect("weekrevenue"); 
+            } else {
+                response.sendRedirect("LoginServlet"); 
+            }
+        } catch (Exception e) {
+            response.sendRedirect("LoginServlet");
         }
     }
 
@@ -120,5 +123,4 @@ public class WeekRevenueServletControl extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
