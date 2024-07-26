@@ -12,11 +12,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import Dao.HouseDAO;
 import Model.Account;
-import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,7 +27,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.File;
-import java.util.List;
 
 @WebServlet(name = "AddHouseControl", urlPatterns = {"/addhouse"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,
@@ -95,25 +96,29 @@ public class AddHouseControl extends HttpServlet {
         String pprice_raw = request.getParameter("price");
         String pdescribe = request.getParameter("description");
         String paddress = request.getParameter("address");
-        String pdate = request.getParameter("date");
+
         String pdiscount_raw = request.getParameter("discount");
         String plocation_raw = request.getParameter("location");
         String pmenu_raw = request.getParameter("menu");
+        String pnumber_of_guest_raw = request.getParameter("number_of_guest");
 
         double pprice = 0.0;
         double pdiscount = 0.0;
         int plocation = 0;
         int pmenu = 0;
+        int pnumber_of_guest = 0;
 
         try {
             pprice = Double.parseDouble(pprice_raw);
             pdiscount = Double.parseDouble(pdiscount_raw);
             plocation = Integer.parseInt(plocation_raw);
             pmenu = Integer.parseInt(pmenu_raw);
+            pnumber_of_guest = Integer.parseInt(pnumber_of_guest_raw);
         } catch (NumberFormatException e) {
             System.out.println("Error parsing number: " + e.getMessage());
         }
 
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         StringBuilder imageLinks = new StringBuilder();
         String uploadPath = getServletContext().getRealPath("") + File.separator + "Images" + File.separator + "houseimgs";
         File uploadDir = new File(uploadPath);
@@ -133,7 +138,7 @@ public class AddHouseControl extends HttpServlet {
         }
 
         HouseDAO dao = new HouseDAO();
-        dao.insertHouse(pname, pprice, pdescribe, paddress, pdate, pdiscount, hostId, plocation, pmenu, imageLinks.toString());
+        dao.insertHouse(pname, pprice, pdescribe, paddress, currentDate, pdiscount, hostId, plocation, pmenu, imageLinks.toString(), pnumber_of_guest);
         request.setAttribute("mess", "House Added!");
         request.getRequestDispatcher("dashboardhost/mnhouse.jsp").forward(request, response);
     }

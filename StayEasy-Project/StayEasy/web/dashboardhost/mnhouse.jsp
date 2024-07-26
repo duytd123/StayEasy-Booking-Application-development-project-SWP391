@@ -97,7 +97,7 @@
                 height: calc(100vh - 48px);
                 padding-top: 0.5rem;
                 overflow-x: hidden;
-                overflow-y: auto; 
+                overflow-y: auto;
             }
             select {
                 width: 32.3%;
@@ -111,6 +111,22 @@
                 box-sizing: border-box;
                 border-radius: 20px;
                 outline: none;
+            }
+            .bg-light1 {
+                background-color: #dc3545 !important
+            }
+
+            .badge1 {
+                display: inline-block;
+                padding: 0.35em 0.65em;
+                font-size: 0.75em;
+                font-weight: 700;
+                line-height: 1;
+                color: #fff;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: baseline;
+                border-radius: 0.25rem;
             }
         </style>
     </head>
@@ -162,31 +178,83 @@
                                 <table class="table table-hover text-nowrap">
                                     <thead>
                                         <tr>
-                                            <th class="text_page_head" scope="col">ID</th>
+                                            <th class="text_page_head" scope="col">STT</th>
                                             <th class="text_page_head" scope="col">Name</th>
+                                            <th class="text_page_head" scope="col"></th>
                                             <th class="text_page_head" style="text-align: center" scope="col">Image</th>
                                             <th class="text_page_head" scope="col">Price</th>
                                             <th class="text_page_head" scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach items="${listByPage}" var="ls">
+                                        <c:forEach items="${listByPage}" var="ls" varStatus="status">
                                             <tr class="product_items">
-                                                <td class="text_page">${ls.houseid}</td>
+                                                <td class="text_page">${status.index + 1}</td>
                                                 <td style="max-width: 280px;" class="text_page">${ls.housename}</td>
+                                                <td style="text-align: center">
+                                                    <c:if test="${ls.status == 1}">
+                                                        <span class="badge bg-success">book</span>
+                                                    </c:if>
+                                                    <c:if test="${ls.status == 0}">
+                                                        <span class="badge bg-light text-dark">pending</span>
+                                                    </c:if>
+                                                    <c:if test="${ls.status == 2}">
+                                                        <span class="badge1 bg-light1 text-dark">block</span>
+                                                    </c:if>
+
+                                                </td>
                                                 <td style="text-align: center">
                                                     <img style="width: 170px; height:180px" src="${ls.images[0]}">
                                                 </td>
                                                 <td class="text_page">${ls.houseprice}$</td>
                                                 <td class="text_page">
-                                                    <a href="updatehouse?hid=${ls.houseid}"><button type="button" class="btn btn-warning"><i class="fa-solid fa-pen"></i></button></a>
-                                                    <a href="deletehouse?hid=${ls.houseid}"><button type="button" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+
+                                                    <c:choose>
+                                                        <c:when test="${ls.status == 1}">
+
+<!--                                                            <a href="updatehouse?hid=${ls.houseid}">
+     <button type="button" class="btn btn-warning">
+         <i class="fa-solid fa-pen"></i>
+     </button>
+ </a>
+ <a href="deletehouse?hid=${ls.houseid}">
+     <button type="button" class="btn btn-danger">
+         <i class="fa-solid fa-trash"></i>
+     </button>
+ </a>-->
+                                                        </c:when>
+                                                        <c:when test="${ls.status == 0}">
+
+                                                            <a href="updatehouse?hid=${ls.houseid}">
+                                                                <button type="button" class="btn btn-warning">
+                                                                    <i class="fa-solid fa-pen"></i>
+                                                                </button>
+                                                            </a>
+                                                            <a href="deletehouse?hid=${ls.houseid}">
+                                                                <button type="button" class="btn btn-danger">
+                                                                    <i class="fa-solid fa-trash"></i>
+                                                                </button>
+                                                            </a>
+                                                        </c:when>
+                                                        <c:when test="${ls.status == 2}">                                                         
+                                                            <a href="updatehouse?hid=${ls.houseid}">
+                                                                <button type="button" class="btn btn-warning">
+                                                                    <i class="fa-solid fa-pen"></i>
+                                                                </button>
+                                                            </a>
+                                                            <a href="restorehouse?hid=${ls.houseid}">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    <i class="fa-solid fa-undo"></i> Restore House
+                                                                </button>
+                                                            </a>
+                                                        </c:when>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-<!----------------------------------------------------------------------------->
+                                <!----------------------------------------------------------------------------->
                                 <div class="clearfix" style="text-align: center">
                                     <ul class="pagination">
                                         <c:if test="${page != 1}">
@@ -243,14 +311,7 @@
                                 <label>Address</label>
                                 <input name="address" type="text" maxlength="255" class="form-control">
                             </div>
-                            <div class="form-group">
-                                <input type="hidden" id="stringdateolb" value="${detail.postdate}">
-                                <div style="margin-bottom: 10px">Release Date</div>
-                                <input type="hidden" name="date" value="" id="here"/>
-                                <select class="bear-dates" id="dobDay"></select>
-                                <select class="bear-months" id="dobMonth"></select>
-                                <select class="bear-years" id="dobYear"></select>
-                            </div>
+
                             <div class="form-group">
                                 <label>Discount</label>
                                 <input name="discount" type="number" step="0.01" min="0" max="100" class="form-control">
@@ -271,6 +332,10 @@
                                     </c:forEach>
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label>Number of Guests</label>
+                                <input name="number_of_guest" type="number" min="1" class="form-control" required>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -282,6 +347,7 @@
         </div>
 
 
+        <!------------------------------------------>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>   
@@ -300,43 +366,7 @@
         <script type="text/javascript" src="https://mdbootstrap.com/wp-content/themes/mdbootstrap4/js/plugins/mdb-plugins-gathered.min.js"></script>
 
         <script src="js/countdown.js"></script>
-        <script type="text/javascript">
-            function addOption(selectElement, value, text) {
-                var option = document.createElement("option");
-                option.value = value;
-                option.text = text;
-                selectElement.add(option);
-            }
 
-            var defaultReleaseDate = document.getElementById("stringdateolb").value;
-            var defaultDateArray = defaultReleaseDate.split('-');
-            var defaultDay = parseInt(defaultDateArray[2]);
-            var defaultMonth = parseInt(defaultDateArray[1]);
-            var defaultYear = parseInt(defaultDateArray[0]);
-
-            var daysSelect = document.getElementById('dobDay');
-            var monthsSelect = document.getElementById('dobMonth');
-            var yearsSelect = document.getElementById('dobYear');
-
-            for (var day = 1; day <= 31; day++) {
-                addOption(daysSelect, day, day);
-            }
-
-            for (var month = 1; month <= 12; month++) {
-                addOption(monthsSelect, month, month);
-            }
-
-            var currentYear = new Date().getFullYear();
-            for (var year = currentYear; year >= 1900; year--) {
-                addOption(yearsSelect, year, year);
-            }
-
-            daysSelect.value = defaultDay;
-            monthsSelect.value = defaultMonth;
-            yearsSelect.value = defaultYear;
-
-
-        </script>
     </body>
 
 

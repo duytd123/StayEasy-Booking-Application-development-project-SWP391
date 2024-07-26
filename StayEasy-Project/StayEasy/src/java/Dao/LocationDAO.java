@@ -33,12 +33,12 @@ public class LocationDAO {
         String sql = "select * from dbo.Location";
         List<Location> list = new ArrayList<>();
         try {
-            //tạo khay chứa câu lệnh
+
             PreparedStatement pre = con.prepareStatement(sql);
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
             while(resultSet.next()){
-                // lấy value theo từng cột
+
                 int loid = resultSet.getInt(1);
                 String loname = resultSet.getString(2);
                 Location l = new Location(loid, loname);

@@ -237,6 +237,7 @@
                                                 <th style="text-align: center" class="border-gray-200" scope="col">STT</th>
                                                 <th style="text-align: center" class="border-gray-200" scope="col">Date</th>
                                                 <th style="text-align: center" class="border-gray-200" scope="col">Total</th>
+                                                <th style="text-align: center" class="border-gray-200" scope="col"></th>
                                                 <th style="text-align: center" class="border-gray-200" scope="col">View | Reject</th>
                                             </tr>
                                         </thead>

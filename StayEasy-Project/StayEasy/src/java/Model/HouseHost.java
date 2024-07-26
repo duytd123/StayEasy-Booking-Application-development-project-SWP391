@@ -14,6 +14,7 @@ public class HouseHost extends House {
     private String address;
     private String description;
     private double discount;
+    private int number_of_guest; 
     private Location location;
     private Menu menu;
     private List<String> images;
@@ -21,7 +22,7 @@ public class HouseHost extends House {
     public HouseHost() {
     }
 
-    public HouseHost(int houseid, Date postdate, String housename, String review, float houseprice, int status, String address, String description, double discount, Location location, Menu menu, List<String> images) {
+    public HouseHost(int houseid, Date postdate, String housename, String review, float houseprice, int status, String address, String description, double discount, int number_of_guest, Location location, Menu menu, List<String> images) {
         this.houseid = houseid;
         this.postdate = postdate;
         this.housename = housename;
@@ -29,8 +30,9 @@ public class HouseHost extends House {
         this.houseprice = houseprice;
         this.status = status;
         this.address = address;
-        this.discount = discount;
         this.description = description;
+        this.discount = discount;
+        this.number_of_guest = number_of_guest; 
         this.location = location;
         this.menu = menu;
         this.images = images;
@@ -108,6 +110,14 @@ public class HouseHost extends House {
         this.discount = discount;
     }
 
+    public int getNumber_of_guest() {
+        return number_of_guest;
+    }
+
+    public void setNumber_of_guest(int number_of_guest) {
+        this.number_of_guest = number_of_guest;
+    }
+
     public Location getLocation() {
         return location;
     }
@@ -131,5 +141,4 @@ public class HouseHost extends House {
     public void setImages(List<String> images) {
         this.images = images;
     }
-
 }

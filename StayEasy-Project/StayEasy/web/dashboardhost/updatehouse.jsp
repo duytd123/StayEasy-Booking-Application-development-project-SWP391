@@ -107,9 +107,13 @@
                                         </c:forEach>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label>Number of Guests</label>
+                                    <input name="numberOfGuests" type="number" min="1" value="${detail.number_of_guest}" class="form-control" required>
+                                </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="redirectToManager()">Close</button>
                                 <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
                         </form>
@@ -123,39 +127,44 @@
         <script src="js/clickevents.js"></script>
         <script src="js/calender.js"></script>
         <script  type="text/javascript">
-            function addOption(selectElement, value, text) {
-                var option = document.createElement("option");
-                option.value = value;
-                option.text = text;
-                selectElement.add(option);
-            }
 
-            var defaultReleaseDate = document.getElementById("stringdateolb").value;
-            var defaultDateArray = defaultReleaseDate.split('-');
-            var defaultDay = parseInt(defaultDateArray[2]);
-            var defaultMonth = parseInt(defaultDateArray[1]);
-            var defaultYear = parseInt(defaultDateArray[0]);
+                                      function redirectToManager() {
+                                          window.location.href = 'manager';
+                                      }
 
-            var daysSelect = document.getElementById('dobDay');
-            var monthsSelect = document.getElementById('dobMonth');
-            var yearsSelect = document.getElementById('dobYear');
+                                      function addOption(selectElement, value, text) {
+                                          var option = document.createElement("option");
+                                          option.value = value;
+                                          option.text = text;
+                                          selectElement.add(option);
+                                      }
 
-            for (var day = 1; day <= 31; day++) {
-                addOption(daysSelect, day, day);
-            }
+                                      var defaultReleaseDate = document.getElementById("stringdateolb").value;
+                                      var defaultDateArray = defaultReleaseDate.split('-');
+                                      var defaultDay = parseInt(defaultDateArray[2]);
+                                      var defaultMonth = parseInt(defaultDateArray[1]);
+                                      var defaultYear = parseInt(defaultDateArray[0]);
 
-            for (var month = 1; month <= 12; month++) {
-                addOption(monthsSelect, month, month);
-            }
+                                      var daysSelect = document.getElementById('dobDay');
+                                      var monthsSelect = document.getElementById('dobMonth');
+                                      var yearsSelect = document.getElementById('dobYear');
 
-            var currentYear = new Date().getFullYear();
-            for (var year = currentYear; year >= 1900; year--) {
-                addOption(yearsSelect, year, year);
-            }
+                                      for (var day = 1; day <= 31; day++) {
+                                          addOption(daysSelect, day, day);
+                                      }
 
-            daysSelect.value = defaultDay;
-            monthsSelect.value = defaultMonth;
-            yearsSelect.value = defaultYear;
+                                      for (var month = 1; month <= 12; month++) {
+                                          addOption(monthsSelect, month, month);
+                                      }
+
+                                      var currentYear = new Date().getFullYear();
+                                      for (var year = currentYear; year >= 1900; year--) {
+                                          addOption(yearsSelect, year, year);
+                                      }
+
+                                      daysSelect.value = defaultDay;
+                                      monthsSelect.value = defaultMonth;
+                                      yearsSelect.value = defaultYear;
 
         </script>
     </body>

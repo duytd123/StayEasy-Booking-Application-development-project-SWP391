@@ -67,10 +67,7 @@
         <servlet-name>EditHouseServlet</servlet-name>
         <servlet-class>Controller.EditHouseServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>DeleteHouseServlet</servlet-name>
-        <servlet-class>Controller.DeleteHouseServlet</servlet-class>
-    </servlet>
+
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
         <servlet-class>Controller.LogoutServlet</servlet-class>
@@ -291,10 +288,7 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DeleteHouseServlet</servlet-name>
-        <url-pattern>/DeleteHouseServlet</url-pattern>
-    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>AddHouseServlet</servlet-name>
         <url-pattern>/AddHouseServlet</url-pattern>
