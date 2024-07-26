@@ -11,11 +11,7 @@
         <link rel="icon" href="Images/logo1.png"/>
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
         <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="StyleSheet.css">
         <link rel="stylesheet" href="css/housepage.css">
         <link rel="stylesheet" href="css/style.css">
@@ -128,7 +124,9 @@
             color: red;
             font-weight: bold;
         }
-
+         section {
+                margin-top: 40px;
+            }
     </style>
 
     <body>

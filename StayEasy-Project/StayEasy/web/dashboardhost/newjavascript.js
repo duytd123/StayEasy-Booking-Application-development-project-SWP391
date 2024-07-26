@@ -6,24 +6,20 @@ function initializeEvents() {
         let startDate = parseDate(booking.startDate);
         let endDate = parseDate(booking.endDate);
 
-        // Adjust for the 2-day discrepancy
         startDate.setUTCDate(startDate.getUTCDate() );
         endDate.setUTCDate(endDate.getUTCDate() );
-
-        // Make sure endDate is inclusive by setting the time to the end of the day
+ 
         endDate.setUTCHours(23, 59, 59, 999);
 
         let eventList = [];
-
-        // Create events for each day in the booking range
+       
         while (startDate <= endDate) {
             eventList.push({
                 id: booking.billId,
                 date: new Date(startDate.getTime()),
                 title: booking.houseName,
                 description: `${booking.fullname}. Phone: ${booking.phone}`
-            });
-            // Move to the next day
+            });       
             startDate.setUTCDate(startDate.getUTCDate() + 1);
         }
 

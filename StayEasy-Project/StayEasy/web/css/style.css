@@ -9,6 +9,10 @@ html,
 body {
     height: 100%;
 }
+element.style {
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
 select.select_option {
     padding: 10px 0;
 }

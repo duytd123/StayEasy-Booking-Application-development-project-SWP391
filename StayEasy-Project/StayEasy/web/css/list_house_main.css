@@ -5,6 +5,10 @@
 :root {
     --orange: #ffa500;
 }
+element.style {
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
 
 * {
     font-family: 'Nunito', sans-serif;

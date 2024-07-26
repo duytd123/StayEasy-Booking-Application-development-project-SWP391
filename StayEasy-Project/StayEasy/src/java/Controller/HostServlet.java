@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package Controller;
 
 import Dao.AccountDAO;
@@ -26,10 +23,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-/**
- *
- * @author kiety
- */
 @MultipartConfig
 @WebServlet(name = "HostServlet", urlPatterns = {"/hostservlet"})
 public class HostServlet extends HttpServlet {
@@ -47,59 +40,69 @@ public class HostServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         doPost(request, response);
-
+//        String action = request.getParameter("sub");
+//        switch (action) {
+//            
+//            default:
+//                throw new AssertionError();
+//        }
     }
 
     protected void saveChanges(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("acc");
+
+        if (acc == null) {
+            request.setAttribute("mess", "User session not found.");
+            request.getRequestDispatcher("dashboardhost/host.jsp").forward(request, response);
+            return;
+        }
+
         int userid = acc.getUserid();
         String username = acc.getUsername();
         String pass = acc.getPass();
         String fullname = request.getParameter("fullname");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
-        Role role = acc.getRole();
-        Account a = new Account(userid, fullname, acc.getUserimg(), username, pass, email, phone, 1, role);
-        AccountDAO dao = new AccountDAO();
-        dao.editAccount(a);
-        session.setAttribute("acc", a);
-        request.setAttribute("mess", "save profile success!!");
-        request.getRequestDispatcher("dashboardhost/host.jsp").forward(request, response);
 
-    }
+        String errorMessage = null;
 
-    protected void rejectBill(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        int billid = Integer.parseInt(request.getParameter("billid"));
-        int userid = Integer.parseInt(request.getParameter("userid"));
-        BillDAO dao = new BillDAO();
-        dao.deleteBill(billid);
-        List<Bill> list = dao.getBillbyUserId(userid);
-        session.setAttribute("list", list);
-        request.setAttribute("mess", "reject success");
-        request.getRequestDispatcher("dashboardhost/bill.jsp").forward(request, response);
-    }
-
-    protected void viewBill(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try (PrintWriter out = response.getWriter()) {
-          
-            int billid = Integer.parseInt(request.getParameter("billid"));
-            HttpSession session = request.getSession();
-            BillDetail b = new BillDetail();
-            BillDetailDAO dao = new BillDetailDAO();
-            b = dao.getBillDeatailbyBillID(billid);
-            if (b != null) {
-                session.setAttribute("bill", b);
-                request.getRequestDispatcher("dashboardhost/billdetailhost.jsp").forward(request, response);
-            }
+        // Validation checks
+        if (phone == null || !phone.matches("\\d{10}")) {
+            errorMessage = "Phone number must be exactly 10 digits.";
         }
+
+        if (fullname == null || !fullname.matches("[A-Za-z0-9\\s]+")) {
+            errorMessage = "Full name must contain only letters and spaces.";
+        }
+
+        if (email == null || !email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+            errorMessage = "Invalid email address format.";
+        }
+
+        if (errorMessage != null) {
+            request.setAttribute("mess", errorMessage);
+            request.getRequestDispatcher("dashboardhost/host.jsp").forward(request, response);
+            return;
+        }
+
+        Account a = new Account(userid, fullname, acc.getUserimg(), username, pass, email, phone, 1, acc.getRole());
+        AccountDAO dao = new AccountDAO();
+
+        try {
+            dao.editAccount(a);
+            session.setAttribute("acc", a);
+            request.setAttribute("mess", "Profile updated successfully!");
+        } catch (Exception e) {
+            // Log the exception for debugging
+            e.printStackTrace();
+            request.setAttribute("mess", "An error occurred while updating the profile.");
+        }
+
+        request.getRequestDispatcher("dashboardhost/host.jsp").forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -111,6 +114,7 @@ public class HostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         request.getRequestDispatcher("dashboardhost/host.jsp").forward(request, response);
     }
 
@@ -135,17 +139,9 @@ public class HostServlet extends HttpServlet {
             case "save":
                 saveChanges(request, response);
                 break;
-            case "reject":
-                rejectBill(request, response);
-                break;
-            case "view":
-                viewBill(request, response);
-                break;
             default:
                 throw new AssertionError();
         }
-        
-        
 
     }
 
@@ -154,24 +150,32 @@ public class HostServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
-            String uploadFolder = "D:/Project/HouseBookingSystem2_SWP391/web/Images/userimgs";
+            String uploadFolder = "C:/Users/badao/Desktop/StayEasy-Booking--Application-development-project-SWP391/StayEasy-Project/StayEasy/web/Images/userimgs";
             Path uploadPath = Paths.get(uploadFolder);
+
             if (!Files.exists(uploadPath)) {
-                Files.createDirectory(uploadPath);
+                Files.createDirectories(uploadPath);
             }
+
             Part imgPart = request.getPart("userimage");
             String imageFileName = Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
-            imgPart.write(Paths.get(uploadPath.toString(), imageFileName).toString());
+            Path filePath = uploadPath.resolve(imageFileName);
+
+            imgPart.write(filePath.toString());
+
             AccountDAO dao = new AccountDAO();
-            dao.updatePic(imageFileName, acc.getUserid());
-            request.setAttribute("mess", "upload image success!!");
-            acc.setUserimg(imageFileName);
+            String relativeImagePath = "Images/userimgs/" + imageFileName;
+            dao.updatePic(relativeImagePath, acc.getUserid());
+            acc.setUserimg(relativeImagePath); // Ensure the path is relative to the web root
             session.setAttribute("acc", acc);
+
+            request.setAttribute("mess", "Upload image success!");
             request.getRequestDispatcher("dashboardhost/host.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
+            request.setAttribute("mess", "Upload image failed: " + e.getMessage());
+            request.getRequestDispatcher("dashboardhost/host.jsp").forward(request, response);
         }
-
     }
 
     /**

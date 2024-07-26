@@ -5,49 +5,28 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!--  All snippets are MIT license http://bootdey.com/license -->
-        <title>bs5 edit profile account details - Bootdey.com</title>
+        <title>Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
-        <link rel="stylesheet" href="StyleSheet.css">
-        <link rel="stylesheet" href="css/housepage.css">
-        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-
         <%
-        session = request.getSession();
-        Account acc = (Account) session.getAttribute("acc");
-        String userimg = null;
-        if(acc.getUserimg() != null){
-        if(acc.getUserimg().contains("https")){
-             userimg = acc.getUserimg();
-        }else{
-            userimg = "Images/userimgs/" + acc.getUserimg();
-        }
-        }
-        
+         session = request.getSession();
+         Account acc = (Account) session.getAttribute("acc");
+         String userimg = null;
+         if (acc != null && acc.getUserimg() != null) {
+             userimg = acc.getUserimg(); 
+         }
         %>
 
         <div class="container-xl px-4 mt-4">
             <!-- Account page navigation-->
             <nav class="nav nav-borders">
-                <a class="nav-link" href="home" target="">Home</a>
-                <a class="nav-link active" href="UserServlet"  target="">Profile</a>
-                <a class="nav-link" href="BillUserServlet"target="">Billing</a>
-                <a class="nav-link" href="security.jsp" target="">Security</a>
+                <a class="nav-link" href="home">Home</a>
+                <a class="nav-link active" href="UserServlet">Profile</a>
+                <a class="nav-link" href="SecurityServlet">Security</a>
             </nav>
             <hr class="mt-0 mb-4">
             <div class="row">
@@ -56,35 +35,29 @@
                     <div class="card mb-4 mb-xl-0">
                         <div class="card-header">Profile Picture</div>
                         <form action="UserServlet" method="post" enctype="multipart/form-data">
-
                             <div class="card-body text-center">
                                 <!-- Profile picture image-->
-                                <img class="img-account-profile rounded-circle mb-2"  src="<%=userimg%>" >
+                                <img class="img-account-profile rounded-circle mb-2" src="${acc.userimg != null ? acc.userimg : 'Images/userimags/default.png'}" alt="Profile Picture">
 
                                 <!-- Profile picture help block-->
                                 <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                 <!-- Profile picture upload button--> 
-
-                                <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-                                <main class="main_full">
-                                    <div class="container">
-                                        <div class="panel">
-                                            <div class="button_outer">
-                                                <div class="btn_upload">
-                                                    <input type="file" id="upload_file" name="userimage" size="50">
-                                                    Upload Image
-                                                </div>
-                                                <div class="processing_bar"></div>
-                                                <div class="success_box"></div>
+                                <div class="container">
+                                    <div class="panel">
+                                        <div class="button_outer">
+                                            <div class="btn_upload">
+                                                <input type="file" id="upload_file" name="userimage" size="50">
+                                                Upload Image
                                             </div>
-                                        </div>
-                                        <div class="error_msg"></div>
-                                        <div class="uploaded_file_view" id="uploaded_view">
-                                            <span class="file_remove">X</span>
+                                            <div class="processing_bar"></div>
+                                            <div class="success_box"></div>
                                         </div>
                                     </div>
-
-                                </main>
+                                    <div class="error_msg"></div>
+                                    <div class="uploaded_file_view" id="uploaded_view">
+                                        <span class="file_remove">X</span>
+                                    </div>
+                                </div>
                                 <button class="btn btn-primary" type="submit" name="sub" value="uploadPic">Upload</button>
                             </div>
                         </form>
@@ -92,23 +65,25 @@
                 </div>
                 <div class="col-xl-8">
                     <!-- Account details card-->
-                    <p class="text-danger">${mess}</p>
                     <div class="card mb-4">
                         <div class="card-header">Account Details</div>
                         <div class="card-body">
-                            <form  action="UserServlet" method="post" >
+                            <!-- Display error or success message -->
+                            <c:if test="${not empty mess}">
+                                <p class="text-danger">${mess}</p>
+                            </c:if>
+
+                            <form action="UserServlet" method="post" id="userForm">
                                 <!-- Form Group (username)-->
                                 <div class="mb-3">
-                                    <label class="small mb-1" for="inputFullname">Full Name (how your name will appear to other users on the site)</label>
-                                    <input class="form-control" name="fullname" id="fullname" type="text" placeholder="Enter your username" value="${acc.fullname}">
+                                    <label class="small mb-1" for="inputFullname">Full Name </label>
+                                    <input class="form-control" name="fullname" id="fullname" type="text" placeholder="Enter your full name" value="${acc.fullname}">
                                 </div>
-
                                 <!-- Form Group (email address)-->
                                 <div class="mb-3">
                                     <label class="small mb-1" for="inputEmailAddress">Email address</label>
                                     <input class="form-control" name="email" id="email" type="email" placeholder="Enter your email address" value="${acc.email}">
                                 </div>
-
                                 <!-- Form Row-->
                                 <div class="row gx-3 mb-3">
                                     <!-- Form Group (phone number)-->
@@ -117,49 +92,58 @@
                                         <input class="form-control" name="phone" id="phone" type="text" placeholder="Enter your phone number" value="${acc.phone}">
                                     </div>
                                 </div>
-
-
                                 <!-- Save changes button-->
-                                <a onclick="showConFirmModal()" class="btn btn-primary" type="button" id="sub" name="sub" value="save">Save changes</a>
+                                <button type="submit" class="btn btn-primary" name="sub" value="save">Save changes</button>
                             </form>
                         </div>
                     </div>
                 </div>
-                <script>
-                    function showConFirmModal() {
-                        const fullname = document.getElementById('fullname').value;
-                        const email = document.getElementById('email').value;
-                        const phone = document.getElementById('phone').value;
-                        $('#yesOption').attr('href', 'UserServlet?sub=save&fullname=' + fullname + '&email=' + email + '&phone=' + phone);
-                        $('#confirmationID').modal('show');
-                    }
-                </script>   
-
                 <!-- Modal Notice -->
                 <div class="modal fade" id="confirmationID" role="dialog" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <!-- Modal content-->
                         <div class="modal-content">
-
                             <div class="modal-header">
                                 <h5 class="modal-title">Confirmation</h5>
                             </div>
-
                             <div class="modal-body">
                                 Do you want to Save Change?
                             </div>
-
                             <div class="modal-footer">
-                                <a id="yesOption" type="button" class="btn btn-primary" >Yes</a>
-                                <!--                                <button type="button" class="btn btn-default" data-dismiss="modal" >Close</button>-->
+                                <a id="yesOption" type="button" class="btn btn-primary">Yes</a>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
+
+        <script type="text/javascript">
+            var btnUpload = $("#upload_file"),
+                    btnOuter = $(".button_outer");
+            btnUpload.on("change", function (e) {
+                var ext = btnUpload.val().split('.').pop().toLowerCase();
+                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+                    $(".error_msg").text("Not an Image...");
+                } else {
+                    $(".error_msg").text("");
+                    btnOuter.addClass("file_uploading");
+                    setTimeout(function () {
+                        btnOuter.addClass("file_uploaded");
+                    }, 3000);
+                    var uploadedFile = URL.createObjectURL(e.target.files[0]);
+                    setTimeout(function () {
+                        $("#uploaded_view").append('<img src="' + uploadedFile + '" />').addClass("show");
+                    }, 3500);
+                }
+            });
+            $(".file_remove").on("click", function (e) {
+                $("#uploaded_view").removeClass("show");
+                $("#uploaded_view").find("img").remove();
+                btnOuter.removeClass("file_uploading");
+                btnOuter.removeClass("file_uploaded");
+            });
+        </script>
 
         <style type="text/css">
             body{
@@ -367,31 +351,6 @@
             }
         </style>
 
-        <script type="text/javascript">
-            var btnUpload = $("#upload_file"),
-                    btnOuter = $(".button_outer");
-            btnUpload.on("change", function (e) {
-                var ext = btnUpload.val().split('.').pop().toLowerCase();
-                if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
-                    $(".error_msg").text("Not an Image...");
-                } else {
-                    $(".error_msg").text("");
-                    btnOuter.addClass("file_uploading");
-                    setTimeout(function () {
-                        btnOuter.addClass("file_uploaded");
-                    }, 3000);
-                    var uploadedFile = URL.createObjectURL(e.target.files[0]);
-                    setTimeout(function () {
-                        $("#uploaded_view").append('<img src="' + uploadedFile + '" />').addClass("show");
-                    }, 3500);
-                }
-            });
-            $(".file_remove").on("click", function (e) {
-                $("#uploaded_view").removeClass("show");
-                $("#uploaded_view").find("img").remove();
-                btnOuter.removeClass("file_uploading");
-                btnOuter.removeClass("file_uploaded");
-            });
-        </script>
+
     </body>
 </html>

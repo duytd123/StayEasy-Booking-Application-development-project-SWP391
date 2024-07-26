@@ -236,9 +236,9 @@
                 background: #fff;
                 border: 1px solid #ddd;
                 padding: 10px;
-                max-width: 300px; 
-                white-space: nowrap; 
-                overflow-x: auto; 
+                max-width: 300px;
+                white-space: nowrap;
+                overflow-x: auto;
                 text-overflow: ellipsis; /* Ellipsis for overflowed text */
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for better visibility */
                 z-index: 1000; /* Ensure it is above other elements */
@@ -247,10 +247,20 @@
             .event-tooltip p {
                 margin: 0;
                 padding: 0;
-                color: #333; 
+                color: #333;
+            }
+            h1 {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #2c3e50;
+                text-align: center;
+                margin: 20px 0;
+                padding: 10px;
+                background: #ecf0f1;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             }
 
-            
         </style>
     </head>
 
@@ -267,8 +277,6 @@
                             <h1>Calendar Booking</h1>
                             <div id="reminder-section">                                  
                                 <ul id="reminderList"></ul>
-
-
                                 <div id="right">
                                     <h3 id="monthAndYear"></h3>
                                     <div class="button-container-calendar">

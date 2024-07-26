@@ -5,32 +5,22 @@
         <meta charset="utf-8">
         <!--  This file has been downloaded from bootdey.com @bootdey on twitter -->
         <!--  All snippets are MIT license http://bootdey.com/license -->
-        <title>bs5 profile security page - Bootdey.com</title>
+        <title>Security</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
-        <link rel="stylesheet" href="StyleSheet.css">
-        <link rel="stylesheet" href="css/housepage.css">
-        <link rel="stylesheet" href="css/style.css">
+
     </head>
     <body>
         <div class="container-xl px-4 mt-4">
             <!-- Account page navigation-->
             <nav class="nav nav-borders">
-                <a class="nav-link" href="home" target="">Home</a>
+                <a class="nav-link" href="home"  target="">Home</a>
                 <a class="nav-link active" href="hostservlet"  target="">Profile</a>
-                <a class="nav-link" href="securityhost" target="">Security</a>
+                <a class="nav-link active" href="securityhost" target="">Security</a>
+                <a class="nav-link" href="host">DashBoard</a>
+
             </nav>
             <hr class="mt-0 mb-4">
             <div class="row">
@@ -44,12 +34,12 @@
                                     <label class="small mb-1" for="currentPassword">Current Password</label>
                                     <input class="form-control" id="curPass" name="curPass" type="password" placeholder="Enter current password">
                                 </div>
-                                <!-- Form Group (new password)-->
+
                                 <div class="mb-3">
                                     <label class="small mb-1" for="newPassword">New Password</label>
                                     <input class="form-control" id="newPass" name="newPass" type="password" placeholder="Enter new password">
                                 </div>
-                                <!-- Form Group (confirm password)-->
+
                                 <div class="mb-3">
                                     <label class="small mb-1" for="confirmPassword">Confirm Password</label>
                                     <input class="form-control" id="rePass" name="rePass" type="password" placeholder="Confirm new password">

@@ -81,9 +81,6 @@ public class AccountDAO {
         }
         return null;
     }
-    
-    
-    
 
     public void changePassword(Account s) {
         String sql = "Update Users set password = ? where username = ? and [status] = 1";
@@ -142,7 +139,7 @@ public class AccountDAO {
         }
         return null;
     }
-    
+
     public void updatePassByUserName(String pass, String username) {
         String sql = "update Users set Password = ? where UserName= ?";
         try {
@@ -153,8 +150,8 @@ public class AccountDAO {
         } catch (Exception e) {
         }
     }
-    
-     public String checkEmailExist(String email) {
+
+    public String checkEmailExist(String email) {
         try {
             String sql = "SELECT * FROM Users WHERE Email = ?";
             PreparedStatement st = con.prepareStatement(sql);
@@ -167,7 +164,6 @@ public class AccountDAO {
         }
         return null;
     }
-
 
 //    public List<Account> getThreeUserMaxBill() {
 //        String sql = "select top 3 Users.user_id,username, MAX(Bill.total)\n"
@@ -198,8 +194,6 @@ public class AccountDAO {
 //
 //        return list;
 //    }
-
-
     public int countAccountByRole(int role) {
         String sql = "select count(*) from Users where role_id = ?";
         int count = 0;
@@ -367,37 +361,38 @@ public class AccountDAO {
 
         return a;
     }
-        public int getPage(String search){
+
+    public int getPage(String search) {
         String sql = "";
-        if(search.isEmpty()){
-          sql ="  select count(*) from Users";
-        }
-        else{
-            sql ="  select count(*) from Users where fullname like ?";
+        if (search.isEmpty()) {
+            sql = "  select count(*) from Users";
+        } else {
+            sql = "  select count(*) from Users where fullname like ?";
         }
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            if(!search.isEmpty()){
-                ps.setString(1, "%"+search +"%");
+            if (!search.isEmpty()) {
+                ps.setString(1, "%" + search + "%");
             }
-            ResultSet rs=  ps.executeQuery();
-            if(rs.next()){
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (Exception e) {
-            System.out.println( e);
+            System.out.println(e);
         }
         return -1;
     }
-        public List<Account> getpagination(int index, String search) {
+
+    public List<Account> getpagination(int index, String search) {
         List<Account> list = new ArrayList<>();
         System.out.println("hihi" + search);
         String sql = "with p as (select ROW_NUMBER() over (order by user_id asc) as num, * from Users where fullname like ?) \n"
                 + "select * from p where num between ? * 5 - (5-1) and ? * 5";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-             ps.setString(1, "%"+ search +"%");
-            ps.setInt(2, index );
+            ps.setString(1, "%" + search + "%");
+            ps.setInt(2, index);
             ps.setInt(3, index);
 
             ResultSet resultSet = ps.executeQuery();
@@ -445,22 +440,10 @@ public class AccountDAO {
     }
 
     public void editAccount(Account account) {
-        String sql = "UPDATE [dbo].[Users]\n"
-                + "   SET [fullname] = ?\n"
-                + "      ,[avatar] = ?\n"
-                + "      ,[username] = ?\n"
-                + "      ,[password] = ?\n"
-                + "      ,[email] = ?\n"
-                + "      ,[phone] = ?\n"
-                + "      ,[status] = ?\n"
-                + "      ,[role_id] = ?\n"
-                + " WHERE user_id = ?";
-        try {
-            //tạo khay chứa câu lệnh
-            PreparedStatement pre = con.prepareStatement(sql);
-            //set gia tri cho dau ? 
+        String sql = "UPDATE [dbo].[Users] SET [fullname] = ?, [avatar] = ?, [username] = ?, [password] = ?, [email] = ?, [phone] = ?, [status] = ?, [role_id] = ? WHERE user_id = ?";
+        try (PreparedStatement pre = con.prepareStatement(sql)) {
             pre.setString(1, account.getFullname());
-            pre.setString(2, account.getUserimg());
+            pre.setString(2, account.getUserimg()); 
             pre.setString(3, account.getUsername());
             pre.setString(4, account.getPass());
             pre.setString(5, account.getEmail());
@@ -468,11 +451,10 @@ public class AccountDAO {
             pre.setInt(7, account.getStatus());
             pre.setInt(8, account.getRole().getId());
             pre.setInt(9, account.getUserid());
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             pre.executeUpdate();
-
         } catch (Exception e) {
-            System.out.println("error :  " + e);
+            // Log the exception for debugging
+            e.printStackTrace();
         }
     }
 
@@ -695,6 +677,7 @@ public class AccountDAO {
             pre.executeUpdate();
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -736,7 +719,6 @@ public class AccountDAO {
 //
 //        return list;
 //    }
-
 //    public static void main(String[] args) {
 //        AccountDAO a = new AccountDAO();
 //        List<Bill1> b = a.getThreeUserMaxBill();

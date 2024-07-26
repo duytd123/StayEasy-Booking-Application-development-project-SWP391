@@ -34,7 +34,7 @@
                 margin-right: 8px;
             }
             section {
-                margin-top: 50px;
+                margin-top: 40px;
             }
         </style>
     </head>

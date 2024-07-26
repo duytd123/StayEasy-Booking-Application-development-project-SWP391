@@ -26,11 +26,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-/**
- *
- * @author kiety
- */
-@MultipartConfig//đc gửi nhiều dữ liệu
+@MultipartConfig
 @WebServlet(name = "UserServlet", urlPatterns = {"/UserServlet"})
 public class UserServlet extends HttpServlet {
 
@@ -59,53 +55,57 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("acc");
+
+        if (acc == null) {
+            request.setAttribute("mess", "User session not found.");
+            request.getRequestDispatcher("user.jsp").forward(request, response);
+            return;
+        }
+
         int userid = acc.getUserid();
         String username = acc.getUsername();
         String pass = acc.getPass();
         String fullname = request.getParameter("fullname");
         String phone = request.getParameter("phone");
         String email = request.getParameter("email");
-        Role role = acc.getRole();
-        Account a = new Account(userid, fullname, acc.getUserimg(), username, pass, email, phone, 1, role);
-        AccountDAO dao = new AccountDAO();
-        dao.editAccount(a);
-        session.setAttribute("acc", a);
-        request.setAttribute("mess", "save profile success!!");
-        request.getRequestDispatcher("user.jsp").forward(request, response);
 
-    }
+        String errorMessage = null;
 
-    protected void rejectBill(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        int billid = Integer.parseInt(request.getParameter("billid"));
-        int userid = Integer.parseInt(request.getParameter("userid"));
-        BillDAO dao = new BillDAO();
-        dao.deleteBill(billid);
-        List<Bill> list = dao.getBillbyUserId(userid);
-        session.setAttribute("list", list);
-        request.setAttribute("mess", "reject success");
-        request.getRequestDispatcher("bill.jsp").forward(request, response);
-    }
-
-    protected void viewBill(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-
-            int billid = Integer.parseInt(request.getParameter("billid"));
-            HttpSession session = request.getSession();
-            BillDetail b = new BillDetail();
-            BillDetailDAO dao = new BillDetailDAO();
-            b = dao.getBillDeatailbyBillID(billid);
-            if (b != null) {
-                session.setAttribute("bill", b);
-                request.getRequestDispatcher("billDetailUser.jsp").forward(request, response);
-            }
+        // Validation checks
+        if (phone == null || !phone.matches("\\d{10}")) {
+            errorMessage = "Phone number must be exactly 10 digits.";
         }
+
+        if (fullname == null || !fullname.matches("[A-Za-z0-9\\s]+")) {
+            errorMessage = "Full name must contain only letters and spaces.";
+        }
+
+        if (email == null || !email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+            errorMessage = "Invalid email address format.";
+        }
+
+        if (errorMessage != null) {
+            request.setAttribute("mess", errorMessage);
+            request.getRequestDispatcher("user.jsp").forward(request, response);
+            return;
+        }
+
+        Account a = new Account(userid, fullname, acc.getUserimg(), username, pass, email, phone, 1, acc.getRole());
+        AccountDAO dao = new AccountDAO();
+
+        try {
+            dao.editAccount(a);
+            session.setAttribute("acc", a);
+            request.setAttribute("mess", "Profile updated successfully!");
+        } catch (Exception e) {
+            // Log the exception for debugging
+            e.printStackTrace();
+            request.setAttribute("mess", "An error occurred while updating the profile.");
+        }
+
+        request.getRequestDispatcher("user.jsp").forward(request, response);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -117,7 +117,8 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        request.getRequestDispatcher("user.jsp").forward(request, response);
     }
 
     /**
@@ -141,12 +142,6 @@ public class UserServlet extends HttpServlet {
             case "save":
                 saveChanges(request, response);
                 break;
-            case "reject":
-                rejectBill(request, response);
-                break;
-            case "view":
-                viewBill(request, response);
-                break;
             default:
                 throw new AssertionError();
         }
@@ -158,24 +153,32 @@ public class UserServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             Account acc = (Account) session.getAttribute("acc");
-            String uploadFolder = "C:/Users/Admin/OneDrive/Desktop/HouseBookingSystem_SWP391/HouseBookingSystem_SWP391/web/Images/userimgs";
+            String uploadFolder = "C:/Users/badao/Desktop/StayEasy-Booking--Application-development-project-SWP391/StayEasy-Project/StayEasy/web/Images/userimgs";
             Path uploadPath = Paths.get(uploadFolder);
+
             if (!Files.exists(uploadPath)) {
-                Files.createDirectory(uploadPath);
+                Files.createDirectories(uploadPath);
             }
+
             Part imgPart = request.getPart("userimage");
             String imageFileName = Paths.get(imgPart.getSubmittedFileName()).getFileName().toString();
-            imgPart.write(Paths.get(uploadPath.toString(), imageFileName).toString());
+            Path filePath = uploadPath.resolve(imageFileName);
+
+            imgPart.write(filePath.toString());
+
             AccountDAO dao = new AccountDAO();
-            dao.updatePic(imageFileName, acc.getUserid());
-            request.setAttribute("mess", "upload image success!!");
-            acc.setUserimg(imageFileName);
+            String relativeImagePath = "Images/userimgs/" + imageFileName;
+            dao.updatePic(relativeImagePath, acc.getUserid());
+            acc.setUserimg(relativeImagePath); // Ensure the path is relative to the web root
             session.setAttribute("acc", acc);
+
+            request.setAttribute("mess", "Upload image success!");
             request.getRequestDispatcher("user.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
+            request.setAttribute("mess", "Upload image failed: " + e.getMessage());
+            request.getRequestDispatcher("user.jsp").forward(request, response);
         }
-
     }
 
     /**
