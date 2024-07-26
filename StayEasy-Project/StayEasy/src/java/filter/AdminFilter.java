@@ -17,6 +17,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Enumeration;
 
 
 /**
@@ -45,7 +46,7 @@ public class AdminFilter implements Filter {
         // the rest of the filter chain is invoked.
         // For example, a logging filter might log items on the request object,
         // such as the parameters.
-        /*
+        
 	for (Enumeration en = request.getParameterNames(); en.hasMoreElements(); ) {
 	    String name = (String)en.nextElement();
 	    String values[] = request.getParameterValues(name);
@@ -60,7 +61,7 @@ public class AdminFilter implements Filter {
 	    }
 	    log(buf.toString());
 	}
-         */
+         
     }
 
     private void doAfterProcessing(ServletRequest request, ServletResponse response)

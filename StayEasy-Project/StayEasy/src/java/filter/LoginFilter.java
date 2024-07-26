@@ -18,6 +18,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Enumeration;
 
 /**
  *
@@ -45,22 +46,22 @@ public class LoginFilter implements Filter {
         // the rest of the filter chain is invoked.
         // For example, a logging filter might log items on the request object,
         // such as the parameters.
-        /*
-	for (Enumeration en = request.getParameterNames(); en.hasMoreElements(); ) {
-	    String name = (String)en.nextElement();
-	    String values[] = request.getParameterValues(name);
-	    int n = values.length;
-	    StringBuffer buf = new StringBuffer();
-	    buf.append(name);
-	    buf.append("=");
-	    for(int i=0; i < n; i++) {
-	        buf.append(values[i]);
-	        if (i < n-1)
-	            buf.append(",");
-	    }
-	    log(buf.toString());
-	}
-         */
+        for (Enumeration en = request.getParameterNames(); en.hasMoreElements();) {
+            String name = (String) en.nextElement();
+            String values[] = request.getParameterValues(name);
+            int n = values.length;
+            StringBuffer buf = new StringBuffer();
+            buf.append(name);
+            buf.append("=");
+            for (int i = 0; i < n; i++) {
+                buf.append(values[i]);
+                if (i < n - 1) {
+                    buf.append(",");
+                }
+            }
+            log(buf.toString());
+        }
+
     }
 
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
@@ -97,6 +98,7 @@ public class LoginFilter implements Filter {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
@@ -109,8 +111,8 @@ public class LoginFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
-        if (session.getAttribute("account") == null) {
-            res.sendRedirect("login");
+        if (session.getAttribute("acc") == null) {
+            res.sendRedirect("LoginServlet");
         }
 
         Throwable problem = null;

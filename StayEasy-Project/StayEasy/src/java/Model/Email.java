@@ -33,13 +33,10 @@ public class Email {
         // Biểu thức chính quy cho định dạng email
         String emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$";
 
-        // Tạo đối tượng Pattern
         Pattern pattern = Pattern.compile(emailRegex);
 
-        // Tạo đối tượng Matcher
         Matcher matcher = pattern.matcher(email);
 
-        // Kiểm tra chuỗi với biểu thức chính quy
         return matcher.matches();
     }
 
@@ -62,7 +59,6 @@ public class Email {
 
         props.put("mail.smtp.starttls.enable", "true");
 
-        //dang nhap tai khoan
         Authenticator au = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
@@ -70,7 +66,7 @@ public class Email {
             }
 
         };
-        // phien lam viec
+
         Session session = Session.getInstance(props, au);
 
         try {
@@ -131,4 +127,46 @@ public class Email {
                 + "</body>\n"
                 + "</html>";
     }
+
+    public String formatUserMessage(String name, String email, String message) {
+        return "<!DOCTYPE html>\n"
+                + "<html lang=\"en\">\n"
+                + "<head>\n"
+                + "    <meta charset=\"UTF-8\">\n"
+                + "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+                + "    <title>User Message</title>\n"
+                + "    <style>\n"
+                + "        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }\n"
+                + "        .container { width: 100%; max-width: 600px; margin: 20px auto; background-color: #ffffff; border-collapse: collapse; }\n"
+                + "        .header, .footer { padding: 20px; text-align: center; background-color: #4CAF50; color: #ffffff; }\n"
+                + "        .content { padding: 20px; }\n"
+                + "        .content p { margin: 0 0 10px; }\n"
+                + "        .content .message { font-size: 16px; color: #333333; }\n"
+                + "    </style>\n"
+                + "</head>\n"
+                + "<body>\n"
+                + "    <table class=\"container\">\n"
+                + "        <tr>\n"
+                + "            <td class=\"header\">\n"
+                + "                User Message\n"
+                + "            </td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td class=\"content\">\n"
+                + "                <p><strong>Name:</strong> " + name + "</p>\n"
+                + "                <p><strong>Email:</strong> " + email + "</p>\n"
+                + "                <p><strong>Message:</strong></p>\n"
+                + "                <p class=\"message\">" + message + "</p>\n"
+                + "            </td>\n"
+                + "        </tr>\n"
+                + "        <tr>\n"
+                + "            <td class=\"footer\">\n"
+                + "                &copy; 2024 Easy Stay\n"
+                + "            </td>\n"
+                + "        </tr>\n"
+                + "    </table>\n"
+                + "</body>\n"
+                + "</html>";
+    }
+
 }

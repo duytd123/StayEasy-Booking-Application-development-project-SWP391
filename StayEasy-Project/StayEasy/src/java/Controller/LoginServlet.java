@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
                 response.addCookie(cPassword);
                 response.addCookie(cRememberMe);
             } else {
-                // Clear cookies if "remember me" is not checked
+               
                 Cookie[] cookies = request.getCookies();
                 if (cookies != null) {
                     for (Cookie cookie : cookies) {

@@ -17,20 +17,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"/>
         <link rel="stylesheet" href="style.css">
         <link rel="icon" href="Images/logo1.png"/>
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
-        <link rel="stylesheet" href="StyleSheet.css">
-        <link rel="stylesheet" href="css/housepage.css">
+
 
         <style>
             .a {
@@ -83,7 +70,7 @@
                             <p><i class="fa fa-check" aria-hidden="true"></i><span>Cam kết</span>
                                 uy tín.</p>
                             <p><i class="fa fa-check" aria-hidden="true"></i>Chính xách bảo hành 
-                                <span>10 năm.</span></p>
+                                <span>chất lượng.</span></p>
                             <p><i class="fa fa-check" aria-hidden="true"></i>Đặt phòng
                                 <span>Nhanh chóng</span> Uy tín .</p>
                         </div>
@@ -107,7 +94,7 @@
                             <div class="section_inspiration_content">
                                 <p>
                                     Chúng tôi hợp tác chặt chẽ với các thương hiêu khách sạn nổi tiếng trên thị
-                                    trường để đảm bảo rằng mọi sản phẩm mà quý khách chọn lựa đều chất lượng.
+                                    trường để đảm bảo rằng mọi trải nghiệm tận hưởng của quý khách chọn lựa đều chất lượng.
                                 </p>
                             </div>
                         </div>
@@ -139,7 +126,7 @@
                                     tôi riêng biệt</i></blockquote>
 
                             <div class="section_material_1_content">                                       
-                                Chúng tôi liên tục cập nhật để đáp ứng mọi sở thích và phong cách cá nhân của quý khách.
+                                Chúng tôi liên tục cập nhật để đáp ứng những địa điểm và dịch vụ phục vụ mọi sở thích và phong cách cá nhân của quý khách.
                             </div>
                         </div>
                     </div>

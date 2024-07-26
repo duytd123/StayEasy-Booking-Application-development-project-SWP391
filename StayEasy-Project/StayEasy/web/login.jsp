@@ -56,9 +56,7 @@
                                     <div class="input-group">
                                         <input type="password" name="password" value="<%=password %>" id="password" class="form-control" aria-describedby="emailHelp" placeholder="Enter Password" autocapitalize="none" autocomplete="off" required="">
                                         <div class="input-group-append">
-                                            <span class="input-group-text">
-                                                <i class="fa fa-eye-slash toggle-password" style="cursor: pointer;"></i>
-                                            </span>
+
                                         </div>
                                     </div>
                                 </div>
@@ -109,7 +107,7 @@
         <script src="assets/js/app.js"></script>
         <script >
             <script>
-    $(document ment).ready(function() {
+    $(document  ment).ready(function() {
                                         $(".toggle-password").click(function() {
                                 $(this).toggleClass("fa-eye fa-eye-slash");
                                         var input = $($(this).parent().prev("input"));

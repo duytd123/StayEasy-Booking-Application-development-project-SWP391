@@ -119,6 +119,15 @@
         #nextBtn {
             right: 0;
         }
+        .success-message {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
 
     </style>
 
@@ -153,7 +162,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="section_title">
-                                <h2 class="text-shadow" style="font-size: 70px;"><span class="ani-fire">BEAUTIFUL HOUSE</span></h2>
+                                <h2 class="text-shadow" style="font-size: 40px;"><span class="ani-fire">BEAUTIFUL HOUSE</span></h2>
                                 <div class="image_container">
                                     <div class="image_wrapper">
                                         <c:forEach items="${houseImages}" var="houseImg">
@@ -177,7 +186,7 @@
                     </div>
 
                     <div class="newsletter_content">
-                        <p>Sign up to get news and get 25% off instantly.</p>
+                        <p>Go to sign up we get news and get 20% discount and many offer instantly.</p>
                     </div>
                 </div>
             </div>
@@ -200,7 +209,7 @@
                 <div class="box">
                     <img src="Images/p-2.jpg" alt="">
                     <div class="content">
-                        <h3>Ha Long</h3>
+                        <h3>Hạ Long</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
@@ -208,7 +217,7 @@
                 <div class="box">
                     <img src="Images/danang.jpg" alt="">
                     <div class="content">
-                        <h3>Da Nang</h3>
+                        <h3>Đà Nẵng</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
@@ -217,7 +226,7 @@
                 <div class="box">
                     <img src="Images/condao.png" alt="">
                     <div class="content">
-                        <h3>Con Dao</h3>
+                        <h3>Côn Đảo</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
@@ -231,7 +240,7 @@
                 <div class="box">
                     <img src="Images/dalat.png" alt="">
                     <div class="content">
-                        <h3>Da Lat</h3>
+                        <h3>Đà Lạt</h3>
                         <p>...</p>
                         <a href="#" class="btn">See more</a>
                     </div>
@@ -275,26 +284,28 @@
 
             <div class="row">
                 <div class="image">
-                    <img src="Images/travel.jpg" alt=""/>
+                    <img src="Images/travel.png" alt=""/>
                 </div>
-                <form name="submit-to-google-sheet">
+                <form action="SendMessageServlet" method="POST">
                     <div class="inputBox">
-                        <% String username = (String)session.getAttribute("username"); %>
+                        <% String username = (String) session.getAttribute("username"); %>
                         <input type="text" name="Name" placeholder="Name" value="<%= username != null ? username : "" %>">
-                        <% String email = (String)session.getAttribute("email"); %>
+                        <% String email = (String) session.getAttribute("email"); %>
                         <input type="email" name="Email" placeholder="Email" value="<%= email != null ? email : "" %>">
                     </div>
-
                     <textarea name="Message" placeholder="Message" cols="30" rows="10"></textarea>
                     <input type="submit" class="btn" value="Send message">
+                    <% if (request.getAttribute("successMessage") != null) { %>
+                    <p style="color: green;"><%= request.getAttribute("successMessage") %></p>
+                    <% } %>
+                    <% if (request.getAttribute("errorMessage") != null) { %>
+                    <p style="color: red;"><%= request.getAttribute("errorMessage") %></p>
+                    <% } %>
                 </form>
             </div>
+
         </section>
 
-        <!-- contact section ends -->
-
-       
-        <!-- brand section ends -->
 
         <!-- Include footer -->
         <%@ include file="footer.jsp" %>

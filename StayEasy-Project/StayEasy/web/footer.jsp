@@ -9,9 +9,9 @@
         <div class="box">
             <h3>Locations</h3>
             <a href="home#gallery">Ha Long</a>
-            <a href="home#gallery">Da Nang</a>
-            <a href="home#gallery">Con Dao</a>
-            <a href="home#gallery">Da Lat</a>
+            <a href="home#gallery">Đà Nẵng</a>
+            <a href="home#gallery">Côn Đảo</a>
+            <a href="home#gallery">Đà Lạt</a>
             <a href="home#gallery">Nha Trang</a>
             <a href="home#gallery">SaPa</a>
         </div>

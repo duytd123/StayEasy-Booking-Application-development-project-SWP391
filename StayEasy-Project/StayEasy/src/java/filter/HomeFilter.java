@@ -109,7 +109,7 @@ public class HomeFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         String url = req.getServletPath();
         if (url.endsWith(".jsp")) {
-            res.sendRedirect("home");
+             res.sendRedirect(req.getContextPath() + "/home");
         }
 
         Throwable problem = null;

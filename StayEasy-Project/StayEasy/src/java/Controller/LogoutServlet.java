@@ -31,27 +31,37 @@ public class LogoutServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
         HttpSession session = request.getSession();
+
+        // Remove specific session attributes
         session.removeAttribute("mess");
-//            Account agmail = (Account)session.getAttribute("acc");
-//            AccountDAO dao = new AccountDAO();
-//            Account acc = dao.checkAccountByEmail(agmail.getEmail());
-//            if(acc != null){
-        boolean a = (boolean) session.getAttribute("rememberme");
-        if (!a) {
+        session.removeAttribute("acc");
+        session.removeAttribute("username");
+        session.removeAttribute("email");
+        session.removeAttribute("imageUser");
+        Boolean rememberMe = (Boolean) session.getAttribute("rememberme");
+
+        // If remember me is not checked, clear cookies
+        if (rememberMe != null && !rememberMe) {
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
-                for (int i = 0; i < cookies.length; i++) {
-                    cookies[i].setMaxAge(0);
-                    response.addCookie(cookies[i]);
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("cusername")
+                            || cookie.getName().equals("cpassword")
+                            || cookie.getName().equals("rememberme")) {
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+                    }
                 }
             }
         }
-//            }
-        session.removeAttribute("acc");
-        session.removeAttribute("rememberme");
-        response.sendRedirect("home");
 
+        // Invalidate the session
+        session.invalidate();
+
+        // Redirect to home page
+        response.sendRedirect("home");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -90,7 +100,6 @@ public class LogoutServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Handles user logout by invalidating the session and clearing cookies.";
     }// </editor-fold>
-
 }
