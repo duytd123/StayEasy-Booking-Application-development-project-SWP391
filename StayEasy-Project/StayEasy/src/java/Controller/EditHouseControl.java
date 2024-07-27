@@ -28,7 +28,8 @@ public class EditHouseControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -43,10 +44,8 @@ public class EditHouseControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       request.getRequestDispatcher("dashboardhost/mnhouse.jsp").forward(request, response);
     }
-
-    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -59,7 +58,7 @@ public class EditHouseControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         // Check if user is logged in
+
         Account loggedInUser = (Account) request.getSession().getAttribute("acc");
         if (loggedInUser == null) {
             response.sendRedirect("LoginServlet");
@@ -93,16 +92,19 @@ public class EditHouseControl extends HttpServlet {
             plocation = Integer.parseInt(plocation_raw);
             pmenu = Integer.parseInt(pmenu_raw);
             pnumberOfGuests = Integer.parseInt(pnumberOfGuests_raw);
-        
-        HouseDAO dao = new HouseDAO();
-        dao.editHouse(pid, pname, pprice, pdescribe, paddress, pdate, pdiscount, pnumberOfGuests, hostId, plocation, pmenu);
 
+            HouseDAO dao = new HouseDAO();
+            dao.editHouse(pid, pname, pprice, pdescribe, paddress, pdate, pdiscount, pnumberOfGuests, hostId, plocation, pmenu);
 
-        request.setAttribute("mess", "Edit successfully!");
-        
-        request.getRequestDispatcher("dashboardhost/mnhouse.jsp").forward(request, response);
+            request.getSession().setAttribute("mess1", "Edit successfully!");
+
+            response.sendRedirect("manager");
         } catch (NumberFormatException e) {
-            System.out.println(e);
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input format.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while processing your request.");
         }
     }
 

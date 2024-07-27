@@ -68,7 +68,7 @@
                                             <img style="width: 200px; height: auto; margin-right: 10px;" src="${img}">
                                         </c:forEach>
                                     </div>
-                                    <input id="imageInput" name="image" type="file" multiple>
+                                    <div></div>
                                 </div>
 
                                 <div class="form-group">
@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Number of Guests</label>
-                                    <input name="numberOfGuests" type="number" min="1" value="${detail.number_of_guest}" class="form-control" required>
+                                    <input name="numberOfGuest" type="number" min="1" value="${detail.number_of_guest}" class="form-control" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
