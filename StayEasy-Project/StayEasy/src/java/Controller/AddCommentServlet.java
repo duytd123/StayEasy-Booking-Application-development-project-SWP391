@@ -35,12 +35,12 @@ public class AddCommentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddCommentServlet</title>");            
+            out.println("<title>Servlet AddCommentServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet AddCommentServlet at " + request.getContextPath() + "</h1>");
@@ -75,24 +75,17 @@ public class AddCommentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-          String dateString =request.getParameter("date");
-        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        try {
-            date = formatDate.parse(dateString);
-        } catch (Exception e) {
-            response.getWriter().print("error : "+e);
-            return;
-        }
         int houseid = Integer.parseInt(request.getParameter("houseid"));
         int userid = Integer.parseInt(request.getParameter("userid"));
         String comment = request.getParameter("comment");
+
+        Date date = new Date(); 
+
         Comment c = new Comment(-1, userid, houseid, comment, date);
         CommentDAO dao = new CommentDAO();
         dao.addComment(c);
-        response.sendRedirect("ListCommentServlet");            
-        
+        response.sendRedirect("housepage?houseId" + houseid);
+
     }
 
     /**

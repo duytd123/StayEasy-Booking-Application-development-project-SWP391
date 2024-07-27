@@ -11,20 +11,6 @@
         <title>Book Your Stay</title>
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
-        <link rel="stylesheet" href="StyleSheet.css">
-        <link rel="stylesheet" href="css/housepage.css">
-
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -41,9 +27,17 @@
             }
 
             .siImg {
-                width: 250px;
-                height: 150px;
-                object-fit: cover;
+                width: 250px; 
+                height: 150px; 
+                object-fit: cover; 
+                border-radius: 10px; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .siImg:hover {
+                transform: scale(1.05); 
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
             }
 
             .siDesc {
@@ -206,6 +200,10 @@
                 color: #fff;
                 border-color: #007bff;
             }
+            .si12{
+                font-size: 11px;
+                font-family: initial;
+            }
         </style>
     </head>
     <header>
@@ -258,15 +256,12 @@
                                 <h1 class="siTitle">${house.housename}</h1>
                                 <span class="siDistance"> </span>
                                 <span class="siTaxi0p"></span>
-                                <span class="siSubtitle"> ${house.houseprice} </span>
-                                <span class="siFeatures">
+                                <span class="siSubtitle"> Price: ${house.houseprice} </span>
 
-                                </span>
-                                <span class="siCancel0p"> ${house.description}</span>
                                 <span class="siCancel0p"> ${house.address}</span>
                                 <span class="siCancel0p">  Check-in Date : ${house.postdate}</span>
 
-                                <span class="siCancel0pSubtitle">
+                                <span class="si12">
                                     ${house.description}
                                 </span>
                                 <c:if test="${house.rentHouse  == true}">
@@ -280,7 +275,7 @@
                                 </div>
                                 <div class="siDetailTexts">
                                     <span class="siPrice"></span>
-                                    <span class="siTax0p">Includes taxes and fees</span>
+                                    <span class="siTax0p"></span>
                                     <a href="housepage?houseId=${house.houseid}" >  <button class="siCheckButton">See availability</button></a>
                                 </div>
                             </div>

@@ -98,28 +98,16 @@ public class CommentDAO {
     }
 
     public void addComment(Comment c) {
-        String sql = "INSERT INTO [dbo].[Comment]\n"
-                + "           ([userid]\n"
-                + "           ,[houseid]\n"
-                + "           ,[comment]\n"
-                + "           ,[date])\n"
-                + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?)";
-        try {
-            PreparedStatement pre = con.prepareStatement(sql);
+        String sql = "INSERT INTO [dbo].[Comment] ([userid], [houseid], [comment], [date]) VALUES (?, ?, ?, ?)";
+        try (PreparedStatement pre = con.prepareStatement(sql)) {
             pre.setInt(1, c.getUserid());
             pre.setInt(2, c.getHouseid());
             pre.setString(3, c.getComment());
-            java.sql.Date DateSql = new java.sql.Date(c.getDate().getTime());
-            pre.setDate(4, DateSql);
+            pre.setDate(4, new java.sql.Date(c.getDate().getTime()));
 
             pre.executeUpdate();
-
         } catch (Exception e) {
-            System.out.println("error :  " + e);
+            System.out.println("Error: " + e);
         }
     }
 

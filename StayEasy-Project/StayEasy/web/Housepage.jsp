@@ -1,4 +1,3 @@
-
 <%@page import="Model.Comment"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.House"%>
@@ -13,30 +12,23 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
 
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>House Details</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
-        <link rel="stylesheet" href="StyleSheet.css">
-        <link rel="stylesheet" href="css/housepage.css">
+
         <style>
-            body {
-                margin-top: 100px;
-            }
-        </style>
+        body {
+            margin-top: 100px;
+        }
+        .star {
+            color: gold;
+        }
+        .feedback-rating .star.gray {
+            color: gray;
+        }
+    </style>
     </head>
 
     <%@ include file="header.jsp" %>
@@ -113,13 +105,14 @@
                     </div>
                 </div>
             </div>
+                        
             <% 
             Account a = (Account) request.getAttribute("account");
             String username = (String)session.getAttribute("username");
             if (username == null) {
             %>
             <div class="alert alert-warning mt-4" role="alert">
-                Please <a href="login.jsp" class="alert-link">login</a> to comment.
+                Please <a href="LoginServlet" class="alert-link">login</a> to comment.
             </div>
             <% } else { %>
             <section class="comments-container mt-5">
@@ -154,16 +147,13 @@
                         <h6 class="card-subtitle mb-2 text-muted">By: ${account.fullname}</h6>
                         <p class="card-text">${c.getComment()}</p>
                         <p class="card-text"><small class="text-muted">${c.getDate()}</small></p>
-                        <a href="NextEditCommentServlet?id=<%= c.getCid() %>" class="btn btn-warning">Edit</a>
-                        <a href="DeleteCommentmainServlet?id=<%= c.getCid() %>" class="btn btn-danger">Delete</a>
+
                     </div>
                 </div>
             </section>
             <% } %>
             <% } %>
         </div>
-
-
 
         <%@ include file="footer.jsp" %>
         <script>
