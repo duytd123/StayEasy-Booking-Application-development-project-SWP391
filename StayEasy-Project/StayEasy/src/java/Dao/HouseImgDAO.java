@@ -171,16 +171,19 @@ public class HouseImgDAO {
         return h;
     }
 
-    public void updateHouseImage(int houseId, String imagePath) {
-        String insertHouseImgSql = "INSERT INTO [dbo].[House_img] ([img_link], [house_id]) VALUES (?, ?)";
-
-        try (PreparedStatement stmt = con.prepareStatement(insertHouseImgSql)) {
-            stmt.setString(1, imagePath);
-            stmt.setInt(2, houseId);
-            stmt.executeUpdate();
-            System.out.println("House image updated successfully.");
+    public void insertHouseImage(int houseId, String imagePath) throws SQLException {
+        String sql = "INSERT INTO [dbo].[House_img] ([house_id], [img_link]) VALUES (?, ?)";
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, houseId);
+            stmt.setString(2, imagePath);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Inserting image failed, no rows affected.");
+            }
         } catch (SQLException e) {
-            System.out.println("Error updating house image: " + e.getMessage());
+            System.out.println("Error inserting house image: " + e.getMessage());
+            e.printStackTrace();
+            throw e; 
         }
     }
 
@@ -195,4 +198,5 @@ public class HouseImgDAO {
             System.out.println("Error deleting house image: " + e.getMessage());
         }
     }
+
 }

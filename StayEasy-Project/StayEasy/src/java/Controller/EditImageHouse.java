@@ -1,58 +1,28 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package Controller;
 
 import Dao.HouseImgDAO;
 import Model.Account;
-import Model.HouseHost;
 import Model.HouseImg;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import java.io.File;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.List;
+import java.io.BufferedReader;
 
-/**
- *
- * @author badao
- */
+@MultipartConfig
 @WebServlet(name = "EditImageHouse", urlPatterns = {"/editimage"})
 public class EditImageHouse extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -66,14 +36,15 @@ public class EditImageHouse extends HttpServlet {
                 String id_raw = request.getParameter("hid");
                 int id = Integer.parseInt(id_raw);
                 HouseImgDAO daoH = new HouseImgDAO();
-                List<HouseImg> h = daoH.getHouseImgByHostIdAndHouseId(hostId, id);
-            
-                request.setAttribute("detail", h);
+                List<HouseImg> houseImages = daoH.getHouseImgByHostIdAndHouseId(hostId, id);
 
-               request.getRequestDispatcher("dashboardhost/updateimage.jsp").forward(request, response);
+                request.setAttribute("detail", houseImages);
+                request.setAttribute("houseId", id);
+
+                request.getRequestDispatcher("dashboardhost/updateimage.jsp").forward(request, response);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input format.");
+                response.sendRedirect("manager");
             } catch (Exception e) {
                 e.printStackTrace();
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while processing your request.");
@@ -81,14 +52,6 @@ public class EditImageHouse extends HttpServlet {
         }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -99,45 +62,84 @@ public class EditImageHouse extends HttpServlet {
         Account loggedInUser = (Account) request.getSession().getAttribute("acc");
         if (loggedInUser != null) {
             try {
-                int hostId = loggedInUser.getUserid();
                 String id_raw = request.getParameter("hid");
                 int id = Integer.parseInt(id_raw);
+
                 HouseImgDAO daoH = new HouseImgDAO();
-               List<HouseImg> h = daoH.getHouseImgByHostIdAndHouseId(hostId, id);
 
                 Part filePart = request.getPart("image");
                 if (filePart != null && filePart.getSize() > 0) {
-                    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                    String imagePath = "Images/houseimgs/" + fileName;
+                    String uploadFolder = getServletContext().getRealPath("/Images/houseimgs");
+                    Path uploadPath = Paths.get(uploadFolder);
 
-                    File file = new File(getServletContext().getRealPath("/") + imagePath);
-                    try (InputStream fileContent = filePart.getInputStream()) {
-                        Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    if (!Files.exists(uploadPath)) {
+                        Files.createDirectories(uploadPath);
                     }
 
-                    daoH.updateHouseImage(id, imagePath);
+                    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                    Path filePath = uploadPath.resolve(fileName);
 
-                }             
+                    try (InputStream fileContent = filePart.getInputStream()) {
+                        Files.copy(fileContent, filePath, StandardCopyOption.REPLACE_EXISTING);
+                    }
 
-                response.sendRedirect("manager");
+                    String relativeImagePath = "Images/houseimgs/" + fileName;
+                    daoH.insertHouseImage(id, relativeImagePath);
+
+                    response.sendRedirect("editimage?hid=" + id);
+                } else {
+                    response.sendRedirect("manager");
+                }
+
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid input format.");
+                response.sendRedirect("manager");
             } catch (Exception e) {
                 e.printStackTrace();
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while processing your request.");
             }
+        } else {
+            response.sendRedirect("LoginServlet");
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/json;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+
+        Account loggedInUser = (Account) request.getSession().getAttribute("acc");
+        if (loggedInUser != null) {
+            try {
+                StringBuilder json = new StringBuilder();
+                try (BufferedReader reader = request.getReader()) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        json.append(line);
+                    }
+                }
+
+                String jsonString = json.toString();
+                int imgId = Integer.parseInt(jsonString.replaceAll("[^0-9]", ""));
+
+                HouseImgDAO daoH = new HouseImgDAO();
+                daoH.deleteHouseImage(imgId);
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid image ID.");
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while processing your request.");
+            }
+        } else {
+            response.sendRedirect("LoginServlet");
+        }
+    }
+
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Servlet for editing house images.";
+    }
 }

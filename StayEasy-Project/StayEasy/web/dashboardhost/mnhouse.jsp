@@ -173,6 +173,12 @@
                                 ${mess1}
                             </div>
                         </c:if>
+                            
+                        <c:if test="${mess2!=null }">
+                            <div class="alert alert-success" role="alert">
+                                ${mess2}
+                            </div>
+                        </c:if>
 
                         <div class="card-body">
                             <div class="table-responsive" id="contentt">
@@ -230,7 +236,6 @@
                                                             </a>
                                                         </c:when>
                                                         <c:when test="${ls.status == 0}">
-
                                                             <a href="updatehouse?hid=${ls.houseid}">
                                                                 <button type="button" class="btn btn-warning">
                                                                     <i class="fa-solid fa-pen"></i>

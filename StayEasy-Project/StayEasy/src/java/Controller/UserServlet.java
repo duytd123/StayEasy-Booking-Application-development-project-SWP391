@@ -169,7 +169,7 @@ public class UserServlet extends HttpServlet {
             AccountDAO dao = new AccountDAO();
             String relativeImagePath = "Images/userimgs/" + imageFileName;
             dao.updatePic(relativeImagePath, acc.getUserid());
-            acc.setUserimg(relativeImagePath); // Ensure the path is relative to the web root
+            acc.setUserimg(relativeImagePath); 
             session.setAttribute("acc", acc);
 
             request.setAttribute("mess", "Upload image success!");
