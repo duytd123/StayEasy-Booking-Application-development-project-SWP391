@@ -75,7 +75,7 @@
                                     <th>Description</th>
                                     <th>Location</th>
                                     <th>Menu</th>
-                                    <th>Action</th>
+                                    <!--<th>Action</th>-->
                                 </tr>
                             </thead>
                             <tbody>
@@ -93,7 +93,7 @@
                                     <td><%= h.getDescription() %></td>
                                     <td><%= h.getLocation().getName() %></td>
                                     <td><%= h.getMenu().getName() %></td>
-                                    <td>
+                                    <!--<td>
                                         <span class="action_btn">
                                             <a href="NextEditHouseServlet?id=<%= h.getHouseid() %>">Update</a>
                                             <a href="DeleteHouseServlet?id=<%= h.getHouseid() %>">Delete</a>
@@ -101,7 +101,7 @@
                                             <a href="ListServiceServlet?id=<%= h.getHouseid() %>">View Service</a>
                                             <a href="NextAddServiceServlet?id=<%= h.getHouseid() %>">Add Service</a>
                                         </span>
-                                    </td>
+                                    </td>-->
                                 </tr>
                                 <%
                                     }

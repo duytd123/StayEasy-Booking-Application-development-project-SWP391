@@ -112,7 +112,7 @@
                 </div>
             </div>
 
-            <!-- Comment section -->
+            <!-- Comment section
             <c:choose>
                 <c:when test="${empty sessionScope.username}">
                     <div class="alert alert-warning mt-4" role="alert">
@@ -155,7 +155,8 @@
                         </section>
                     </c:forEach>
                 </c:otherwise>
-            </c:choose>
+            </c:choose> 
+            -->
         </div>
 
 
