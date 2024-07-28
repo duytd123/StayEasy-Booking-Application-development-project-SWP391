@@ -1,4 +1,3 @@
-
 <%@page import="Model.Comment"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.House"%>
@@ -13,28 +12,25 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
 
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>House Details</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <link href="stylesheet" rel="stylesheet">
-        <link rel="stylesheet" href="list.css">
-        <link rel="stylesheet" href="housepage.css">
-        <link rel="stylesheet" href="css/list_house_main.css">
-        <link rel="stylesheet" href="assets/css/style.min.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="user.jsp">
-        <link rel="stylesheet" href="list_house_main.css">
-        <link rel="stylesheet" href="StyleSheet.css">
-        <link rel="stylesheet" href="css/housepage.css">
+
         <style>
             body {
                 margin-top: 100px;
+            }
+            .star {
+                color: gold;
+            }
+            .feedback-rating .star.gray {
+                color: gray;
+            }
+            .heading2{
+                color: black;
+                font-size: 15px;
             }
         </style>
     </head>
@@ -45,6 +41,7 @@
         <div class="container" style="margin-top: 100px">
             <div class="row">
                 <div class="col-md-8">
+                    <!-- House details section -->
                     <h1 class="display-4 text-dark">${house.housename}</h1>
                     <p class="lead"><i class="fas fa-map-marker-alt"></i> ${house.address}</p>
                     <p>Check-in Date: ${house.postdate}</p>
@@ -61,7 +58,9 @@
                     <h2>Type</h2>
                     <p>${house.menu.name}</p>
                 </div>
+
                 <div class="col-md-4 mt-5">
+                    <!-- Booking section -->
                     <div class="hotel-services mt-4 p-3 border rounded">
                         <h2>Book house</h2>
                         <form action="booking" method="get">
@@ -69,16 +68,17 @@
                             <button type="submit" class="btn btn-success btn-block">Reserve or Book Now</button>
                         </form>
                     </div>
+
+                    <!-- Feedback section -->
                     <div class="hotel-services mt-4 p-3 border rounded">
                         <c:set var="totalStar" value="${calculateStar.totalStar(feedbacks)}" />
                         <div class="product-rating" style="font-size: 20px;">
-                            <h4>Feedback avarage</h4>
+                            <h4>Feedback average</h4>
                             <c:choose>
                                 <c:when test="${totalStar > 0}">
                                     <c:forEach var="i" begin="1" end="${calculateStar.floor(totalStar)}">
                                         <span class="star" style="color: gold">★</span>
                                     </c:forEach>
-
                                     <c:if test="${totalStar - calculateStar.floor(totalStar) >= 0.5}">
                                         <i class="fa fa-star-half-o" style="color: gold"></i>
                                     </c:if>
@@ -93,9 +93,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </div>
-                        <a class="review-link" href="#"
-                           >(${feedbacks.size()} Reviews)</i></a
-                        >
+                        <a class="review-link" href="#">(${feedbacks.size()} Reviews)</a>
                         <hr>
                         <h4>Feedbacks</h4>
                         <c:forEach var="feedback" items="${feedbacks}">
@@ -113,56 +111,52 @@
                     </div>
                 </div>
             </div>
-            <% 
-            Account a = (Account) request.getAttribute("account");
-            String username = (String)session.getAttribute("username");
-            if (username == null) {
-            %>
-            <div class="alert alert-warning mt-4" role="alert">
-                Please <a href="login.jsp" class="alert-link">login</a> to comment.
-            </div>
-            <% } else { %>
-            <section class="comments-container mt-5">
-                <h1 class="heading">Leave us your comment</h1>
-                <form action="AddCommentmainServlet" method="post" class="form-group">
-                    <div class="form-group">
-                        <label>Name: ${username}</label>
-                        <input type="hidden" name="userid" value="<%= a.getUserid() %>" />
-                        <input type="hidden" name="houseid" value="${house.houseid}" />
-                    </div>
-                    <div class="form-group">
-                        <label>Date:</label>
-                        <input type="date" name="date" class="form-control" required />
-                    </div>
-                    <div class="form-group">
-                        <label>Comment:</label>
-                        <textarea name="comment" class="form-control" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Comment</button>
-                </form>
-            </section>
 
-            <h1 class="heading mt-5">Comments</h1>
-            <%
-                List<Comment> list = (List<Comment>) request.getAttribute("Comment");
-                for (Comment c : list) {
-            %>
-            <section class="comment mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">From: ${house.housename}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">By: ${account.fullname}</h6>
-                        <p class="card-text">${c.getComment()}</p>
-                        <p class="card-text"><small class="text-muted">${c.getDate()}</small></p>
-                        <a href="NextEditCommentServlet?id=<%= c.getCid() %>" class="btn btn-warning">Edit</a>
-                        <a href="DeleteCommentmainServlet?id=<%= c.getCid() %>" class="btn btn-danger">Delete</a>
+            <!-- Comment section -->
+            <c:choose>
+                <c:when test="${empty sessionScope.username}">
+                    <div class="alert alert-warning mt-4" role="alert">
+                        Please <a href="LoginServlet" class="alert-link">login</a> to comment.
                     </div>
-                </div>
-            </section>
-            <% } %>
-            <% } %>
+                </c:when>
+                <c:otherwise>
+                    <section class="comments-container mt-5">
+                        <h1 class="heading2"></h1>
+                        <form action="AddCommentServlet" method="POST" class="form-group">
+                            <input type="hidden" name="houseid" value="${house.houseid}">
+                            <div class="form-group">
+                                <label>Name: ${sessionScope.username}</label><br>
+                                                               
+                            </div>
+                            <div class="form-group">
+                                <label>Comment:</label>
+                                <textarea name="comment" class="form-control" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Comment</button>
+                        </form>
+                    </section>
+
+                    <h1 class="heading2 mt-5">Comments</h1>
+                    <c:forEach var="comment" items="${commentt}">
+                        <section class="comment mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">From: ${comment.fullname}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">By: ${comment.fullname}</h6>
+                                    <p class="card-text">${comment.comment}</p>
+                                    <p class="card-text"><small class="text-muted">${comment.date}</small></p>
+                                        <c:if test="${comment.reply != null}">
+                                        <div class="reply">
+                                            <p><strong>Reply:</strong> ${comment.reply}</p>
+                                        </div>
+                                    </c:if>
+                                </div>
+                            </div>
+                        </section>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
         </div>
-
 
 
         <%@ include file="footer.jsp" %>

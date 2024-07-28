@@ -447,7 +447,7 @@ public class HouseDAO {
                 insertHouseStmt.setInt(8, locationId);
                 insertHouseStmt.setInt(9, menuId);
                 insertHouseStmt.setInt(10, numberOfGuest);
-                insertHouseStmt.setInt(11, 0); 
+                insertHouseStmt.setInt(11, 0);
 
                 int rowsAffected = insertHouseStmt.executeUpdate();
 
@@ -732,32 +732,37 @@ public class HouseDAO {
         return false;
     }
 
-    public House getHousebyId(int id) {
-        String sql = "select * from dbo.House where house_id = ?";
-        House h = new House();
+  public House getHousebyId(int id) {
+        String sql = "SELECT h.house_id, h.post_date, h.house_name, h.review, h.house_price, h.status, h.address, h.description, "
+                + "l.name AS location_name, m.name AS menu_name "
+                + "FROM dbo.House h "
+                + "JOIN dbo.Location l ON h.loca_id = l.loca_id "
+                + "JOIN dbo.Menu m ON h.menu_id = m.menu_id "
+                + "WHERE h.house_id = ?";
+
+        House h = null;
 
         try {
-            //tạo khay chứa câu lệnh
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setInt(1, id);
-            //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
-            while (resultSet.next()) {
-                int houseid = resultSet.getInt(1);
-                Date postdate = resultSet.getDate(2);
-                String housename = resultSet.getString(3);
-                String review = resultSet.getString(4);
-                float price = resultSet.getFloat(5);
-                int status = resultSet.getInt(6);
-                String address = resultSet.getString(7);
-                String description = resultSet.getString(8);
-                int locationid = resultSet.getInt(9);
-                double discount = resultSet.getDouble("discount");
-                //tạo model hứng giữ liệu 
-                Menu menu = new Menu(0, null);
-                Location location = new Location(locationid, null);
+
+            if (resultSet.next()) {
+                int houseid = resultSet.getInt("house_id");
+                Date postdate = resultSet.getDate("post_date");
+                String housename = resultSet.getString("house_name");
+                String review = resultSet.getString("review");
+                float price = resultSet.getFloat("house_price");
+                int status = resultSet.getInt("status");
+                String address = resultSet.getString("address");
+                String description = resultSet.getString("description");
+                String locationName = resultSet.getString("location_name");
+                String menuName = resultSet.getString("menu_name");
+
+                // Create objects with names
+                Location location = new Location(0, locationName); // Use 0 or another value for id if not needed
+                Menu menu = new Menu(0, menuName); // Use 0 or another value for id if not needed
                 h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
-                h.setDiscountBook(discount);
             }
         } catch (Exception e) {
             System.out.println("error: " + e);
@@ -765,6 +770,7 @@ public class HouseDAO {
 
         return h;
     }
+
 
     public void editHouse(House house) {
         String sql = "UPDATE [dbo].[House]\n"

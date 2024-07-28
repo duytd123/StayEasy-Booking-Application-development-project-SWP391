@@ -57,13 +57,12 @@
                 }
             }
 
-            /* Sidebar */
             .sidebar {
                 position: fixed;
                 top: 0;
                 bottom: 0;
                 left: 0;
-                padding: 58px 0 0; /* Height of navbar */
+                padding: 58px 0 0; 
                 box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
                 width: 240px;
                 z-index: 600;
@@ -238,7 +237,7 @@
                                                 <th style="text-align: center" class="border-gray-200" scope="col">Date</th>
                                                 <th style="text-align: center" class="border-gray-200" scope="col">Total</th>
                                                 <th style="text-align: center" class="border-gray-200" scope="col"></th>
-                                                <th style="text-align: center" class="border-gray-200" scope="col">View | Reject</th>
+<!--                                                <th style="text-align: center" class="border-gray-200" scope="col">View | Reject</th>-->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -257,8 +256,8 @@
                                                             <span class="badge bg-light text-dark">Pending</span>
                                                         </c:if>
                                                     </td>
-                                                    <td style="text-align: center">
-                                                        <form action="hostservlet" method="POST">
+<!--                                                    <td style="text-align: center">
+                                                        <form action="billhost" method="POST">
                                                             <input type="hidden" name="userid" value="${l.userid}">
                                                             <input type="hidden" name="billid" value="${l.billid}">
                                                             <button type="submit" class="badge bg-light text-dark" name="sub" value="view">view</button>
@@ -266,7 +265,7 @@
                                                                 <a onclick="showConfirmModal(${l.billid}, ${l.userid})" class="badge bg-success" type="button">X</a>
                                                             </c:if>
                                                         </form>
-                                                    </td>
+                                                    </td>-->
                                                 </tr>
                                             </c:forEach>
                                         </tbody>

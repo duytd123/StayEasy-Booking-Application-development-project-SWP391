@@ -7,10 +7,6 @@ package configs;
 import Model.Feedback;
 import java.util.List;
 
-/**
- *
- * @author HP
- */
 public class CalculateFeedback {
 
     public float totalStar(List<Feedback> feedbacks) {
@@ -36,3 +32,6 @@ public class CalculateFeedback {
     }
 
 }
+
+
+

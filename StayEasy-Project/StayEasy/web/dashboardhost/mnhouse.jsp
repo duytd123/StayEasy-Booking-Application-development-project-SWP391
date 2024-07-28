@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -167,9 +168,15 @@
                                 ${error}
                             </div>
                         </c:if>
-                        <c:if test="${mess!=null }">
+                        <c:if test="${mess1!=null }">
                             <div class="alert alert-success" role="alert">
-                                ${mess}
+                                ${mess1}
+                            </div>
+                        </c:if>
+                            
+                        <c:if test="${mess2!=null }">
+                            <div class="alert alert-success" role="alert">
+                                ${mess2}
                             </div>
                         </c:if>
 
@@ -222,9 +229,13 @@
          <i class="fa-solid fa-trash"></i>
      </button>
  </a>-->
+                                                            <a href="editimage?hid=${ls.houseid}">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    <i class="fas fa-images"></i> Edit Image
+                                                                </button>
+                                                            </a>
                                                         </c:when>
                                                         <c:when test="${ls.status == 0}">
-
                                                             <a href="updatehouse?hid=${ls.houseid}">
                                                                 <button type="button" class="btn btn-warning">
                                                                     <i class="fa-solid fa-pen"></i>
@@ -233,6 +244,11 @@
                                                             <a href="deletehouse?hid=${ls.houseid}">
                                                                 <button type="button" class="btn btn-danger">
                                                                     <i class="fa-solid fa-trash"></i>
+                                                                </button>
+                                                            </a>
+                                                            <a href="editimage?hid=${ls.houseid}">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    <i class="fas fa-images"></i> Edit Image
                                                                 </button>
                                                             </a>
                                                         </c:when>
@@ -245,6 +261,11 @@
                                                             <a href="restorehouse?hid=${ls.houseid}">
                                                                 <button type="button" class="btn btn-primary">
                                                                     <i class="fa-solid fa-undo"></i> Restore House
+                                                                </button>
+                                                            </a>
+                                                            <a href="editimage?hid=${ls.houseid}">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    <i class="fas fa-images"></i> Edit Image
                                                                 </button>
                                                             </a>
                                                         </c:when>

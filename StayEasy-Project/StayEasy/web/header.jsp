@@ -74,6 +74,7 @@
 
             <c:if test="${sessionScope.acc != null}">
                 <a href="history-booking">History booking</a>
+                
             </c:if>
             <c:if test="${sessionScope.acc != null}">
                 <c:choose>
@@ -84,6 +85,7 @@
                         <a href="host">Dashboard</a>
                     </c:when>
                     <c:otherwise>
+                        <a href="hostregister">Register to host</a>
                     </c:otherwise>
                 </c:choose>
             </c:if>

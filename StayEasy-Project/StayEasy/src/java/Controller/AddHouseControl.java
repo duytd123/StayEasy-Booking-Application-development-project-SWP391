@@ -79,7 +79,6 @@ public class AddHouseControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
 
-        // Check if user is logged in
         Account loggedInUser = (Account) request.getSession().getAttribute("acc");
 
         if (loggedInUser == null) {
