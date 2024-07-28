@@ -126,8 +126,7 @@
                             <input type="hidden" name="houseid" value="${house.houseid}">
                             <div class="form-group">
                                 <label>Name: ${sessionScope.username}</label><br>
-                                
-                                <input type="hidden" name="userid" value="${sessionScope.account.userid}">
+                                                               
                             </div>
                             <div class="form-group">
                                 <label>Comment:</label>

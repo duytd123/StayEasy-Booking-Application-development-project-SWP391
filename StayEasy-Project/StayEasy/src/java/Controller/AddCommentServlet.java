@@ -39,10 +39,7 @@ public class AddCommentServlet extends HttpServlet {
             response.sendRedirect("LoginServlet");
             return;
         }
-
-        int userid = loggedInUser.getUserid();
-        
-        
+        int userid = loggedInUser.getUserid();       
         int houseId = Integer.parseInt(request.getParameter("houseid"));
         String comment = request.getParameter("comment");
         Date date = new Date();
