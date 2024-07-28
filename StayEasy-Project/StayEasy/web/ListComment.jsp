@@ -60,7 +60,6 @@
                     <a href="ListBillServlet">Orders</a>
                     <a href="ListAccountServlet">Users</a>
                     <a href="ListAddService">Service</a>
-                    <a href="admin_contacts.html">Messages</a>
                 </nav>
 
                 <div style="font-size: 2.5rem;" class="icons">

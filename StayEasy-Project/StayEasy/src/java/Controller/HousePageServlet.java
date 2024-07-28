@@ -224,6 +224,3 @@ public class HousePageServlet extends HttpServlet {
     }// </editor-fold>
 
 }
-
-//copy hết mấy file xanh và xanh duong thì trong file có doạn này màu xanh lá thì copy hết nha
-//cop xanh la kieu j a

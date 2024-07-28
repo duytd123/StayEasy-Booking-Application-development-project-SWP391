@@ -111,6 +111,39 @@ public class CommentDAO {
         }
     }
 
+    public List<CommentWithInfo> getCommentsByHouseId2(int houseId) {
+        String sql = "SELECT c.cid, c.userid, c.houseid, c.comment, c.date, c.reply, "
+                + "u.fullname, u.phone, u.email, h.house_name "
+                + "FROM Comment c "
+                + "INNER JOIN House h ON c.houseid = h.house_id "
+                + "INNER JOIN Users u ON c.userid = u.user_id "
+                + "WHERE h.house_id = ?";
+        List<CommentWithInfo> list = new ArrayList<>();
+        try {
+            PreparedStatement pre = con.prepareStatement(sql);
+            pre.setInt(1, houseId);
+            ResultSet resultSet = pre.executeQuery();
+            while (resultSet.next()) {
+                int cid = resultSet.getInt("cid");
+                int userid = resultSet.getInt("userid");
+                int houseid = resultSet.getInt("houseid");
+                String comment = resultSet.getString("comment");
+                Date date = resultSet.getDate("date");
+                String fullname = resultSet.getString("fullname");
+                String phone = resultSet.getString("phone");
+                String email = resultSet.getString("email");
+                String houseName = resultSet.getString("house_name");
+                String reply = resultSet.getString("reply");
+                CommentWithInfo m = new CommentWithInfo(cid, userid, houseid, comment, date, fullname, phone, email, houseName, reply);
+                list.add(m);
+            }
+            System.out.println("Comments retrieved: " + list.size()); 
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+        return list;
+    }
+
     public void editComment(Comment c) {
         String sql = "UPDATE [dbo].[Comment]\n"
                 + "   SET [userid] = ?\n"
