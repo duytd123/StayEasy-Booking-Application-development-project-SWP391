@@ -7,6 +7,20 @@
         <title>House Booking</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link href="stylesheet" rel="stylesheet">
+        <link rel="stylesheet" href="list.css">
+        <link rel="stylesheet" href="housepage.css">
+        <link rel="stylesheet" href="css/list_house_main.css">
+        <link rel="stylesheet" href="assets/css/style.min.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="assets/css/dist/css/bootstrap_1.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="user.jsp">
+        <link rel="stylesheet" href="list_house_main.css">
+        <link rel="stylesheet" href="StyleSheet.css">
+        <link rel="stylesheet" href="css/housepage.css">
         <style>
             body {
                 margin-top: 50px;
@@ -92,9 +106,29 @@
                         <input type="date" id="endDate" name="enddate" class="form-control" required />
                     </div>
                     <div class="form-group">
-                        <label for="total">Total:</label>
-                        <input type="number" id="total" name="total" class="form-control" value="${house.houseprice}" readonly />
+                        <label for="additionalServices">Additional Services</label>
+                        <div id="additionalServices">
+                            <c:forEach items="${additionalServices}" var="service">
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" class="service-checkbox" name="service_${service.serviceid}" value="${service.serviceprice}" data-service-name="${service.addService.servicename}">
+                                        ${service.addService.servicename} - ${service.serviceprice} USD
+                                    </label>
+                                    <input type="number" class="form-control service-quantity" name="quantity_${service.addService.serviceid}" value="1" min="1" style="display:none;">
+                                </div>
+                            </c:forEach>
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="discount">Discount:</label>
+                        <input type="text" id="discount" name="discount" class="form-control" value="${house.discountBook}%" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="total">Total:</label>
+                        <input type="number" id="total" name="total" class="form-control" value="${house.houseprice - (house.houseprice * (house.discountBook/100))}" readonly />
+                    </div>
+                    <!--??-->
                     <div class="form-group">
                         <label for="note">Note:</label>
                         <input type="text" id="note" name="note" class="form-control" />
@@ -115,7 +149,7 @@
                 const startDateInput = document.getElementById('startDate');
                 const endDateInput = document.getElementById('endDate');
                 const totalInput = document.getElementById('total');
-                const housePrice = parseFloat(${house.houseprice});
+                const housePrice = parseFloat(${house.houseprice - (house.houseprice * (house.discountBook/100))});
 
                 function addDays(date, days) {
                     const result = new Date(date);
@@ -200,6 +234,37 @@
                     }
                 });
             }
+        </script>
+        <script>
+            const housePrice = parseFloat(${house.houseprice});
+            const totalInput = document.getElementById('total');
+            const checkboxes = document.querySelectorAll('.service-checkbox');
+            const quantities = document.querySelectorAll('.service-quantity');
+
+            function updateTotal() {
+                let total = housePrice;
+                checkboxes.forEach((checkbox, index) => {
+                    if (checkbox.checked) {
+                        const servicePrice = parseFloat(checkbox.value);
+                        const quantity = parseInt(quantities[index].value);
+                        total += servicePrice * quantity;
+                    }
+                });
+                totalInput.value = total.toFixed(2);
+            }
+
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.addEventListener('change', function () {
+                    quantities[index].style.display = this.checked ? 'inline-block' : 'none';
+                    updateTotal();
+                });
+            });
+
+            quantities.forEach(quantity => {
+                quantity.addEventListener('input', updateTotal);
+            });
+
+            updateTotal();
         </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

@@ -147,7 +147,7 @@ public class AdditionalServiceDAO {
                 int serviceid = resultSet.getInt("add_service_id");
                 String servicename = resultSet.getString("add_serviceName");
                 String servicedesc = resultSet.getString("add_serviceDesc");
-                String imageUrl = resultSet.getString("image_url"); // New field
+                String imageUrl = null;
                 as = new AdditionalService(serviceid, servicename, servicedesc, imageUrl);
             }
         } catch (Exception e) {

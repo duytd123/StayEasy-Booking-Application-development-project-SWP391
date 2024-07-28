@@ -5,6 +5,7 @@
  */
 package Model;
 
+
 import java.util.Date;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Date;
  * @author Admin
  */
 public class House {
-    
+
     private int houseid;
     private Date postdate;
     private String housename;
@@ -25,6 +26,9 @@ public class House {
     private Menu menu;
     private int numberBill;
     private boolean rentHouse;
+    private double discountBook;
+   
+
     public House() {
     }
 
@@ -39,9 +43,10 @@ public class House {
         this.description = description;
         this.location = location;
         this.menu = menu;
+        
     }
 
-      public int getNumberBill() {
+    public int getNumberBill() {
         return numberBill;
     }
 
@@ -49,9 +54,6 @@ public class House {
         this.numberBill = numberBill;
     }
 
-
-
-    
     public int getHouseid() {
         return houseid;
     }
@@ -140,6 +142,11 @@ public class House {
         this.rentHouse = rentHouse;
     }
 
-    
-    
+    public double getDiscountBook() {
+        return discountBook;
+    }
+
+    public void setDiscountBook(double discount) {
+        this.discountBook = discount;
+    }
 }

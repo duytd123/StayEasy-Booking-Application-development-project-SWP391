@@ -752,12 +752,12 @@ public class HouseDAO {
                 String address = resultSet.getString(7);
                 String description = resultSet.getString(8);
                 int locationid = resultSet.getInt(9);
-                int menuid = resultSet.getInt(10);
-
-                //tạo model hứng giữ liệu
-                Menu menu = new Menu(menuid, null);
+                double discount = resultSet.getDouble("discount");
+                //tạo model hứng giữ liệu 
+                Menu menu = new Menu(0, null);
                 Location location = new Location(locationid, null);
                 h = new House(houseid, postdate, housename, review, price, status, address, description, location, menu);
+                h.setDiscountBook(discount);
             }
         } catch (Exception e) {
             System.out.println("error: " + e);
@@ -1242,5 +1242,46 @@ public class HouseDAO {
         }
 
         return count;
+    }
+     public House getHousebyId1(int id) {
+        String sql = "select * from dbo.House where house_id = ?";
+        HouseHost h = new HouseHost();
+
+        try (PreparedStatement pre = con.prepareStatement(sql)) {
+            pre.setInt(1,id);
+            
+            ResultSet rs = pre.executeQuery();
+
+            if (rs.next()) {
+                int retrievedHouseId = rs.getInt("house_id");
+                Date postDate = rs.getDate("post_date");
+                String houseName = rs.getString("house_name");
+                String review = rs.getString("review");
+                float housePrice = rs.getFloat("house_price");
+                int status = rs.getInt("status");
+                String address = rs.getString("address");
+                String description = rs.getString("description");
+                double discount = rs.getDouble("discount");
+                int locationId = rs.getInt("loca_id");
+                int menuId = rs.getInt("menu_id");
+                int numberOfGuest = rs.getInt("number_of_guest");
+                String image = rs.getString("images");
+
+                String[] imageArray = (image != null) ? image.split(",") : new String[0];
+
+                Location l = ld.getLocationById(locationId);
+                Menu m = md.getMenuById(menuId);
+
+                List<String> imagesList = new ArrayList<>();
+                if (imageArray.length > 0) {
+                    imagesList.addAll(Arrays.asList(imageArray));
+                }
+
+                return new HouseHost(retrievedHouseId, postDate, houseName, review, housePrice, status, address, description, discount, numberOfGuest, l, m, imagesList);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching house by house_id and host_id: " + e.getMessage());
+        }
+        return h;
     }
 }

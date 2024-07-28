@@ -14,6 +14,7 @@ public class HouseAdditionalService {
     private int houseid;
     private int servicestatus;
     private float serviceprice;
+    private AdditionalService addService;
 
     public HouseAdditionalService() {
     }
@@ -66,6 +67,11 @@ public class HouseAdditionalService {
         this.serviceprice = serviceprice;
     }
 
-    
-    
+    public AdditionalService getAddService() {
+        return addService;
+    }
+
+    public void setAddService(AdditionalService addService) {
+        this.addService = addService;
+    }
 }

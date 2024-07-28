@@ -38,6 +38,7 @@ public class HouseAdditionalServiceDAO {
             PreparedStatement pre = con.prepareStatement(sql);
             //chạy câu lệnh và tạo khay chứa kết quả câu lệnh
             ResultSet resultSet = pre.executeQuery();
+            AdditionalServiceDAO addDao = new AdditionalServiceDAO();
             while (resultSet.next()) {
                 int houseaddserviceid = resultSet.getInt(1);
                 int serviceid = resultSet.getInt(2);
@@ -45,6 +46,7 @@ public class HouseAdditionalServiceDAO {
                 int servicestatus = resultSet.getInt(4);
                 float serviceprice = resultSet.getInt(5);
                 HouseAdditionalService hs = new HouseAdditionalService(houseaddserviceid, serviceid, houseid, servicestatus, serviceprice);
+                hs.setAddService(addDao.getAdditionalServicebyID(serviceid));
                 list.add(hs);
             }
         } catch (Exception e) {

@@ -6,12 +6,14 @@ package Controller;
 
 import Dao.BillDAO;
 import Dao.BillDetailDAO;
+import Dao.HouseAdditionalServiceDAO;
 import Dao.HouseDAO;
 import Dao.HouseImgDAO;
 import Model.Account;
 import Model.Bill;
 import Model.BillDetail;
 import Model.House;
+import Model.HouseAdditionalService;
 import Model.HouseImg;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -89,6 +91,9 @@ public class BookingUserController extends HttpServlet {
             House house = houseDao.getHousebyId(houseId);
             HouseImgDAO houImageDAO = new HouseImgDAO();
             List<HouseImg> listImage = houImageDAO.getHouseImgbyID(houseId);
+            HouseAdditionalServiceDAO houseAddDao = new HouseAdditionalServiceDAO();
+            List<HouseAdditionalService> houseAdds = houseAddDao.getHouseAdditionalService();
+            request.setAttribute("additionalServices", houseAdds);
             request.setAttribute("account", accountLogin);
             request.setAttribute("house", house);
             request.setAttribute("listImage", listImage);
@@ -165,8 +170,8 @@ public class BookingUserController extends HttpServlet {
             }
 
             long totalDays = ChronoUnit.DAYS.between(startDate, endDate);
-            float housePrice = Float.parseFloat(request.getParameter("housePrice"));
-            float total = housePrice * totalDays;
+            float housePrice = Float.parseFloat(request.getParameter("total"));
+            float total = housePrice;
 
             BillDAO billDao = new BillDAO();
             BillDetailDAO billDetailDao = new BillDetailDAO();
@@ -192,6 +197,7 @@ public class BookingUserController extends HttpServlet {
                 billDetail.setNote(note);
                 billDetails.add(billDetail);
                 bill.setBillDetail(billDetails);
+                bill.setStatus(payment.equals("1") ? 1 : 0);
                 int idBill = billDao.bookingBill(bill);
                 if (idBill > 0) {
                     billDetail.setBillid(idBill);
@@ -202,9 +208,11 @@ public class BookingUserController extends HttpServlet {
                         return;
                     }
                     if (id > 0) {
-                        response.sendRedirect("bookingConfirmation.jsp?message=success");
+                        request.getRequestDispatcher("bookingConfirmation.jsp?message=success").forward(request, response);
+//                        response.sendRedirect("bookingConfirmation.jsp?message=success");
                     } else {
-                        response.sendRedirect("bookingConfirmation.jsp?message=fail");
+                           request.getRequestDispatcher("bookingConfirmation.jsp?message=fail").forward(request, response);
+//                        response.sendRedirect("bookingConfirmation.jsp?message=fail");
                     }
                 }
             } else {
