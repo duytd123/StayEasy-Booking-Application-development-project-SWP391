@@ -1,0 +1,637 @@
+/* media size definitions */
+/* fonts definitions */
+:root,
+[data-bui-theme="legacy-light"] {
+--bui_color_border_alt: #e7e7e7;
+--bui_color_action_border: #0071c2;
+--bui_color_border_disabled: #d9d9d9;
+--bui_color_destructive_border: #cc0000;
+--bui_color_constructive_border: #008009;
+--bui_color_background: #494949;
+--bui_color_background_rgb: 73, 73, 73;
+--bui_color_background_alt: #f2f2f2;
+--bui_color_background_alt_rgb: 242, 242, 242;
+--bui_color_background_base: #ffffff;
+--bui_color_background_base_rgb: 255, 255, 255;
+--bui_color_background_base_alt: #f2f2f2;
+--bui_color_background_base_alt_rgb: 242, 242, 242;
+--bui_color_background_disabled: #d9d9d9;
+--bui_color_background_disabled_rgb: 217, 217, 217;
+--bui_color_background_inverted: #171717;
+--bui_color_background_inverted_rgb: 23, 23, 23;
+--bui_color_accent_background_alt: #fdf4d8;
+--bui_color_accent_background_alt_rgb: 253, 244, 216;
+--bui_color_action_background_alt: #e4f4ff;
+--bui_color_action_background_alt_rgb: 228, 244, 255;
+--bui_color_callout_background_alt: #fff0e0;
+--bui_color_callout_background_alt_rgb: 255, 240, 224;
+--bui_color_background_disabled_alt: #f2f2f2;
+--bui_color_background_disabled_alt_rgb: 242, 242, 242;
+--bui_color_destructive_background_alt: #fff0f0;
+--bui_color_destructive_background_alt_rgb: 255, 240, 240;
+--bui_color_constructive_background_alt: #e7fde9;
+--bui_color_constructive_background_alt_rgb: 231, 253, 233;
+--bui_color_foreground: #262626;
+--bui_color_foreground_alt: #6b6b6b;
+--bui_color_accent_foreground: #8e6601;
+--bui_color_action_foreground: #0071c2;
+--bui_color_callout_foreground: #923e01;
+--bui_color_foreground_disabled: #949494;
+--bui_color_foreground_inverted: #f2f2f2;
+--bui_color_destructive_foreground: #cc0000;
+--bui_color_constructive_foreground: #008009;
+--bui_color_foreground_disabled_alt: #d9d9d9;
+--bui_color_brand_primary_foreground: #003580;
+--bui_color_action_foreground_inverted: #3daeff;
+--bui_color_highlighted: #cbcbcb;
+--bui_color_action_focus: rgba(0, 113, 194, 0.24);
+--bui_color_highlighted_alt: rgba(0, 0, 0, 0.06);
+--bui_color_destructive_focus: rgba(204, 0, 0, 0.24);
+--bui_color_action_highlighted_alt: rgba(0, 113, 194, 0.06);
+--bui_color_destructive_highlighted_alt: rgba(204, 0, 0, 0.06);
+--bui_color_on_background: #ffffff;
+--bui_color_background_elevation_one: #ffffff;
+--bui_color_background_elevation_two: #ffffff;
+--bui_color_background_elevation_two_rgb: 255, 255, 255;
+--bui_color_accent_background_dynamic: #febb02;
+--bui_color_callout_background_dynamic: #ff8000;
+--bui_color_destructive_background_dynamic: #cc0000;
+--bui_color_constructive_background_dynamic: #008009;
+--bui_color_brand_primary_background_dynamic: #003580;
+--bui_color_on_accent_background_dynamic: #262626;
+--bui_color_on_callout_background_dynamic: #262626;
+--bui_color_on_destructive_background_dynamic: #ffffff;
+--bui_color_on_constructive_background_dynamic: #ffffff;
+}
+[data-bui-theme="legacy-dark"] {
+--bui_color_border_alt: #494949;
+--bui_color_action_border: #3daeff;
+--bui_color_border_disabled: #6b6b6b;
+--bui_color_destructive_border: #ff5c5c;
+--bui_color_constructive_border: #69ce6f;
+--bui_color_background: #d9d9d9;
+--bui_color_background_rgb: 217, 217, 217;
+--bui_color_background_alt: #262626;
+--bui_color_background_alt_rgb: 38, 38, 38;
+--bui_color_background_base: #000000;
+--bui_color_background_base_rgb: 0, 0, 0;
+--bui_color_background_base_alt: #000000;
+--bui_color_background_base_alt_rgb: 0, 0, 0;
+--bui_color_background_disabled: #494949;
+--bui_color_background_disabled_rgb: 73, 73, 73;
+--bui_color_background_inverted: #f2f2f2;
+--bui_color_background_inverted_rgb: 242, 242, 242;
+--bui_color_accent_background_alt: #3d2b01;
+--bui_color_accent_background_alt_rgb: 61, 43, 1;
+--bui_color_action_background_alt: #001e33;
+--bui_color_action_background_alt_rgb: 0, 30, 51;
+--bui_color_callout_background_alt: #3c1901;
+--bui_color_callout_background_alt_rgb: 60, 25, 1;
+--bui_color_background_disabled_alt: #262626;
+--bui_color_background_disabled_alt_rgb: 38, 38, 38;
+--bui_color_destructive_background_alt: #330000;
+--bui_color_destructive_background_alt_rgb: 51, 0, 0;
+--bui_color_constructive_background_alt: #003303;
+--bui_color_constructive_background_alt_rgb: 0, 51, 3;
+--bui_color_foreground: #f2f2f2;
+--bui_color_foreground_alt: #d9d9d9;
+--bui_color_accent_foreground: #febb02;
+--bui_color_action_foreground: #3daeff;
+--bui_color_callout_foreground: #ff8000;
+--bui_color_foreground_disabled: #6b6b6b;
+--bui_color_foreground_inverted: #171717;
+--bui_color_destructive_foreground: #ff5c5c;
+--bui_color_constructive_foreground: #69ce6f;
+--bui_color_foreground_disabled_alt: #494949;
+--bui_color_brand_primary_foreground: #a3d7fc;
+--bui_color_action_foreground_inverted: #0071c2;
+--bui_color_highlighted: #434343;
+--bui_color_action_focus: rgba(61, 174, 255, 0.24);
+--bui_color_highlighted_alt: rgba(255, 255, 255, 0.12);
+--bui_color_destructive_focus: rgba(255, 92, 92, 0.24);
+--bui_color_action_highlighted_alt: rgba(61, 174, 255, 0.12);
+--bui_color_destructive_highlighted_alt: rgba(255, 92, 92, 0.12);
+--bui_color_on_background: #262626;
+--bui_color_background_elevation_one: #171717;
+--bui_color_background_elevation_two: #262626;
+--bui_color_background_elevation_two_rgb: 38, 38, 38;
+--bui_color_accent_background_dynamic: #262626;
+--bui_color_callout_background_dynamic: #262626;
+--bui_color_destructive_background_dynamic: #262626;
+--bui_color_constructive_background_dynamic: #262626;
+--bui_color_brand_primary_background_dynamic: #262626;
+--bui_color_on_accent_background_dynamic: #febb02;
+--bui_color_on_callout_background_dynamic: #ff8000;
+--bui_color_on_destructive_background_dynamic: #ff5c5c;
+--bui_color_on_constructive_background_dynamic: #69ce6f;
+}
+:root,
+[data-bui-theme="legacy-light"],
+[data-bui-theme="legacy-dark"] {
+--bui_color_black: #000000;
+  --bui_color_black_rgb: 0, 0, 0;
+  --bui_color_white: #ffffff;
+  --bui_color_white_rgb: 255, 255, 255;
+  --bui_color_border: #949494;
+  --bui_color_accent_border: #febb02;
+  --bui_color_callout_border: #ff8000;
+  --bui_color_transparent: rgba(0, 0, 0, 0);
+  --bui_color_cta_background: #0071c2;
+  --bui_color_cta_background_rgb: 0, 113, 194;
+  --bui_color_black_with_alpha: rgba(0, 0, 0, 0.5);
+  --bui_color_accent_background: #febb02;
+  --bui_color_accent_background_rgb: 254, 187, 2;
+  --bui_color_action_background: #0071c2;
+  --bui_color_action_background_rgb: 0, 113, 194;
+  --bui_color_callout_background: #ff8000;
+  --bui_color_callout_background_rgb: 255, 128, 0;
+  --bui_color_destructive_background: #cc0000;
+  --bui_color_destructive_background_rgb: 204, 0, 0;
+  --bui_color_constructive_background: #008009;
+  --bui_color_constructive_background_rgb: 0, 128, 9;
+  --bui_color_brand_primary_background: #003580;
+  --bui_color_brand_primary_background_rgb: 0, 53, 128;
+  --bui_color_brand_genius_primary_background: #004cb8;
+  --bui_color_brand_genius_primary_background_rgb: 0, 76, 184;
+  --bui_color_brand_genius_secondary_foreground: #febb02;
+  --bui_color_cta_highlighted: #00487a;
+  --bui_color_action_highlighted: #00487a;
+  --bui_color_destructive_highlighted: #af0e19;
+  --bui_color_on_cta_background: #ffffff;
+  --bui_color_on_accent_background: #262626;
+  --bui_color_on_action_background: #ffffff;
+  --bui_color_on_callout_background: #262626;
+  --bui_color_on_destructive_background: #ffffff;
+  --bui_color_on_constructive_background: #ffffff;
+  --bui_color_on_brand_primary_background: #ffffff;
+  --bui_color_on_brand_genius_primary_background: #ffffff;
+  --bui_color_on_brand_primary_background_dynamic: #ffffff;
+  --bui_shadow_100: 0px 2px 8px 0px rgba(0, 0, 0, 0.16);
+  --bui_shadow_200: 0px 2px 16px 0px rgba(0, 0, 0, 0.24);
+  --bui_shadow_300: 0px 4px 16px 0px rgba(0, 0, 0, 0.32);
+  --bui_spacing_1x: 4px;
+  --bui_spacing_2x: 8px;
+  --bui_spacing_3x: 12px;
+  --bui_spacing_4x: 16px;
+  --bui_spacing_6x: 24px;
+  --bui_spacing_8x: 32px;
+  --bui_spacing_12x: 48px;
+  --bui_spacing_16x: 64px;
+  --bui_spacing_24x: 96px;
+  --bui_spacing_half: 2px;
+  --bui_border_width_100: 1px;
+  --bui_border_width_200: 2px;
+  --bui_border_radius_100: 2px;
+  --bui_border_radius_200: 2px;
+  --bui_border_radius_300: 2px;
+}
+:root,
+[data-bui-theme="legacy-light"],
+[data-bui-theme="legacy-dark"] {
+--bui_font_body_1_font-size: 16px;
+--bui_font_body_1_font-weight: 400;
+--bui_font_body_1_line-height: 24px;
+--bui_font_body_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_body_2_font-size: 14px;
+--bui_font_body_2_font-weight: 400;
+--bui_font_body_2_line-height: 20px;
+--bui_font_body_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_small_1_font-size: 12px;
+--bui_font_small_1_font-weight: 400;
+--bui_font_small_1_line-height: 18px;
+--bui_font_small_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_small_2_font-size: 10px;
+--bui_font_small_2_font-weight: 500;
+--bui_font_small_2_line-height: 16px;
+--bui_font_small_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_strong_1_font-size: 16px;
+--bui_font_strong_1_font-weight: 700;
+--bui_font_strong_1_line-height: 24px;
+--bui_font_strong_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_strong_2_font-size: 14px;
+--bui_font_strong_2_font-weight: 700;
+--bui_font_strong_2_line-height: 20px;
+--bui_font_strong_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_display_1_font-size: 40px;
+--bui_font_display_1_font-weight: 700;
+--bui_font_display_1_line-height: 52px;
+--bui_font_display_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_display_2_font-size: 36px;
+--bui_font_display_2_font-weight: 700;
+--bui_font_display_2_line-height: 48px;
+--bui_font_display_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_display_3_font-size: 32px;
+--bui_font_display_3_font-weight: 700;
+--bui_font_display_3_line-height: 40px;
+--bui_font_display_3_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_featured_1_font-size: 20px;
+--bui_font_featured_1_font-weight: 400;
+--bui_font_featured_1_line-height: 28px;
+--bui_font_featured_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_featured_2_font-size: 20px;
+--bui_font_featured_2_font-weight: 400;
+--bui_font_featured_2_line-height: 28px;
+--bui_font_featured_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_featured_3_font-size: 20px;
+--bui_font_featured_3_font-weight: 400;
+--bui_font_featured_3_line-height: 28px;
+--bui_font_featured_3_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_headline_1_font-size: 28px;
+--bui_font_headline_1_font-weight: 700;
+--bui_font_headline_1_line-height: 36px;
+--bui_font_headline_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_headline_2_font-size: 24px;
+--bui_font_headline_2_font-weight: 700;
+--bui_font_headline_2_line-height: 32px;
+--bui_font_headline_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_headline_3_font-size: 20px;
+--bui_font_headline_3_font-weight: 700;
+--bui_font_headline_3_line-height: 28px;
+--bui_font_headline_3_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_emphasized_1_font-size: 16px;
+--bui_font_emphasized_1_font-weight: 500;
+--bui_font_emphasized_1_line-height: 24px;
+--bui_font_emphasized_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_emphasized_2_font-size: 14px;
+--bui_font_emphasized_2_font-weight: 500;
+--bui_font_emphasized_2_line-height: 20px;
+--bui_font_emphasized_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+@media (min-width: 576px) {
+:root,
+[data-bui-theme="legacy-light"],
+[data-bui-theme="legacy-dark"] {
+--bui_font_body_1_font-size: 16px;
+--bui_font_body_1_font-weight: 400;
+--bui_font_body_1_line-height: 24px;
+--bui_font_body_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_body_2_font-size: 14px;
+--bui_font_body_2_font-weight: 400;
+--bui_font_body_2_line-height: 20px;
+--bui_font_body_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_small_1_font-size: 12px;
+--bui_font_small_1_font-weight: 400;
+--bui_font_small_1_line-height: 18px;
+--bui_font_small_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_small_2_font-size: 12px;
+--bui_font_small_2_font-weight: 500;
+--bui_font_small_2_line-height: 18px;
+--bui_font_small_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_strong_1_font-size: 16px;
+--bui_font_strong_1_font-weight: 700;
+--bui_font_strong_1_line-height: 24px;
+--bui_font_strong_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_strong_2_font-size: 14px;
+--bui_font_strong_2_font-weight: 700;
+--bui_font_strong_2_line-height: 20px;
+--bui_font_strong_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_display_1_font-size: 64px;
+--bui_font_display_1_font-weight: 700;
+--bui_font_display_1_line-height: 72px;
+--bui_font_display_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_display_2_font-size: 56px;
+--bui_font_display_2_font-weight: 700;
+--bui_font_display_2_line-height: 64px;
+--bui_font_display_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_display_3_font-size: 48px;
+--bui_font_display_3_font-weight: 700;
+--bui_font_display_3_line-height: 62px;
+--bui_font_display_3_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_featured_1_font-size: 32px;
+--bui_font_featured_1_font-weight: 400;
+--bui_font_featured_1_line-height: 40px;
+--bui_font_featured_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_featured_2_font-size: 24px;
+--bui_font_featured_2_font-weight: 400;
+--bui_font_featured_2_line-height: 32px;
+--bui_font_featured_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_featured_3_font-size: 20px;
+--bui_font_featured_3_font-weight: 400;
+--bui_font_featured_3_line-height: 28px;
+--bui_font_featured_3_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_headline_1_font-size: 32px;
+--bui_font_headline_1_font-weight: 700;
+--bui_font_headline_1_line-height: 40px;
+--bui_font_headline_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_headline_2_font-size: 24px;
+--bui_font_headline_2_font-weight: 700;
+--bui_font_headline_2_line-height: 32px;
+--bui_font_headline_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_headline_3_font-size: 20px;
+--bui_font_headline_3_font-weight: 700;
+--bui_font_headline_3_line-height: 28px;
+--bui_font_headline_3_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_emphasized_1_font-size: 16px;
+--bui_font_emphasized_1_font-weight: 500;
+--bui_font_emphasized_1_line-height: 24px;
+--bui_font_emphasized_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_emphasized_2_font-size: 14px;
+--bui_font_emphasized_2_font-weight: 500;
+--bui_font_emphasized_2_line-height: 20px;
+--bui_font_emphasized_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+}
+@media (min-width: 1024px) {
+:root,
+[data-bui-theme="legacy-light"],
+[data-bui-theme="legacy-dark"] {
+--bui_font_body_1_font-size: 16px;
+--bui_font_body_1_font-weight: 400;
+--bui_font_body_1_line-height: 24px;
+--bui_font_body_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_body_2_font-size: 14px;
+--bui_font_body_2_font-weight: 400;
+--bui_font_body_2_line-height: 20px;
+--bui_font_body_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_small_1_font-size: 12px;
+--bui_font_small_1_font-weight: 400;
+--bui_font_small_1_line-height: 18px;
+--bui_font_small_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_small_2_font-size: 12px;
+--bui_font_small_2_font-weight: 500;
+--bui_font_small_2_line-height: 18px;
+--bui_font_small_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_strong_1_font-size: 16px;
+--bui_font_strong_1_font-weight: 700;
+--bui_font_strong_1_line-height: 24px;
+--bui_font_strong_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_strong_2_font-size: 14px;
+--bui_font_strong_2_font-weight: 700;
+--bui_font_strong_2_line-height: 20px;
+--bui_font_strong_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_display_1_font-size: 96px;
+--bui_font_display_1_font-weight: 700;
+--bui_font_display_1_line-height: 108px;
+--bui_font_display_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_display_2_font-size: 64px;
+--bui_font_display_2_font-weight: 700;
+--bui_font_display_2_line-height: 72px;
+--bui_font_display_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_display_3_font-size: 48px;
+--bui_font_display_3_font-weight: 700;
+--bui_font_display_3_line-height: 62px;
+--bui_font_display_3_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_featured_1_font-size: 32px;
+--bui_font_featured_1_font-weight: 400;
+--bui_font_featured_1_line-height: 40px;
+--bui_font_featured_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_featured_2_font-size: 24px;
+--bui_font_featured_2_font-weight: 400;
+--bui_font_featured_2_line-height: 32px;
+--bui_font_featured_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_featured_3_font-size: 20px;
+--bui_font_featured_3_font-weight: 400;
+--bui_font_featured_3_line-height: 28px;
+--bui_font_featured_3_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_headline_1_font-size: 32px;
+--bui_font_headline_1_font-weight: 700;
+--bui_font_headline_1_line-height: 40px;
+--bui_font_headline_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_headline_2_font-size: 24px;
+--bui_font_headline_2_font-weight: 700;
+--bui_font_headline_2_line-height: 32px;
+--bui_font_headline_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_headline_3_font-size: 20px;
+--bui_font_headline_3_font-weight: 700;
+--bui_font_headline_3_line-height: 28px;
+--bui_font_headline_3_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_emphasized_1_font-size: 16px;
+--bui_font_emphasized_1_font-weight: 500;
+--bui_font_emphasized_1_line-height: 24px;
+--bui_font_emphasized_1_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+--bui_font_emphasized_2_font-size: 14px;
+--bui_font_emphasized_2_font-weight: 500;
+--bui_font_emphasized_2_line-height: 20px;
+--bui_font_emphasized_2_font-family: BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+}
+
+/* media size definitions */
+/* fonts definitions */
+.ext-global-alert {
+  position: relative;
+}
+
+/* media size definitions */
+/* fonts definitions */
+:root {
+  --bui_color_destructive_dark: #a30000;
+  --bui_color_destructive: #c00;
+  --bui_color_destructive_light: #fcb4b4;
+  --bui_color_destructive_lighter: #ffebeb;
+  --bui_color_destructive_lightest: #fff0f0;
+  --bui_color_callout_dark: #bc5b01;
+  --bui_color_callout: #ff8000;
+  --bui_color_callout_light: #ffc489;
+  --bui_color_callout_lighter: #fff0e0;
+  --bui_color_callout_lightest: #fff8f0;
+  --bui_color_complement_dark: #cd8900;
+  --bui_color_complement: #febb02;
+  --bui_color_complement_light: #ffe08a;
+  --bui_color_complement_lighter: #fdf4d8;
+  --bui_color_complement_lightest: #fefbf0;
+  --bui_color_constructive_dark: #006607;
+  --bui_color_constructive: #008009;
+  --bui_color_constructive_light: #97e59c;
+  --bui_color_constructive_lighter: #e7fde9;
+  --bui_color_constructive_lightest: #f1fef2;
+  --bui_color_primary_dark: #00224f;
+  --bui_color_primary: #003580;
+  --bui_color_primary_light: #bad4f7;
+  --bui_color_primary_lighter: #ebf3ff;
+  --bui_color_primary_lightest: #fafcff;
+  --bui_color_grayscale_dark: #333;
+  --bui_color_grayscale: #6b6b6b;
+  --bui_color_grayscale_light: #bdbdbd;
+  --bui_color_grayscale_lighter: #e6e6e6;
+  --bui_color_grayscale_lightest: #f5f5f5;
+  --bui_color_black: #000;
+  --bui_color_white: #fff;
+  --bui_color_action_dark: #005c9d;
+  --bui_color_action: #0071c2;
+  --bui_color_action_light: #a3d7fc;
+  --bui_color_action_lighter: #e4f4ff;
+  --genius_color_primary: #004cb8;
+}
+* {
+  box-sizing: border-box;
+}
+html, body {
+  min-height: 100vh;
+}
+body{
+  background-color: var(--bui_color_background_alt);
+  color: var(--bui_color_grayscale_dark);
+}
+html, body {
+  display: flex;
+  flex-direction: column;
+}
+/*
+We are targeting capla MFE, but excluding header and footer, so only content part.
+This is to make footer stick to bottom.
+*/
+body > div[data-capla-component]:not([data-capla-namespace^="b-extranet-common-header"]):not([data-capla-namespace^="b-extranet-common-footer"]) {
+  flex: 1 0 auto;
+}
+
+/* media size definitions */
+/* fonts definitions */
+:root {
+    --bui_unit_value: 8;
+    --bui_unit_smaller: 2px;
+    --bui_unit_small: 4px;
+    --bui_unit_medium: 8px;
+    --bui_unit_large: 16px;
+    --bui_unit_larger: 24px;
+    --bui_unit_largest: 32px;
+}
+:root {
+  --bui_color_destructive_dark: #a30000;
+  --bui_color_destructive: #c00;
+  --bui_color_destructive_light: #fcb4b4;
+  --bui_color_destructive_lighter: #ffebeb;
+  --bui_color_destructive_lightest: #fff0f0;
+  --bui_color_callout_dark: #bc5b01;
+  --bui_color_callout: #ff8000;
+  --bui_color_callout_light: #ffc489;
+  --bui_color_callout_lighter: #fff0e0;
+  --bui_color_callout_lightest: #fff8f0;
+  --bui_color_complement_dark: #cd8900;
+  --bui_color_complement: #febb02;
+  --bui_color_complement_light: #ffe08a;
+  --bui_color_complement_lighter: #fdf4d8;
+  --bui_color_complement_lightest: #fefbf0;
+  --bui_color_constructive_dark: #006607;
+  --bui_color_constructive: #008009;
+  --bui_color_constructive_light: #97e59c;
+  --bui_color_constructive_lighter: #e7fde9;
+  --bui_color_constructive_lightest: #f1fef2;
+  --bui_color_primary_dark: #00224f;
+  --bui_color_primary: #003580;
+  --bui_color_primary_light: #bad4f7;
+  --bui_color_primary_lighter: #ebf3ff;
+  --bui_color_primary_lightest: #fafcff;
+  --bui_color_grayscale_dark: #333;
+  --bui_color_grayscale: #6b6b6b;
+  --bui_color_grayscale_light: #bdbdbd;
+  --bui_color_grayscale_lighter: #e6e6e6;
+  --bui_color_grayscale_lightest: #f5f5f5;
+  --bui_color_black: #000;
+  --bui_color_white: #fff;
+  --bui_color_action_dark: #005c9d;
+  --bui_color_action: #0071c2;
+  --bui_color_action_light: #a3d7fc;
+  --bui_color_action_lighter: #e4f4ff;
+  --genius_color_primary: #004cb8;
+}
+.error-hero {
+  display: flex;
+  height: 324px; /* A wide fixed space for the section */
+  align-items: center;
+}
+.error-hero__icon {
+  margin-right: var(--bui_unit_large);
+}
+.error-hero__header {
+  margin: 0 0 var(--bui_unit_medium);
+}
+
+/* media size definitions */
+/* fonts definitions */
+.error-panel-header {
+  margin: 0;
+}
+
+/* media size definitions */
+/* fonts definitions */
+:root {
+    --bui_unit_value: 8;
+    --bui_unit_smaller: 2px;
+    --bui_unit_small: 4px;
+    --bui_unit_medium: 8px;
+    --bui_unit_large: 16px;
+    --bui_unit_larger: 24px;
+    --bui_unit_largest: 32px;
+}
+:root {
+  --bui_color_destructive_dark: #a30000;
+  --bui_color_destructive: #c00;
+  --bui_color_destructive_light: #fcb4b4;
+  --bui_color_destructive_lighter: #ffebeb;
+  --bui_color_destructive_lightest: #fff0f0;
+  --bui_color_callout_dark: #bc5b01;
+  --bui_color_callout: #ff8000;
+  --bui_color_callout_light: #ffc489;
+  --bui_color_callout_lighter: #fff0e0;
+  --bui_color_callout_lightest: #fff8f0;
+  --bui_color_complement_dark: #cd8900;
+  --bui_color_complement: #febb02;
+  --bui_color_complement_light: #ffe08a;
+  --bui_color_complement_lighter: #fdf4d8;
+  --bui_color_complement_lightest: #fefbf0;
+  --bui_color_constructive_dark: #006607;
+  --bui_color_constructive: #008009;
+  --bui_color_constructive_light: #97e59c;
+  --bui_color_constructive_lighter: #e7fde9;
+  --bui_color_constructive_lightest: #f1fef2;
+  --bui_color_primary_dark: #00224f;
+  --bui_color_primary: #003580;
+  --bui_color_primary_light: #bad4f7;
+  --bui_color_primary_lighter: #ebf3ff;
+  --bui_color_primary_lightest: #fafcff;
+  --bui_color_grayscale_dark: #333;
+  --bui_color_grayscale: #6b6b6b;
+  --bui_color_grayscale_light: #bdbdbd;
+  --bui_color_grayscale_lighter: #e6e6e6;
+  --bui_color_grayscale_lightest: #f5f5f5;
+  --bui_color_black: #000;
+  --bui_color_white: #fff;
+  --bui_color_action_dark: #005c9d;
+  --bui_color_action: #0071c2;
+  --bui_color_action_light: #a3d7fc;
+  --bui_color_action_lighter: #e4f4ff;
+  --genius_color_primary: #004cb8;
+}
+.error-code-block {
+  background: var(--bui_color_grayscale_dark);
+  color: var(--bui_color_white);
+  padding: var(--bui_unit_medium) var(--bui_unit_small);
+}
+
+/* media size definitions */
+/* fonts definitions */
+:root {
+    --bui_unit_value: 8;
+    --bui_unit_smaller: 2px;
+    --bui_unit_small: 4px;
+    --bui_unit_medium: 8px;
+    --bui_unit_large: 16px;
+    --bui_unit_larger: 24px;
+    --bui_unit_largest: 32px;
+}
+.server-error {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--bui_unit_larger);
+}
+.server-error__image {
+  width: auto;
+  height: 250px;
+  margin-right: var(--bui_unit_larger);
+}
+@media (max-width: 575px) {
+.server-error {
+    flex-direction: column;
+    text-align: center;
+}
+.server-error .server-error__image {
+    margin-right: 0;
+}
+.server-error__image {
+    height: 150px;
+}
+}
+
+
+/*# sourceMappingURL=https://istatic.booking.com/internal-static/capla/static/css/108baf03.3c87a2bd.chunk.css.map*/

@@ -47,7 +47,7 @@
             <div class="container">
                 <h1 class="title mb-4">Dashboard</h1>
 
-                <div class="section mb-5">
+<!--                <div class="section mb-5">
                     <h2 class="title mb-3">Top 3 House Booking</h2>
                     <div class="row">
                         <c:forEach items="${listHouse}" var="house">
@@ -60,8 +60,8 @@
                             </div>
                         </c:forEach>
                     </div>
-                </div>
-
+                </div>-->
+<!--
                 <div class="section mb-5">
                     <h2 class="title mb-3">Top 3 Users</h2>
                     <div class="row">
@@ -74,10 +74,10 @@
                             </div>
                         </c:forEach>
                     </div>
-                </div>
+                </div>-->
 
                 <div class="section mb-5">
-                    <h2 class="title mb-3">Type Users and Total Accounts</h2>
+                    <h2 class="title mb-3">Total Accounts</h2>
                     <div class="row">
                         <div class="col-md-4 mb-4">
                             <div class="card p-3">

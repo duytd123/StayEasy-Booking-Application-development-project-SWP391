@@ -40,15 +40,14 @@
 
                 <div class="flex">
 
-                    <a href="home" class="logo">Admin<span>Panel</span></a>
-
+                    <a href="DashboardServlet" class="logo">Admin<span>Panel</span></a>
                     <nav class="navbar">
-                        <a href="home"><span>Home</span></a>
+                        <a href="DashboardServlet"><span>Home</span></a>
                         <a href="ListHouseServlet">Room</a>
-                        <a href="ListBillServlet">Orders</a>
-                        <a href="ListAccountServlet">Users</a>
-                        <a href="ListAddService">Service</a>
-                        <a href="ListCommentServlet">Messages</a>
+                        <!--<a href="ListBillServlet">Orders</a>-->
+                        <a href="ListAccountServlet?page=1&search=">Users</a>
+                        <a href="ListAddService?page=1&search=">Service</a>
+                        <!--<a href="ListCommentServlet">Messages</a>-->
                     </nav>
 
                     <div class="icons">
@@ -70,7 +69,7 @@
                         <th>Img_ID</th>
                         <th>Img_Link</th>
                         <th>House_ID</th>
-                        <th>Action</th>
+<!--                        <th>Action</th>-->
                     </tr>
                 </thead>
                 <%
@@ -80,11 +79,11 @@
                     <td><%=h.getImgid() %></td>
                     <td><%=h.getImglink() %></td>
                     <td><%=h.getHouseid() %></td>
-                    <td>
+<!--       //              <td>
                         <span class="action_btn">
                             <a href="NextEditHouseImgServlet?id=<%=h.getHouseid() %>">Update</a>
                         </span>
-                    </td>
+                    </td>-->
                 </tr>
                 <%
                     }
