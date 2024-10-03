@@ -3,9 +3,6 @@ GROUP 4 - SE1806 - Summer2024
 Nguyễn Hải Phong
 ```
 ```
-Phạm Mạnh Hùng
-```
-```
 Trần Đức Duy ~Leader
 ```
 ```
